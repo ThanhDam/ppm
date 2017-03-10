@@ -131,7 +131,7 @@ COLLATE = utf8_unicode_ci;
 -- -----------------------------------------------------
 -- Table `db_ppm`.`type-of-medicine`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `db_ppm`.`type-of-medicine` (
+CREATE TABLE IF NOT EXISTS `db_ppm`.`type_of_medicine` (
   `idType` INT(11) NOT NULL AUTO_INCREMENT,
   `typeName` VARCHAR(45) CHARACTER SET 'utf8' NOT NULL,
   PRIMARY KEY (`idType`))
@@ -155,7 +155,7 @@ CREATE TABLE IF NOT EXISTS `db_ppm`.`medicine` (
   INDEX `fk_type_idx` (`idType` ASC),
   CONSTRAINT `fk_type`
     FOREIGN KEY (`idType`)
-    REFERENCES `db_ppm`.`type-of-medicine` (`idType`)
+    REFERENCES `db_ppm`.`type_of_medicine` (`idType`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -166,7 +166,7 @@ COLLATE = utf8_unicode_ci;
 -- -----------------------------------------------------
 -- Table `db_ppm`.`allergic-detail`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `db_ppm`.`allergic-detail` (
+CREATE TABLE IF NOT EXISTS `db_ppm`.`allergic_detail` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `idPatient` INT(11) NOT NULL,
   `idMedicine` INT(11) NOT NULL,
@@ -185,7 +185,7 @@ COLLATE = utf8_unicode_ci;
 -- -----------------------------------------------------
 -- Table `db_ppm`.`treatment-detail`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `db_ppm`.`treatment-detail` (
+CREATE TABLE IF NOT EXISTS `db_ppm`.`treatment_detail` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `idTreatment` INT(11) NOT NULL,
   `idMedicine` INT(11) NOT NULL,
@@ -218,7 +218,6 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 /*
 -- Query: SELECT * FROM db_ppm.roles
 LIMIT 0, 1000
-
 -- Date: 2017-03-07 16:30
 */
 INSERT INTO `roles` (`id`,`roles`) VALUES (1,'admin');
@@ -228,7 +227,6 @@ INSERT INTO `roles` (`id`,`roles`) VALUES (3,'nurse');
 /*
 -- Query: SELECT * FROM db_ppm.user
 LIMIT 0, 1000
-
 -- Date: 2017-03-07 16:31
 */
 INSERT INTO `user` (`id`,`name`,`username`,`password`,`specialist`,`address`,`sex`) VALUES (1,'Phan Van Hanh','hanhpv','hanhpv','than kinh','123 Nguyen Trai, Q1, Tp.HCM','male');
@@ -240,7 +238,6 @@ INSERT INTO `user` (`id`,`name`,`username`,`password`,`specialist`,`address`,`se
 /*
 -- Query: SELECT * FROM db_ppm.patient
 LIMIT 0, 1000
-
 -- Date: 2017-03-07 16:31
 */
 INSERT INTO `patient` (`id`,`name`,`address`,`sex`,`dob`) VALUES (1,'Nguyen Thi Lanh','43 Nguyen Thai Son, Q.Go Vap, Tp.HCM','female','1978-03-12');
@@ -250,7 +247,6 @@ INSERT INTO `patient` (`id`,`name`,`address`,`sex`,`dob`) VALUES (3,'Lai Thi Hoa
 /*
 -- Query: SELECT * FROM db_ppm.treatment
 LIMIT 0, 1000
-
 -- Date: 2017-03-07 16:32
 */
 INSERT INTO `treatment` (`id`,`idPatient`,`idDoctor`,`date`,`file`,`prescription`) VALUES (1,1,2,'2017-02-10','','nhiem trung mat');
@@ -260,7 +256,6 @@ INSERT INTO `treatment` (`id`,`idPatient`,`idDoctor`,`date`,`file`,`prescription
 /*
 -- Query: SELECT * FROM db_ppm.history
 LIMIT 0, 1000
-
 -- Date: 2017-03-07 16:32
 */
 INSERT INTO `history` (`id`,`idTreatment`,`dateTime`,`contentChange`) VALUES (1,1,'2017-02-10 00:00:00','doi thuoc');
@@ -269,24 +264,22 @@ INSERT INTO `history` (`id`,`idTreatment`,`dateTime`,`contentChange`) VALUES (1,
 /*
 -- Query: SELECT * FROM db_ppm.`type-of-medicine`
 LIMIT 0, 1000
-
 -- Date: 2017-03-07 16:33
 */
-INSERT INTO `type-of-medicine` (`idType`,`typeName`) VALUES (1,'thuoc khang sinh');
-INSERT INTO `type-of-medicine` (`idType`,`typeName`) VALUES (2,'thuoc gay te, gay me, phuc hoi');
-INSERT INTO `type-of-medicine` (`idType`,`typeName`) VALUES (3,'thuoc ha sot, giam dau, chong co giat');
-INSERT INTO `type-of-medicine` (`idType`,`typeName`) VALUES (4,'thuoc chong di ung');
-INSERT INTO `type-of-medicine` (`idType`,`typeName`) VALUES (5,'thuoc tai mui hong');
-INSERT INTO `type-of-medicine` (`idType`,`typeName`) VALUES (6,'thuoc dieu tri da day');
-INSERT INTO `type-of-medicine` (`idType`,`typeName`) VALUES (7,'thuoc dieu tri xuong khop');
-INSERT INTO `type-of-medicine` (`idType`,`typeName`) VALUES (8,'thuoc dieu tri tim mach');
-INSERT INTO `type-of-medicine` (`idType`,`typeName`) VALUES (9,'vitamin');
-INSERT INTO `type-of-medicine` (`idType`,`typeName`) VALUES (10,'thuoc than kinh');
+INSERT INTO `type_of_medicine` (`idType`,`typeName`) VALUES (1,'thuoc khang sinh');
+INSERT INTO `type_of_medicine` (`idType`,`typeName`) VALUES (2,'thuoc gay te, gay me, phuc hoi');
+INSERT INTO `type_of_medicine` (`idType`,`typeName`) VALUES (3,'thuoc ha sot, giam dau, chong co giat');
+INSERT INTO `type_of_medicine` (`idType`,`typeName`) VALUES (4,'thuoc chong di ung');
+INSERT INTO `type_of_medicine` (`idType`,`typeName`) VALUES (5,'thuoc tai mui hong');
+INSERT INTO `type_of_medicine` (`idType`,`typeName`) VALUES (6,'thuoc dieu tri da day');
+INSERT INTO `type_of_medicine` (`idType`,`typeName`) VALUES (7,'thuoc dieu tri xuong khop');
+INSERT INTO `type_of_medicine` (`idType`,`typeName`) VALUES (8,'thuoc dieu tri tim mach');
+INSERT INTO `type_of_medicine` (`idType`,`typeName`) VALUES (9,'vitamin');
+INSERT INTO `type_of_medicine` (`idType`,`typeName`) VALUES (10,'thuoc than kinh');
 
 /*
 -- Query: SELECT * FROM db_ppm.medicine
 LIMIT 0, 1000
-
 -- Date: 2017-03-07 16:33
 */
 INSERT INTO `medicine` (`idMedicine`,`idType`,`name`,`mfg`,`producer`,`dosage`) VALUES (1,4,'Abenin Tab','2016-12-31','	Kyung Dong Pharm Co., Ltd','Viên nén bao phim-10mg');
@@ -302,21 +295,19 @@ INSERT INTO `medicine` (`idMedicine`,`idType`,`name`,`mfg`,`producer`,`dosage`) 
 /*
 -- Query: SELECT * FROM db_ppm.`treatment-detail`
 LIMIT 0, 1000
-
 -- Date: 2017-03-07 16:33
 */
-INSERT INTO `treatment-detail` (`id`,`idTreatment`,`idMedicine`,`diseases`) VALUES (1,1,4,'nhiem trung mat');
-INSERT INTO `treatment-detail` (`id`,`idTreatment`,`idMedicine`,`diseases`) VALUES (2,1,5,'nhiem trung mat');
-INSERT INTO `treatment-detail` (`id`,`idTreatment`,`idMedicine`,`diseases`) VALUES (3,2,7,'tim mach');
-INSERT INTO `treatment-detail` (`id`,`idTreatment`,`idMedicine`,`diseases`) VALUES (4,2,8,'thieu vitamin');
+INSERT INTO `treatment_detail` (`id`,`idTreatment`,`idMedicine`,`diseases`) VALUES (1,1,4,'nhiem trung mat');
+INSERT INTO `treatment_detail` (`id`,`idTreatment`,`idMedicine`,`diseases`) VALUES (2,1,5,'nhiem trung mat');
+INSERT INTO `treatment_detail` (`id`,`idTreatment`,`idMedicine`,`diseases`) VALUES (3,2,7,'tim mach');
+INSERT INTO `treatment_detail` (`id`,`idTreatment`,`idMedicine`,`diseases`) VALUES (4,2,8,'thieu vitamin');
 
 
 /*
 -- Query: SELECT * FROM db_ppm.`allergic-detail`
 LIMIT 0, 1000
-
 -- Date: 2017-03-07 16:28
 */
-INSERT INTO `allergic-detail` (`id`,`idPatient`,`idMedicine`) VALUES (1,3,3);
-INSERT INTO `allergic-detail` (`id`,`idPatient`,`idMedicine`) VALUES (2,3,1);
-INSERT INTO `allergic-detail` (`id`,`idPatient`,`idMedicine`) VALUES (3,1,9);
+INSERT INTO `allergic_detail` (`id`,`idPatient`,`idMedicine`) VALUES (1,3,3);
+INSERT INTO `allergic_detail` (`id`,`idPatient`,`idMedicine`) VALUES (2,3,1);
+INSERT INTO `allergic_detail` (`id`,`idPatient`,`idMedicine`) VALUES (3,1,9);
