@@ -51,12 +51,16 @@ public class PatientServiceImpl implements IPatientService {
 
 	@Override
 	public List<Patient> findAllPatients() {
-		return (List<Patient>) patientRepos.findAll();
+		List<Patient> patients = patientRepos.findAll();
+		return patients;
 	}
 
 	@Override
 	public boolean isPatientExist(Patient patient) {
-		// TODO Auto-generated method stub
+		Patient patientser = findById(patient.getPatientId());
+        if (patientser !=null){
+        	return true;
+        }
 		return false;
 	}
 

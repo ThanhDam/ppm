@@ -1,6 +1,6 @@
 package com.csc.team2.model;
 
-import java.io.Serializable;
+
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,13 +11,11 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="type_of_medicine")
-public class TypeMedicine implements Serializable {
-	
-	private static final long serialVersionUD =1L;
+public class TypeMedicine  {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="idtype")
+	@Column(name="id")
 	private Integer typeId;
 	
 	@Column(name="typename")

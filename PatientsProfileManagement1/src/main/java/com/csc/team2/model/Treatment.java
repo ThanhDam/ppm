@@ -20,17 +20,15 @@ private static final long serialVersionUD =1;
 	@Column(name="id")
 	private Integer id;
 	
-	@Column(name = "idPatient")
+	@Column(name = "idpatient")
 	private Integer idPatient;
 	
-	@Column(name = "idDoctor")
+	@Column(name = "iddoctor")
 	private Integer idDoctor;
 	
 	@Column(name = "date")
 	private String date;
 	
-	@Column(name = "idAllergic")
-	private Integer idAllergic;
 	
 	@Column(name = "file")
 	private String file;
@@ -70,13 +68,6 @@ private static final long serialVersionUD =1;
 		this.date = date;
 	}
 
-	public Integer getIdAllergic() {
-		return idAllergic;
-	}
-
-	public void setIdAllergic(Integer idAllergic) {
-		this.idAllergic = idAllergic;
-	}
 
 	public String getFile() {
 		return file;

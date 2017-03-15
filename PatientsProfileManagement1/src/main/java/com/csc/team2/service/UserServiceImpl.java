@@ -2,6 +2,7 @@ package com.csc.team2.service;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -53,5 +54,49 @@ public class UserServiceImpl implements UserService{
 		user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
 		userRepository.save(user);
 	}
+	@Override
+	public void updateAdmin(User user){
+		
+	}
+	@Override
+	public void updateDoctor(User user){
+		
+	}
+	@Override
+	public void updateNurse(User user){
+		
+	}
+	@Override
+	public void deleteAdminById(int id){
+		
+	}
+	@Override
+	public void deleteDoctorById(int id){
+		
+	}
+	@Override
+	public void deleteNurseById(int id){
+		
+	}
+	@Override
+	public void deleteAllDoctor(){
+		
+	}
+	@Override
+	public void deleteAllNurse(){
+		
+	}
 	
+	@Override
+	public List<User> findAllUsers(){
+		return userRepository.findAll();
+		
+	}
+	
+	
+	/*@Override
+	public List<User> findAllAdmin(User user){
+		Role userRole = roleRepository.findByRoles("doctor");
+		
+	}*/
 }

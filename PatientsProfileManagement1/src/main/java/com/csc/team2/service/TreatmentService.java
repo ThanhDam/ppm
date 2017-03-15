@@ -21,5 +21,7 @@ public interface TreatmentService  {
     List<Treatment> findAllTreatment();
  
     boolean isTreatmentExist(Treatment treatment);
+    
+    
 
 }

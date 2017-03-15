@@ -23,17 +23,32 @@ public class LoginController {
 	@RequestMapping(value={"/","/login"}, method = RequestMethod.GET)
 	public ModelAndView login(){
 		ModelAndView modelAndView = new ModelAndView();
+
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		System.out.println(auth.getAuthorities().toString());
+		if(auth.getAuthorities().toString().equals("[admin]")){
+			modelAndView.setViewName("admin/home");	
+			return modelAndView;
+		}
+		else if(auth.getAuthorities().toString().equals("[doctor]")) {
+			modelAndView.setViewName("doctor/home");
+			return modelAndView;
+		}
+		else if(auth.getAuthorities().toString().equals("[nurse]")) {
+			modelAndView.setViewName("nurse/home");
+			return modelAndView;
+		}
 		modelAndView.setViewName("login");
 		return modelAndView;
 	}
-	
-	@RequestMapping(value={"/test"}, method = RequestMethod.GET)
-	public ModelAndView test(){
+		
+	/*@RequestMapping(value={"/","/login"}, method = RequestMethod.GET)
+	public ModelAndView login(){
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("test");
+		modelAndView.setViewName("login");
 		return modelAndView;
-	}
-	
+	}*/
+
 	@RequestMapping(value="/registration", method = RequestMethod.GET)
 	public ModelAndView registration(){
 		ModelAndView modelAndView = new ModelAndView();
@@ -137,6 +152,7 @@ public class LoginController {
 		}
 		return modelAndView;
 	}
+
 	
 	@RequestMapping(value="/admin/home", method = RequestMethod.GET)
 	public ModelAndView adminHome(){

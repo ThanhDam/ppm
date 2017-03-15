@@ -22,10 +22,10 @@ private static final long serialVersionUD =1;
 	@Column(name="id")
 	private Integer id;
 	
-	@Column(name = "idTreatment")
+	@Column(name = "idtreatment")
 	private Integer idTreatment;
 	
-	@Column(name = "idMedicine")
+	@Column(name = "idmedicine")
 	private Integer idMedicine;
 	
 	@Column(name = "diseases")

@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.csc.team2.model.Medicine;
-import com.csc.team2.model.Patient;
 import com.csc.team2.service.MedicineServiceImpl;
 
 @Controller
@@ -26,11 +25,11 @@ public class MedicineController {
 	@Autowired
 	MedicineServiceImpl medicineService;
 	
-	public static final Logger logger = LoggerFactory.getLogger(PatientController.class);
+	public static final Logger logger = LoggerFactory.getLogger(MedicineController.class);
 	
 	//--------------------Select All Medicine-----------------------------------------
 	
-	@RequestMapping(value="/Medicine", method = RequestMethod.GET)
+	@RequestMapping(value="/medicine", method = RequestMethod.GET)
 	public ResponseEntity<List<Medicine>> listMedicine(){
 		List<Medicine> medicines = medicineService.findAllMedicines();
 		if(medicines.isEmpty()){
@@ -39,9 +38,20 @@ public class MedicineController {
 		return new ResponseEntity<List<Medicine>>(medicines, HttpStatus.OK);
 	}
 	
+	//--------------------Select Medicine Type-----------------------------------------
+	
+		@RequestMapping(value="/medicinebytype/{id}", method = RequestMethod.GET)
+		public ResponseEntity<List<Medicine>> listMedicine(@PathVariable("id") int id){
+			List<Medicine> medicines = medicineService.findByType(id);
+			if(medicines.isEmpty()){
+				return new ResponseEntity(HttpStatus.NO_CONTENT);
+			}
+			return new ResponseEntity<List<Medicine>>(medicines, HttpStatus.OK);
+		}
+	
 	//--------------------Select One Medicine-----------------------------------------
 	
-	@RequestMapping(value="/Medicine/{id}", method = RequestMethod.GET)
+	@RequestMapping(value="/medicine/{id}", method = RequestMethod.GET)
 	public ResponseEntity<?> getMedicine(@PathVariable("id") int id){
 		logger.info("Fetching Medicine with id {}", id);
 		Medicine medicine = medicineService.findById(id);
@@ -54,7 +64,7 @@ public class MedicineController {
 	
 	//-------------------Create Medicine----------------------------------------------
 	
-	@RequestMapping(value="/Medicine", method= RequestMethod.POST)
+	@RequestMapping(value="/medicine", method= RequestMethod.POST)
 	public ResponseEntity<?> createMedicine(@RequestBody Medicine medicine,UriComponentsBuilder ucBuilder){
 		logger.info("create New Medicine : {}", medicine);
 		if(medicineService.isMedicineExist(medicine)){
@@ -70,7 +80,7 @@ public class MedicineController {
 	
 	//------------------Update Medicine-----------------------------------------------
 	
-	@RequestMapping(value="/Medicine/{id}", method = RequestMethod.PUT)
+	@RequestMapping(value="/medicine/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<?> updateMedicine(@PathVariable("id") int id,@RequestBody Medicine medicine){
 		logger.info("update medicine with id {}", id);
 		
@@ -89,7 +99,7 @@ public class MedicineController {
 	}
 	
 	//------------------Delete a Medicinhe-----------------------------------------
-	@RequestMapping(value="/Medicine/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value="/medicine/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<?> deleteMedicine(@PathVariable("id") int id){
 		logger.info("Fetch & delete medicine with id {}", id);
 		Medicine medicine = medicineService.findById(id);
@@ -101,7 +111,7 @@ public class MedicineController {
 	}
 	
 	//------------------Delete All Medicine---------------------------------------
-	@RequestMapping(value="/Medicine", method = RequestMethod.DELETE)
+	@RequestMapping(value="/medicine", method = RequestMethod.DELETE)
 	public ResponseEntity<?> deleteAllMedicine(){
 		logger.info("Deleting All Medicine");
 		 

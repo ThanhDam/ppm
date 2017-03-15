@@ -18,6 +18,8 @@ public interface IMedicineService {
     void deleteAllMedicines();
  
     List<Medicine> findAllMedicines();
+    
+    List<Medicine> findByType(int typeid);
  
     boolean isMedicineExist(Medicine medicine);
 }

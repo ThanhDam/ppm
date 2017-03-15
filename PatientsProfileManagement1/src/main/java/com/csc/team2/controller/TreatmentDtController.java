@@ -21,7 +21,7 @@ import com.csc.team2.util.CustomErrorType;
 
  
 @RestController
-@RequestMapping("/api")
+
 public class TreatmentDtController {
  
     public static final Logger logger = LoggerFactory.getLogger(TreatmentDtController.class);

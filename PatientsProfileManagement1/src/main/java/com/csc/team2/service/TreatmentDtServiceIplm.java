@@ -2,6 +2,8 @@ package com.csc.team2.service;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,6 +65,10 @@ public class TreatmentDtServiceIplm implements TreatmentDtService {
 	public boolean isTreatmentDtExist(TreatmentDt treatmentdt) {
 		return findById(treatmentdt.getId()) != null;
 	}
+
+	
+
+	
 	
 	
 	

@@ -59,4 +59,9 @@ public class MedicineServiceImpl implements IMedicineService {
 		return false;
 	}
 
+	@Override
+	public List<Medicine> findByType(int typeid) {
+		return medicineRepos.findByTypeId(typeid);
+	}
+
 }

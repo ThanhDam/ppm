@@ -1,6 +1,7 @@
 package com.csc.team2.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name="medicine")
@@ -18,7 +21,7 @@ private static final long serialVersionUD =1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="idmedicine")
+	@Column(name="id")
 	private Integer medicineId;
 	
 	@Column(name="idtype")
@@ -27,8 +30,9 @@ private static final long serialVersionUD =1L;
 	@Column(name="name")
 	private String name;
 	
+	@Temporal(TemporalType.DATE)
 	@Column(name="mfg")
-	private String mfg;
+	private Date mfg;
 	
 	@Column(name="producer")
 	private String producer;
@@ -60,11 +64,11 @@ private static final long serialVersionUD =1L;
 		this.name = name;
 	}
 
-	public String getMfg() {
+	public Date getMfg() {
 		return mfg;
 	}
 
-	public void setMfg(String mfg) {
+	public void setMfg(Date mfg) {
 		this.mfg = mfg;
 	}
 
@@ -84,7 +88,7 @@ private static final long serialVersionUD =1L;
 		this.dosage = dosage;
 	}
 
-	public Medicine(Integer medicineId, Integer typeId, String name, String mfg, String producer, String dosage) {
+	public Medicine(Integer medicineId, Integer typeId, String name, Date mfg, String producer, String dosage) {
 		this.medicineId = medicineId;
 		this.typeId = typeId;
 		this.name = name;
@@ -105,7 +109,7 @@ private static final long serialVersionUD =1L;
 		this.medicineId = 0;
 		this.typeId = 0;
 		this.name = "";
-		this.mfg = "";
+		this.mfg = null;
 		this.producer = "";
 		this.dosage = "";
 	}

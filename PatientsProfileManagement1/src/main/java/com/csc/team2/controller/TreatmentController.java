@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,12 +18,13 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
  
 import com.csc.team2.model.Treatment;
+import com.csc.team2.model.User;
 import com.csc.team2.service.TreatmentService;
+import com.csc.team2.service.UserService;
 import com.csc.team2.util.CustomErrorType;
 
  
 @RestController
-@RequestMapping("/api")
 public class TreatmentController {
  
     public static final Logger logger = LoggerFactory.getLogger(TreatmentController.class);
@@ -31,14 +34,14 @@ public class TreatmentController {
  
     // -------------------Retrieve All Treatment---------------------------------------------
  
-    @RequestMapping(value = "/treatment/", method = RequestMethod.GET)
+    @RequestMapping(value = "/treatment", method = RequestMethod.GET)
     public ResponseEntity<List<Treatment>> listAllTreatment() {
-        List<Treatment> treatments = treatmentService.findAllTreatment();
-        if (treatments.isEmpty()) {
+        List<Treatment> treatment = treatmentService.findAllTreatment();
+        if (treatment.isEmpty()) {
             return new ResponseEntity(HttpStatus.NO_CONTENT);
             // You many decide to return HttpStatus.NOT_FOUND
         }
-        return new ResponseEntity<List<Treatment>>(treatments, HttpStatus.OK);
+        return new ResponseEntity<List<Treatment>>(treatment, HttpStatus.OK);
     }
  
     // -------------------Retrieve Single Treatment------------------------------------------
@@ -47,6 +50,7 @@ public class TreatmentController {
     public ResponseEntity<?> getTreatment(@PathVariable("id") int id) {
         logger.info("Fetching Treatment with id {}", id);
         Treatment treatment = treatmentService.findById(id);
+        System.out.println("------------------treat");
         if (treatment == null) {
             logger.error("User with id {} not found.", id);
             return new ResponseEntity(new Error("Treatment with id " + id 
@@ -54,10 +58,21 @@ public class TreatmentController {
         }
         return new ResponseEntity<Treatment>(treatment, HttpStatus.OK);
     }
+    @Autowired
+	private UserService userService;
+ // -------------------Retrieve Single Name------------------------------------------
+    
+    @RequestMapping(value = "/treatment/name", method = RequestMethod.GET)
+    public ResponseEntity<?> getNameDoctor() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    	User user = userService.findUserByUsername(auth.getName());
+    	System.out.println("---------------"+auth.getName());
+        return new ResponseEntity<User>(user, HttpStatus.OK);
+    }
  
     // -------------------Create a Treatment-------------------------------------------
  
-    @RequestMapping(value = "/treatment/", method = RequestMethod.POST)
+    @RequestMapping(value = "/treatment", method = RequestMethod.POST)
     public ResponseEntity<?> createTreatment(@RequestBody Treatment treatment, UriComponentsBuilder ucBuilder) {
         logger.info("Creating Treatment : {}", treatment);
  
@@ -91,7 +106,7 @@ public class TreatmentController {
         currentTreatment.setIdPatient(treatment.getIdPatient());
         currentTreatment.setIdDoctor(treatment.getIdDoctor());
         currentTreatment.setDate(treatment.getDate());
-        currentTreatment.setIdAllergic(treatment.getIdAllergic());
+        
         currentTreatment.setFile(treatment.getFile());
         currentTreatment.setPrescription(treatment.getPrescription());
  
@@ -117,11 +132,13 @@ public class TreatmentController {
  
     // ------------------- Delete All Treatment-----------------------------
  
-    @RequestMapping(value = "/treatment/", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/treatment", method = RequestMethod.DELETE)
     public ResponseEntity<Treatment> deleteAllTreatment() {
         logger.info("Deleting All Treatment");
  
         treatmentService.deleteAllTreatment();
         return new ResponseEntity<Treatment>(HttpStatus.NO_CONTENT);
     }
+    
+    
 }

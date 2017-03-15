@@ -10,4 +10,5 @@ import com.csc.team2.model.TreatmentDt;
 public interface TreatmentDtRepository extends CrudRepository<TreatmentDt, Integer>{
 
 	//User findByName(String name);
+	
 }

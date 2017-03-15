@@ -17,11 +17,11 @@
 			<label class="lable-regis" th:text="Registration"></label>
 			<hr style="margin-bottom: 0; margin-top: 0;">
 		</div>
-		<form class="form-horizontal form-mar" autocomplete="off" action="#" th:action="@{/registration}"
+		<form class="form-horizontal form-mar" autocomplete="off" action="#" th:action="@{/admin/NurseRegistration}"
 					th:object="${user}" method="post" role="form">
 					
 			  <div class="form-group">
-					<label class="col-sm-2 control-label">Email</label>
+					<label class="col-sm-2 control-label">Full Name</label>
 					<div class="col-sm-10">
 					  <input type="text" th:field="*{name}" placeholder="Name"
 									class="form-control transparent-input"
@@ -113,21 +113,18 @@
 					</div>
 			  </div>
 			  
-			  
-			  <div class="form-group">
-					<label class="col-sm-2 control-label">Sex</label>
 					<div class="col-sm-10">
 						<div class="btn-radio">
 						  <ul>
 								<li>
-									<input type="radio" id="f-option" name="selector">
+									<input type="radio" id="f-option" name="sex" value="Male" checked>
 									<label for="f-option">Male</label>
 						
 									<div class="check"></div>
 								</li>
 						  
 								<li>
-									<input type="radio" id="s-option" name="selector">
+									<input type="radio" id="s-option" name="sex" value="Female">
 									<label for="s-option">Female</label>
 						
 									<div class="check"><div class="inside"></div></div>
@@ -135,54 +132,16 @@
 						
 							</ul>
 						</div>
-<<<<<<< .mine
 
-
-
-
-
-
-=======
-					</div> -->
-					
-					<div class="form-group">
+					</div>
 						<div class="col-sm-9">
 							<button type="submit" class="btn btn-primary btn-block">Register Nurse</button>
 						</div>
->>>>>>> .theirs
-					</div>
-			  </div>
-			  <div class="row">
-					<div class="col-sm-2"></div>
-					<div class="col-sm-10">
-					  <label th:if="${#fields.hasErrors('sex')}" th:errors="*{sex}"
-									class="validation-message"></label>
-					</div>
-			  </div>
-			  
-			  <div class="row btn-center">
-				  <button type="submit" class="btn btn-primary">Register User</button>
-			  </div>
+
+			 <span th:utext="${successMessage}"></span>
 		</form>
 		
-		<form th:action="@{/}" method="get">
-			<div class="btn-center">
-				<button class="btn btn-md btn-warning " type="Submit">Login</button>
-				
-				<!-- <form>
-					 <div>
-						<div class="col-sm-9">
-							 <input type="radio" name="roles" value="doctor" checked>Doctor   
-	  						 <input type="radio" name="roles" value="nurse">Nurse	 
-						</div>
-					</div> 
-				</form> -->
-				
-			</div>
-		</form>	
 		
-		<span th:utext="${successMessage}"></span>
-	</div>
 	
 	</div>
 </body>

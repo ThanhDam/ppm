@@ -2,6 +2,7 @@ package com.csc.team2.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,56 +13,58 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="allergic_detail")
-public class Allergic implements Serializable{
-
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Integer id;
+public class Allergic implements Serializable {
 	
-	@Column(name="idPatient")
-	@NotNull
-	private Integer idPatient;
-	
-	@Column(name="idMedicine")
-	@NotNull
-	private Integer idMedicine;
+	private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id")
+    private Integer id;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "patient_id")
+    private int patientId;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "medicine_id")
+    private int medicineId;
 
-	public Integer getId() {
-		return id;
-	}
+    public Allergic() {
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public Allergic(Integer id) {
+        this.id = id;
+    }
 
-	public Integer getIdPatient() {
-		return idPatient;
-	}
+    public Allergic(Integer id, int patientId, int medicineId) {
+        this.id = id;
+        this.patientId = patientId;
+        this.medicineId = medicineId;
+    }
 
-	public void setIdPatient(Integer idPatient) {
-		this.idPatient = idPatient;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public Integer getIdMedicine() {
-		return idMedicine;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public void setIdMedicine(Integer idMedicine) {
-		this.idMedicine = idMedicine;
-	}
+    public int getPatientId() {
+        return patientId;
+    }
 
-	public Allergic(Integer id, Integer idPatient, Integer idMedicine) {
-		this.id = id;
-		this.idPatient = idPatient;
-		this.idMedicine = idMedicine;
-	}
+    public void setPatientId(int patientId) {
+        this.patientId = patientId;
+    }
 
-	public Allergic(Allergic a) {
-		this.id = a.id;
-		this.idPatient = a.idPatient;
-		this.idMedicine = a.idMedicine;
-	}
-	
-	
-	
+    public int getMedicineId() {
+        return medicineId;
+    }
+
+    public void setMedicineId(int medicineId) {
+        this.medicineId = medicineId;
+    }
+
 }
