@@ -1,0 +1,363 @@
+<style>
+.well {
+	background: none;
+	height: 210px;
+}
+
+.table-scroll tbody {
+	position: absolute;
+	overflow-y: scroll;
+	height: 150px;
+}
+
+.table-scroll tr {
+	width: 100%;
+	table-layout: fixed;
+	display: inline-table;
+}
+
+.table-scroll thead>tr>th {
+	border: none;
+}
+</style>
+<div style="margin-top: 80px" id="wrapper">
+	<!-- Navigation -->
+
+	<div id="page-wrapper">
+		<!-- Modal popup type medicine form -->
+		<form>
+			<div class="modal fade" id="TypeMedicineModal" tabindex="-1" role="dialog"
+				aria-labelledby="myModalLabel">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+							<h4 class="modal-title" id="myModalLabel">Update Type of Medicine</h4>
+						</div>
+						<div class="modal-body">
+							<div class="form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12"
+									for="type-name">Type Name <span class="required">*</span>
+								</label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<input ng-model="curentTypeMedicine.typeName" type="text"
+										id="type-name" required="required"
+										class="form-control col-md-7 col-xs-12">
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default"
+								data-dismiss="modal">Close</button>
+							<button type="button"
+								ng-click="updateTypeMedicine(curentTypeMedicine.typeId,curentTypeMedicine)"
+								class="btn btn-primary">Save changes</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	<!-- Modal popup medicine form -->
+		<form>
+			<div class="modal fade" id="MedicineModal" tabindex="-1" role="dialog"
+				aria-labelledby="myModalLabel">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+							<h4 class="modal-title" id="myModalLabel">Update Medicine</h4>
+						</div>
+						<div class="modal-body">
+							<div class="form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12"
+									for="medicine-name">Name <span class="required">*</span>
+								</label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<input ng-model="curentMedicine.name" type="text"
+										id="medicine-name" required="required"
+										class="form-control col-md-7 col-xs-12">
+								</div>
+							</div>
+							<br>
+							<div class="form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12"
+									for="type-name">Type Name<span class="required">*</span>
+								</label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<input ng-model="curentTypeMedicine.typeName" type="text"
+										id="type-name" name="Type Name" required="required"
+										class="form-control col-md-7 col-xs-12">
+								</div>
+							</div>
+							<br>
+							<div class="form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12"
+								for="producer">Producer<span class="required">*</span></label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<input ng-model="curentMedicine.producer" type="text"
+										id="producer" name="Producer" required="required"
+										class="form-control col-md-7 col-xs-12">
+								</div>
+							</div>
+							<br>
+							<div class="form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12"
+								for="dosage">Dosage<span class="required">*</span></label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<input ng-model="curentMedicine.dosage" type="text"
+										id="dosage" name="Dosage" required="required"
+										class="form-control col-md-7 col-xs-12">
+								</div>
+							</div>
+							<br>
+							<div class="form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">
+								MFG<span class="required">*</span>
+								</label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<input ng-model="curentMedicine.mfg" type="date"
+										class="datepicker" data-date-format="mm/dd/yyyy">
+
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default"
+								data-dismiss="modal">Close</button>
+							<button type="button"
+								ng-click="updatePatient(curentPatient.patienId,curentPatient )"
+								class="btn btn-primary">Save changes</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+		<!-- end popup form -->
+
+		<div class="container-fluid">
+
+			<div class="row">
+				<div class="col-md-8 col-sm-12 col-xs-12">
+					<div class="x_panel">
+						<div class="x_title">
+							<h1 style="width: 250px" class="btn btn-primary">NEW MEDICINE</h1>
+
+						</div>
+						<div style="border: 1px dotted #2f3a54; border-radius: 5px;"
+							class="rounded">
+							<br />
+<!-- Create New Medicine form -->
+							<form id="demo-form2" ng-submit="submitForm()"
+								data-parsley-validate class="form-horizontal form-label-left">
+
+								<div class="form-group">
+									<label class="control-label col-md-3 col-sm-3 col-xs-12" 
+										for="name">Name <span class="required">*</span>
+									</label>
+									<div class="col-md-6 col-sm-6 col-xs-12">
+										<input ng-model="medicine.name" type="text" id="first-name" 
+											required="required" class="form-control col-md-7 col-xs-12">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-md-3 col-sm-3 col-xs-12"
+										for="type">Type<span class="required">*</span>
+									</label>
+									<div class="col-md-6 col-sm-6 col-xs-12">
+										<select class="selectpicker form-control col-md-7 col-xs-12" 
+										ng-model="medicine.type" ng-options="typemedicine.typeName for typemedicine in typemedicines" data-live-search="true">
+				
+										</select>
+
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label class="control-label col-md-3 col-sm-3 col-xs-12"
+										for="producer">Producer<span class="required">*</span>
+									</label>
+									<div class="col-md-6 col-sm-6 col-xs-12">
+										<input ng-model="medicine.producer" type="text" id="address" name="address"
+											required="required" class="form-control col-md-7 col-xs-12">
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label class="control-label col-md-3 col-sm-3 col-xs-12"
+										for="dosage">Dosage<span class="required">*</span>
+									</label>
+									<div class="col-md-6 col-sm-6 col-xs-12">
+										<input ng-model="medicine.dosage" type="text" id="address" name="address"
+											required="required" class="form-control col-md-7 col-xs-12">
+									</div>
+								</div>
+
+
+								<div class="form-group">
+									<label class="control-label col-md-3 col-sm-3 col-xs-12">mfg
+										<span class="required">*</span>
+									</label>
+									<div class="col-md-6 col-sm-6 col-xs-12">
+										<input ng-model="medicine.mfg" type="date" class="datepicker"
+											data-date-format="mm/dd/yyyy">
+
+									</div>
+								</div>
+								<div class="ln_solid"></div>
+								<br>
+								<div class="form-group">
+									<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+										<!-- 										<button class="btn btn-primary" type="button">Cancel</button> -->
+										<button ng-click="getMedicine()" class="btn btn-primary"
+											type="reset">Reset</button>
+										<button type="submit" ng-click="createMedicine()"
+											class="btn btn-success">Submit</button>
+									</div>
+								</div>
+
+							</form>
+						</div>
+					</div>
+					<br>
+
+				</div>
+				<!-- TYPE MEDICINE -->
+				<div class="col-md-4 col-sm-12 col-xs-12">
+					<div class="x_panel">
+						<div class="x_title">
+							<h1 style="width: 250px" class="btn btn-primary">TYPE
+								MEDICINE</h1>
+
+						</div>
+						<div style="border: 1px dotted #2f3a54; border-radius: 5px;"
+							class="rounded">
+							<br />
+							<form id="demo-form2" ng-submit="submitForm()"
+								data-parsley-validate class="form-horizontal form-label-left">
+
+								<div class="form-group">
+									<label class="control-label col-md-3 col-sm-3 col-xs-12"
+										for="typeName">TypeName <span class="required">*</span>
+									</label>
+									<div class="col-md-6 col-sm-6 col-xs-12">
+										<input ng-model="typemedicine.typeName" type="text" id="typeName"
+											required="required" class="form-control col-md-7 col-xs-12">
+									</div>
+								</div>
+
+								<div class="ln_solid"></div>
+								<div class="form-group">
+									<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+										<!-- 										<button class="btn btn-primary" type="button">Cancel</button> -->
+										<button ng-click="getTypeMedicine()" class="btn btn-primary"
+											type="reset">Reset</button>
+											
+										<button type="submit" ng-click="createTypeMedicine()"
+											class="btn btn-success">Submit</button>
+									</div>
+								</div>
+							</form>
+							<div class="table-responsive col-xs-12 well">
+								<table
+									class="table table-scroll table-striped jambo_table bulk_action">
+									<thead>
+										<tr>
+											<th class="col-xs-8 column-title">Type Name</th>
+											<th class="col-xs-4 column-title no-link last">Action</th>
+
+										</tr>
+									</thead>
+
+									<tbody>
+										<tr class="headings" ng-repeat="typemedicine in typemedicines">
+											<td class="col-xs-8"><a
+												ng-href="#/typemedicine/{{typemedicine.typeId}}"></a>{{typemedicine.typeName}}</td>
+											<td class="col-xs-4">
+												<button type="button" ng-click="getTypeOne(typemedicine.typeId)" class="btn btn-primary" 
+												data-toggle="modal" data-target="#TypeMedicineModal">
+									  				<span><i class="fa fa-wrench" aria-hidden="true"></i></i></span>
+												</button>
+												<button ng-click="deleteTypeMedicine(typemedicine.typeId)"
+													data-toggle="tooltip" title="Delete Type Medicine!"
+													class="glyphicon glyphicon-trash btn btn-danger"></button>
+
+											</td>
+										</tr>
+
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- test popup -->
+
+				<!-- Popup Div Ends Here -->
+			</div>
+			<!--               table -->
+			<div class="col-md-12 col-sm-12 col-xs-12">
+				<div class="x_panel">
+					<div class="x_title">
+						<h1 style="width: 250px" class="btn btn-primary">LIST
+							MEDICINE</h1>
+						<div class="clearfix"></div>
+					</div>
+
+					<div class="x_content">
+
+						<div class="table-responsive">
+							<table class="table table-striped jambo_table bulk_action">
+								<thead>
+									<tr class="headings">
+										<th class="column-title">Name</th>
+										<th class="column-title">Type</th>
+										<th class="column-title">mfg</th>
+										<th class="column-title">producer</th>
+										<th class="column-title">dosage</th>
+										<th class="column-title no-link last"><span class="nobr">Action</span>
+										</th>
+
+									</tr>
+								</thead>
+
+								<tbody>
+									<tr ng-repeat="medicine in medicines">
+										<td><a ng-href="#/medicine/{{medicine.medicineId}}"></a>{{medicine.name
+											| uppercase}}</td>
+										<td>{{medicine.typename}}</td>
+										<td>{{medicine.mfg }}</td>
+										<td>{{medicine.producer}}</td>
+										<td>{{medicine.dosage}}</td>
+										<td>
+											<button type="button" ng-click="getOne(medicine.medicineId)" class="btn btn-primary" 
+											data-toggle="modal" data-target="#MedicineModal">
+									  			<span><i class="fa fa-wrench" aria-hidden="true"></i></i></span>
+											</button>
+											<button ng-click="deleteMedicine(medicine.medicineId)"
+												data-toggle="tooltip" title="Delete Medicine!"
+												class="glyphicon glyphicon-trash btn btn-danger"></button>
+
+										</td>
+									</tr>
+
+								</tbody>
+							</table>
+						</div>
+
+
+					</div>
+				</div>
+			</div>
+			<!--end table-->
+
+			<!-- Modal -->
+
+		</div>
+	</div>
+</div>

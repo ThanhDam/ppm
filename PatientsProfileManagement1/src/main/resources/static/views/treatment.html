@@ -1,0 +1,248 @@
+
+
+<style>
+.side-nav li a {
+	color: #F2F5F7 !important;
+	text-decoration: none;
+}
+
+#wrapper {
+	background-color: white;
+}
+
+.side-nav {
+	background: #2A3F54;
+}
+
+.side-nav li a:hover, .side-nav li a:focus {
+	outline: none;
+	background-color: #73879C !important;
+}
+
+.icon-down {
+	float: right
+}
+
+/* ..............  Search  ................... */
+.cf:before, .cf:after {
+	content: "";
+	display: table;
+}
+
+.cf:after {
+	clear: both;
+}
+
+.cf {
+	zoom: 1;
+}
+
+/*-------------------------------------*/
+.form-wrapper input {
+	width: 93%;
+	height: 40px;
+	font: bold 15px 'lucida sans', 'trebuchet MS', 'Tahoma';
+	border: 0;
+	background: #eee;
+	text-align: center;
+	float: left;
+	border-radius: none;
+}
+
+.form-wrapper input:focus {
+	outline: 0;
+	background: #eee;
+	-moz-box-shadow: 0 0 2px rgba(0, 0, 0, .8) inset;
+	-webkit-box-shadow: 0 0 2px rgba(0, 0, 0, .8) inset;
+	box-shadow: 0 0 2px rgba(0, 0, 0, .8) inset;
+	border: 0;
+}
+
+.form-wrapper input::-webkit-input-placeholder {
+	color: #999;
+	font-weight: normal;
+	font-style: italic;
+}
+
+.form-wrapper input:-moz-placeholder {
+	color: #999;
+	font-weight: normal;
+	font-style: italic;
+}
+
+.form-wrapper input:-ms-input-placeholder {
+	color: #999;
+	font-weight: normal;
+	font-style: italic;
+}
+
+.form-wrapper button {
+	overflow: visible;
+	position: relative;
+	float: left;
+	border: 0;
+	padding: 0;
+	cursor: pointer;
+	height: 40px;
+	width: 50px;
+	font: bold 15px/40px 'lucida sans', 'trebuchet MS', 'Tahoma';
+	color: #fff;
+	text-transform: uppercase;
+	background: #d83c3c;
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, .3);
+}
+
+.form-wrapper button:hover {
+	background: #e54040;
+}
+
+.form-wrapper button:active, .form-wrapper button:focus {
+	background: #c42f2f;
+}
+
+.form-wrapper button:before {
+	position: absolute;
+	top: 12px;
+	right: -6px;
+	content: " ";
+	border-style: solid none solid solid;
+	border-width: 8px 0 8px 8px;
+	border-color: transparent transparent transparent #d83c3c;
+}
+
+.form-wrapper button:hover:before {
+	border-left-color: #e54040;
+}
+
+.form-wrapper button:focus:before {
+	border-left-color: #c42f2f;
+}
+
+.form-wrapper button::-moz-focus-inner {
+	border: 0;
+	padding: 0;
+}
+</style>
+
+
+<div id="page-wrapper">
+
+	<div class="container-fluid">
+
+		<div class="row">
+			<div class="col-md-12 col-sm-12 col-xs-12">
+				<div class="x_panel">
+					<div class="x_title">
+						<h2>Add Treatment</h2>
+
+					</div>
+					<div class="x_content">
+						<br />
+						<form id="demo-form2" data-parsley-validate
+							class="form-horizontal form-label-left">
+
+							<div class="form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12"
+									for="patient-name">Patient's name <span
+									class="required">*</span>
+								</label>
+								<div class="col-md-3 col-sm-3 col-xs-12">
+									<input type="text" id="id" required="required"
+										class="form-control col-md-7 col-xs-12" 
+										ng-model="patient.patienId">
+								</div>
+								<div class="col-md-3 col-sm-3 col-xs-12">
+									<input type="text" id="name" required="required"
+										class="form-control col-md-7 col-xs-12" 
+										>
+								</div>
+								<div class="col-md-3 col-sm-3 col-xs-12 col-md-offset-3">
+									<button class="btn btn-searchID" type="button"
+									ng-click="getOnePatient(patient.patienId)">Search
+										Patient's ID</button>
+								</div>
+
+							</div>
+
+							<div class="form-group">
+								<label for="doctor-name"
+									class="control-label col-md-3 col-sm-3 col-xs-12">Doctor's
+									name<span class="required">*</span>
+								</label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<input id="doctor-name" class="form-control col-md-7 col-xs-12"
+										type="text" name="doctor-name" value={{doctor.name}}>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">Diagnotics</label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<input id="diagnotics" class="form-control col-md-7 col-xs-12"
+										type="text" name="diagnotics">
+								</div>
+							</div>
+							<div class="ln_solid"></div>
+							<div class="form-group">
+								<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+									<button class="btn btn-prescript" type="button">Prescript</button>
+
+								</div>
+							</div>
+
+						</form>
+					</div>
+				</div>
+			</div>
+
+			<!--               table -->
+			<div class="col-md-12 col-sm-12 col-xs-12">
+				<div class="x_panel">
+					<div class="x_title">
+						<h2>List Treatment</h2>
+
+						<div class="clearfix"></div>
+					</div>
+					<form class="form-wrapper cf">
+						<button type="submit">
+							<i class="fa fa-search" aria-hidden="true"></i>
+						</button>
+						<input type="text" placeholder="Search here..." required>
+					</form>
+					<div class="x_content">
+
+						<div class="table-responsive">
+							<table class="table table-striped jambo_table bulk_action">
+								<thead>
+									<tr class="headings">
+										<th class="column-title">ID</th>
+										<th class="column-title">Patient's Name</th>
+										<th class="column-title">Doctor's Name</th>
+										<th class="column-title">Date</th>
+										<th class="column-title">Prescription</th>
+										<th class="column-title no-link last"><span class="nobr">View</span>
+										</th>
+
+									</tr>
+								</thead>
+
+								<tbody ng-repeat="treatment in treatments">
+									<tr class="even pointer">
+										<td>{{treatment.id}}</td>
+										<td >{{treatment.idPatient}}</td>
+										<td>{{treatment.idDoctor}}</td>
+										<td>{{treatment.date}}</td>
+										<td>{{treatment.prescription}}</td>
+										<td><a href="#/treatmentdetail/{{treatment.id}}">Detail</a></td>
+									</tr>
+
+
+								</tbody>
+							</table>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

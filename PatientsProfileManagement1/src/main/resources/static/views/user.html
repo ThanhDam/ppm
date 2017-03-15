@@ -1,0 +1,31 @@
+<div style="margin-top:100px"></div>
+<div>
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Active</th>
+			<th>Address</th>
+			<th>Specialist</th>
+			<th>Sex</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="user in users">
+			<td><a ng-href="#/user/{{user.username}}"></a>{{user.name | uppercase}}</td>
+			<td>{{user.active}}</td>
+			<td>{{user.address}}</td>
+			<td>{{user.specialist}}</td>
+			<td>{{user.sex }}</td>
+			
+			<td><button ng-click="increaseData(product.id)"
+				class="glyphicon glyphicon-plus btn btn-sm btn-success"></button>
+				<div>{{patient.id}}</div> 
+				<button ng-click="decreaseData(product.id)"
+				class="glyphicon glyphicon-minus btn btn-sm btn-warning"></button>
+			<td><button ng-click="" class="glyphicon glyphicon-trash btn btn-danger"></button></td>
+		</tr>
+	</tbody>
+</table>
+</div>

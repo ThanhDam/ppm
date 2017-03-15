@@ -1,0 +1,294 @@
+<style>
+.side-nav li a {
+	color: #F2F5F7 !important;
+	text-decoration: none;
+}
+
+#wrapper{
+	background-color:white;
+}
+
+.side-nav {
+	background: #2A3F54;
+}
+
+.side-nav li a:hover, .side-nav li a:focus {
+	outline: none;
+	background-color: #73879C !important;
+}
+
+.icon-down {
+	float: right
+}
+</style>
+
+<div id="wrapper">
+	<!-- Navigation -->
+	<nav role="navigation">
+		<!-- Brand and toggle get grouped for better mobile display -->
+
+
+		<!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+		<div class="collapse navbar-collapse navbar-ex1-collapse">
+			<ul class="nav navbar-nav side-nav">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Profile</a></li>
+                    <li class="dropdown">
+                        <a href="#" data-toggle="dropdown" class="dropdown-toggle">Messages <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Inbox</a></li>
+                            <li><a href="#">Drafts</a></li>
+                            <li><a href="#">Sent Items</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">Trash</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav side-nav">
+                    <li class="dropdown">
+                        <a data-target="#bs-example-navbar-collapse-2" href="#" data-toggle="collapse" class="dropdown-toggle">Admin <b class="caret"></b></a>
+                       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+                        <ul class="nav navbar-nav">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">Settings</a></li>
+                        </ul>
+                        </div>
+                    </li>
+                </ul>
+			<ul style="top: 70px" class="nav navbar-nav side-nav">
+				<li>
+					<a href="#"><i
+						class="glyphicon glyphicon-user fa fa-fw fa-bar-chart-o"></i>
+						Patient<span class="icon-down glyphicon glyphicon-chevron-down"></span>
+				</a>
+				</li>
+				<li><a href="#"><i
+						class="glyphicon glyphicon-tag fa fa-fw fa-table"></i> Medicine<span
+						class="icon-down glyphicon glyphicon-chevron-down"></span></a></li>
+				<li><a href="#"><i
+						class="glyphicon glyphicon-edit fa fa-fw fa-edit"></i> Account<span
+						class="icon-down glyphicon glyphicon-chevron-down"></span></a></li>
+				<li class="dropdown">
+                        <a data-target="#bs-example-navbar-collapse-2" href="#" data-toggle="collapse" class="dropdown-toggle">Admin <b class="caret"></b></a>
+                       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+                        <ul class="nav child_menu">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">Settings</a></li>
+                        </ul>
+                        </div>
+                    </li>
+			</ul>
+		</div>
+		<!-- /.navbar-collapse -->
+	</nav>
+
+	<div id="page-wrapper">
+
+		<div class="container-fluid">
+
+			<div class="row">
+				<div class="col-md-12 col-sm-12 col-xs-12">
+					<div class="x_panel">
+						<div class="x_title">
+							<h2>Add Patient</h2>
+
+						</div>
+						<div class="x_content">
+							<br />
+							<form id="demo-form2" data-parsley-validate
+								class="form-horizontal form-label-left">
+
+								<div class="form-group">
+									<label class="control-label col-md-3 col-sm-3 col-xs-12"
+										for="first-name">First Name <span class="required">*</span>
+									</label>
+									<div class="col-md-6 col-sm-6 col-xs-12">
+										<input type="text" id="first-name" required="required"
+											class="form-control col-md-7 col-xs-12">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-md-3 col-sm-3 col-xs-12"
+										for="last-name">Last Name <span class="required">*</span>
+									</label>
+									<div class="col-md-6 col-sm-6 col-xs-12">
+										<input type="text" id="last-name" name="last-name"
+											required="required" class="form-control col-md-7 col-xs-12">
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="middle-name"
+										class="control-label col-md-3 col-sm-3 col-xs-12">Middle
+										Name / Initial</label>
+									<div class="col-md-6 col-sm-6 col-xs-12">
+										<input id="middle-name"
+											class="form-control col-md-7 col-xs-12" type="text"
+											name="middle-name">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-md-3 col-sm-3 col-xs-12">Gender</label>
+									<div class="col-md-6 col-sm-6 col-xs-12">
+										<div id="gender" class="btn-group" data-toggle="buttons">
+											<label class="btn btn-default"
+												data-toggle-class="btn-primary"
+												data-toggle-passive-class="btn-default"> <input
+												type="radio" name="gender" value="male"> &nbsp; Male
+												&nbsp;
+											</label> <label class="btn btn-primary"
+												data-toggle-class="btn-primary"
+												data-toggle-passive-class="btn-default"> <input
+												type="radio" name="gender" value="female"> Female
+											</label>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-md-3 col-sm-3 col-xs-12">Date
+										Of Birth <span class="required">*</span>
+									</label>
+									<div class="col-md-6 col-sm-6 col-xs-12">
+										<input id="birthday"
+											class="date-picker form-control col-md-7 col-xs-12"
+											required="required" type="text">
+									</div>
+								</div>
+								<div class="ln_solid"></div>
+								<div class="form-group">
+									<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+										<button class="btn btn-primary" type="button">Cancel</button>
+										<button class="btn btn-primary" type="reset">Reset</button>
+										<button type="submit" class="btn btn-success">Submit</button>
+									</div>
+								</div>
+
+							</form>
+						</div>
+					</div>
+				</div>
+				<!--               table -->
+				<div class="col-md-12 col-sm-12 col-xs-12">
+					<div class="x_panel">
+						<div class="x_title">
+							<h2>List Patient</h2>
+							<ul class="nav navbar-right panel_toolbox">
+								<li><a class="collapse-link"><i
+										class="fa fa-chevron-up"></i></a></li>
+								<li class="dropdown"><a href="#" class="dropdown-toggle"
+									data-toggle="dropdown" role="button" aria-expanded="false"><i
+										class="fa fa-wrench"></i></a>
+									<ul class="dropdown-menu" role="menu">
+										<li><a href="#">Settings 1</a></li>
+										<li><a href="#">Settings 2</a></li>
+									</ul></li>
+								<li><a class="close-link"><i class="fa fa-close"></i></a></li>
+							</ul>
+							<div class="clearfix"></div>
+						</div>
+
+						<div class="x_content">
+
+							<div class="table-responsive">
+								<table class="table table-striped jambo_table bulk_action">
+									<thead>
+										<tr class="headings">
+											<th class="column-title">Invoice</th>
+											<th class="column-title">Invoice Date</th>
+											<th class="column-title">Order</th>
+											<th class="column-title">Bill to Name</th>
+											<th class="column-title">Status</th>
+											<th class="column-title">Amount</th>
+											<th class="column-title no-link last"><span class="nobr">Action</span>
+											</th>
+
+										</tr>
+									</thead>
+
+									<tbody>
+										<tr class="even pointer">
+											<td class=" ">121000040</td>
+											<td class=" ">May 23, 2014 11:47:56 PM</td>
+											<td class=" ">121000210 <i
+												class="success fa fa-long-arrow-up"></i></td>
+											<td class=" ">John Blank L</td>
+											<td class=" ">Paid</td>
+											<td class="a-right a-right ">$7.45</td>
+											<td class=" last"><a href="#">View</a></td>
+										</tr>
+										<tr class="odd pointer">
+											<td class=" ">121000039</td>
+											<td class=" ">May 23, 2014 11:30:12 PM</td>
+											<td class=" ">121000208 <i
+												class="success fa fa-long-arrow-up"></i>
+											</td>
+											<td class=" ">John Blank L</td>
+											<td class=" ">Paid</td>
+											<td class="a-right a-right ">$741.20</td>
+											<td class=" last"><a href="#">View</a></td>
+										</tr>
+										<tr class="even pointer">
+											<td class=" ">121000038</td>
+											<td class=" ">May 24, 2014 10:55:33 PM</td>
+											<td class=" ">121000203 <i
+												class="success fa fa-long-arrow-up"></i>
+											</td>
+											<td class=" ">Mike Smith</td>
+											<td class=" ">Paid</td>
+											<td class="a-right a-right ">$432.26</td>
+											<td class=" last"><a href="#">View</a></td>
+										</tr>
+										<tr class="odd pointer">
+											<td class=" ">121000037</td>
+											<td class=" ">May 24, 2014 10:52:44 PM</td>
+											<td class=" ">121000204</td>
+											<td class=" ">Mike Smith</td>
+											<td class=" ">Paid</td>
+											<td class="a-right a-right ">$333.21</td>
+											<td class=" last"><a href="#">View</a></td>
+										</tr>
+										<tr class="even pointer">
+											<td class=" ">121000040</td>
+											<td class=" ">May 24, 2014 11:47:56 PM</td>
+											<td class=" ">121000210</td>
+											<td class=" ">John Blank L</td>
+											<td class=" ">Paid</td>
+											<td class="a-right a-right ">$7.45</td>
+											<td class=" last"><a href="#">View</a></td>
+										</tr>
+										<tr class="odd pointer">
+											<td class=" ">121000039</td>
+											<td class=" ">May 26, 2014 11:30:12 PM</td>
+											<td class=" ">121000208 <i
+												class="error fa fa-long-arrow-down"></i>
+											</td>
+											<td class=" ">John Blank L</td>
+											<td class=" ">Paid</td>
+											<td class="a-right a-right ">$741.20</td>
+											<td class=" last"><a href="#">View</a></td>
+										</tr>
+										<tr class="even pointer">
+											<td class=" ">121000038</td>
+											<td class=" ">May 26, 2014 10:55:33 PM</td>
+											<td class=" ">121000203</td>
+											<td class=" ">Mike Smith</td>
+											<td class=" ">Paid</td>
+											<td class="a-right a-right ">$432.26</td>
+											<td class=" last"><a href="#">View</a></td>
+										</tr>
+
+									</tbody>
+								</table>
+							</div>
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
