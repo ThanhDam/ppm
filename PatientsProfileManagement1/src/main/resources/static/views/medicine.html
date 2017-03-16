@@ -43,7 +43,7 @@
 									for="type-name">Type Name <span class="required">*</span>
 								</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input ng-model="curentTypeMedicine.typeName" type="text"
+									<input ng-model="curentTypeMedicine.typename" type="text"
 										id="type-name" required="required"
 										class="form-control col-md-7 col-xs-12">
 								</div>
@@ -53,7 +53,7 @@
 							<button type="button" class="btn btn-default"
 								data-dismiss="modal">Close</button>
 							<button type="button"
-								ng-click="updateTypeMedicine(curentTypeMedicine.typeId,curentTypeMedicine)"
+								ng-click="updateTypeMedicine(curentTypeMedicine.id,curentTypeMedicine)"
 								class="btn btn-primary">Save changes</button>
 						</div>
 					</div>
@@ -89,10 +89,19 @@
 								<label class="control-label col-md-3 col-sm-3 col-xs-12"
 									for="type-name">Type Name<span class="required">*</span>
 								</label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
+								<!-- <div class="col-md-6 col-sm-6 col-xs-12">
 									<input ng-model="curentTypeMedicine.typeName" type="text"
 										id="type-name" name="Type Name" required="required"
 										class="form-control col-md-7 col-xs-12">
+								</div> -->
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<select class="selectpicker form-control col-md-7 col-xs-12" 
+									ng-model="medicine.typeId.id">
+									<option ng-repeat="typemedicine in typemedicines" 
+									value="{{typemedicine.id}}" data-live-search="true">{{typemedicine.typename}}</option>
+				
+									</select>
+								<!-- <span>selected: {{curentMedicine.typeId}}</span> -->
 								</div>
 							</div>
 							<br>
@@ -131,7 +140,7 @@
 							<button type="button" class="btn btn-default"
 								data-dismiss="modal">Close</button>
 							<button type="button"
-								ng-click="updatePatient(curentPatient.patienId,curentPatient )"
+								ng-click="updateMedicine(curentMedicine.id,curentMedicine )"
 								class="btn btn-primary">Save changes</button>
 						</div>
 					</div>
@@ -246,7 +255,7 @@
 										for="typeName">TypeName <span class="required">*</span>
 									</label>
 									<div class="col-md-6 col-sm-6 col-xs-12">
-										<input ng-model="typemedicine.typeName" type="text" id="typeName"
+										<input ng-model="typemedicine.typename" type="text" id="typeName"
 											required="required" class="form-control col-md-7 col-xs-12">
 									</div>
 								</div>
@@ -277,13 +286,13 @@
 									<tbody>
 										<tr class="headings" ng-repeat="typemedicine in typemedicines">
 											<td class="col-xs-8"><a
-												ng-href="#/typemedicine/{{typemedicine.typeId}}"></a>{{typemedicine.typeName}}</td>
+												ng-href="#/typemedicine/{{typemedicine.id}}"></a>{{typemedicine.typename}}</td>
 											<td class="col-xs-4">
-												<button type="button" ng-click="getTypeOne(typemedicine.typeId)" class="btn btn-primary" 
+												<button type="button" ng-click="getTypeOne(typemedicine.id)" class="btn btn-primary" 
 												data-toggle="modal" data-target="#TypeMedicineModal">
 									  				<span><i class="fa fa-wrench" aria-hidden="true"></i></i></span>
 												</button>
-												<button ng-click="deleteTypeMedicine(typemedicine.typeId)"
+												<button ng-click="deleteTypeMedicine(typemedicine.id)"
 													data-toggle="tooltip" title="Delete Type Medicine!"
 													class="glyphicon glyphicon-trash btn btn-danger"></button>
 
@@ -296,30 +305,44 @@
 						</div>
 					</div>
 				</div>
-				<!-- test popup -->
-
-				<!-- Popup Div Ends Here -->
 			</div>
 			<!--               table -->
 			<div class="col-md-12 col-sm-12 col-xs-12">
 				<div class="x_panel">
+				
 					<div class="x_title">
 						<h1 style="width: 250px" class="btn btn-primary">LIST
 							MEDICINE</h1>
 						<div class="clearfix"></div>
+	
 					</div>
-
+				<form class="form-wrapper cf">
+					    <button type="submit">
+					    	<i class="fa fa-search" aria-hidden="true"></i>
+					    </button>
+					  	<input type="text" ng-model="search" placeholder="Search here..." class="form-control" required> 
+				</form>
 					<div class="x_content">
 
 						<div class="table-responsive">
 							<table class="table table-striped jambo_table bulk_action">
 								<thead>
 									<tr class="headings">
-										<th class="column-title">Name</th>
-										<th class="column-title">Type</th>
-										<th class="column-title">mfg</th>
-										<th class="column-title">producer</th>
-										<th class="column-title">dosage</th>
+										<th class="column-title" ng-click="sort('name')">Name
+										<span class="glyphicon sort-icon" ng-show="sortKey=='name'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+										</th>
+										<th class="column-title" ng-click="sort('typename')">Type
+										<span class="glyphicon sort-icon" ng-show="sortKey=='typeName'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+										</th>
+										<th class="column-title" ng-click="sort('mfg')">Manufacture
+										<span class="glyphicon sort-icon" ng-show="sortKey=='mfg'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+										</th>
+										<th class="column-title" ng-click="sort('producer')">producer
+										<span class="glyphicon sort-icon" ng-show="sortKey=='producer'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+										</th>
+										<th class="column-title" ng-click="sort('dosage')">Dosage
+										<span class="glyphicon sort-icon" ng-show="sortKey=='dosage'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+										</th>
 										<th class="column-title no-link last"><span class="nobr">Action</span>
 										</th>
 
@@ -327,15 +350,15 @@
 								</thead>
 
 								<tbody>
-									<tr ng-repeat="medicine in medicines">
+									<tr dir-paginate="medicine in medicines|orderBy:sortKey:reverse|filter:search|itemsPerPage:3">
 										<td><a ng-href="#/medicine/{{medicine.medicineId}}"></a>{{medicine.name
 											| uppercase}}</td>
-										<td>{{medicine.typename}}</td>
+										<td>{{medicine.typeId.typename}}</td>
 										<td>{{medicine.mfg }}</td>
 										<td>{{medicine.producer}}</td>
 										<td>{{medicine.dosage}}</td>
 										<td>
-											<button type="button" ng-click="getOne(medicine.medicineId)" class="btn btn-primary" 
+											<button type="button" ng-click="getOne(medicine.id)" class="btn btn-primary" 
 											data-toggle="modal" data-target="#MedicineModal">
 									  			<span><i class="fa fa-wrench" aria-hidden="true"></i></i></span>
 											</button>
@@ -348,6 +371,11 @@
 
 								</tbody>
 							</table>
+							<dir-pagination-controls
+						       max-size="5"
+						       direction-links="true"
+						       boundary-links="true" >
+						    </dir-pagination-controls>
 						</div>
 
 

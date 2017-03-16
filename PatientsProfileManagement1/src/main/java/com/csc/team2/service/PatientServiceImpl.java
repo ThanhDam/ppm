@@ -51,13 +51,13 @@ public class PatientServiceImpl implements IPatientService {
 
 	@Override
 	public List<Patient> findAllPatients() {
-		List<Patient> patients = patientRepos.findAll();
-		return patients;
+		return (List<Patient>) patientRepos.findAll();
+		
 	}
 
 	@Override
 	public boolean isPatientExist(Patient patient) {
-		Patient patientser = findById(patient.getPatientId());
+		Patient patientser = findById(patient.getId());
         if (patientser !=null){
         	return true;
         }

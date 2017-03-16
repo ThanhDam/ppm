@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.csc.team2.repository.ITypeMedicneRepository;
-import com.csc.team2.model.TypeMedicine;
+import com.csc.team2.model.TypeOfMedicine;
 
 @Service("typeMedicineService")
 public class TypeMedicineServiceImpl implements ITypeMedicineService {
@@ -15,23 +15,23 @@ public class TypeMedicineServiceImpl implements ITypeMedicineService {
 	ITypeMedicneRepository typeMedicineRepos;
 
 	@Override
-	public TypeMedicine findById(int id) {
+	public TypeOfMedicine findById(int id) {
 		return typeMedicineRepos.findOne(id);
 	}
 
 	@Override
-	public TypeMedicine findByName(String name) {
-		return typeMedicineRepos.findBytypeName(name);
+	public TypeOfMedicine findByName(String name) {
+		return typeMedicineRepos.findBytypename(name);
 	}
 
 	@Override
-	public void saveTypeMedicine(TypeMedicine typeMedicine) {
+	public void saveTypeMedicine(TypeOfMedicine typeMedicine) {
 		typeMedicineRepos.save(typeMedicine);
 		
 	}
 
 	@Override
-	public void updateTypeMedicine(TypeMedicine typeMedicine) {
+	public void updateTypeMedicine(TypeOfMedicine typeMedicine) {
 		saveTypeMedicine(typeMedicine);
 		
 	}
@@ -49,12 +49,12 @@ public class TypeMedicineServiceImpl implements ITypeMedicineService {
 	}
 
 	@Override
-	public List<TypeMedicine> findAllTypeMedicines() {
-		return typeMedicineRepos.findAll();
+	public List<TypeOfMedicine> findAllTypeMedicines() {
+		return (List<TypeOfMedicine>) typeMedicineRepos.findAll();
 	}
 
 	@Override
-	public boolean isTypeMedicineExist(TypeMedicine typeMedicine) {
+	public boolean isTypeMedicineExist(TypeOfMedicine typeMedicine) {
 		// TODO Auto-generated method stub
 		return false;
 	}

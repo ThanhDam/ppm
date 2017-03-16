@@ -2,22 +2,22 @@ package com.csc.team2.service;
 
 import java.util.List;
 
-import com.csc.team2.model.TypeMedicine;
+import com.csc.team2.model.TypeOfMedicine;
 
 public interface ITypeMedicineService {
-	TypeMedicine findById(int id);
+	TypeOfMedicine findById(int id);
 	 
-	TypeMedicine findByName(String name);
+	TypeOfMedicine findByName(String name);
  
-    void saveTypeMedicine(TypeMedicine typeMedicine);
+    void saveTypeMedicine(TypeOfMedicine typeMedicine);
  
-    void updateTypeMedicine(TypeMedicine typeMedicine);
+    void updateTypeMedicine(TypeOfMedicine typeMedicine);
  
     void deleteTypeMedicineById(int id);
  
     void deleteAllTypeMedicines();
  
-    List<TypeMedicine> findAllTypeMedicines();
+    List<TypeOfMedicine> findAllTypeMedicines();
  
-    boolean isTypeMedicineExist(TypeMedicine typeMedicine);
+    boolean isTypeMedicineExist(TypeOfMedicine typeMedicine);
 }

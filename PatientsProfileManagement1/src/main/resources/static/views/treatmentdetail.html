@@ -21,7 +21,8 @@
 								</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
 									<input type="text" id="patient-name"
-										class="form-control col-md-7 col-xs-12" >
+										class="form-control col-md-7 col-xs-12" value={{treatment.patientId.name}} 
+										disabled="disabled">
 								</div>
 
 							</div>
@@ -32,7 +33,8 @@
 								<div class="col-md-6 col-sm-6 col-xs-12">
 									<input id="address-patient"
 										class="form-control col-md-4 col-xs-6" type="text"
-										name="address-patient" >
+										name="address-patient" value={{treatment.patientId.address}}
+										>
 								</div>
 							</div>
 							<div class="form-group">
@@ -41,7 +43,7 @@
 									of birth</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
 									<input id="dob-patient" class="form-control col-md-4 col-xs-6"
-										type="date" name="dob-patient" >
+										type="date" name="dob-patient" value={{treatment.patientId.dob}}>
 								</div>
 							</div>
 							<div class="form-group">
@@ -49,7 +51,7 @@
 									class="control-label col-md-3 col-sm-3 col-xs-6">Sex</label>
 								<div class="col-md-3 col-sm-3 col-xs-6">
 									<input id="sex-patient" class="form-control col-md-4 col-xs-6"
-										type="text" name="sex-patient" >
+										type="text" name="sex-patient" value={{treatment.patientId.sex}}>
 								</div>
 							</div>
 						</form>
@@ -73,7 +75,8 @@
 								</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
 									<input type="text" id="doctor-name"
-										class="form-control col-md-7 col-xs-12">
+										class="form-control col-md-7 col-xs-12" value={{treatment.doctorId.name}}
+										disabled="disabled">
 								</div>
 
 							</div>
@@ -84,7 +87,7 @@
 								<div class="col-md-6 col-sm-6 col-xs-12">
 									<input id="address-patient"
 										class="form-control col-md-4 col-xs-6" type="text"
-										name="address-patient">
+										name="address-patient" value={{treatment.doctorId.address}}>
 								</div>
 							</div>
 							<div class="form-group">
@@ -92,7 +95,7 @@
 									class="control-label col-md-3 col-sm-3 col-xs-6">Specialist</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
 									<input id="specialist" class="form-control col-md-4 col-xs-6"
-										type="text" name="specialist">
+										type="text" name="specialist" value={{treatment.doctorId.specialist}}>
 								</div>
 							</div>
 							<div class="form-group">
@@ -100,7 +103,7 @@
 									class="control-label col-md-3 col-sm-3 col-xs-6">Sex</label>
 								<div class="col-md-3 col-sm-3 col-xs-6">
 									<input id="sex-doctor" class="form-control col-md-4 col-xs-6"
-										type="text" name="sex-doctor">
+										type="text" name="sex-doctor" value={{treatment.doctorId.sex}}>
 								</div>
 							</div>
 						</form>
@@ -132,12 +135,12 @@
 									</tr>
 								</thead>
 
-								<tbody>
+								<tbody ng-repeat="treatment in treatment.treatmentDetailList" >
 									<tr class="even pointer">
-										<td>1</td>
-										<td>Accutob</td>
-										<td>nhiem trung mat</td>
-										<td>Thuốc nhỏ mắt 0,3%</td>
+										<td ></td>
+										<td>{{treatment.medicineId.name}}</td>
+										<td>{{treatment.diseases}}</td>
+										<td>{{treatment.medicineId.dosage}}</td>
 
 									</tr>
 

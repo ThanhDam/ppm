@@ -52,7 +52,7 @@ public class HistoryServiceImpl implements IHistoryService {
 
 	@Override
 	public List<History> findAllHistorys() {
-		return historyRepos.findAll();
+		return (List<History>) historyRepos.findAll();
 	}
 
 	@Override

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
  
-import com.csc.team2.model.TreatmentDt;
+import com.csc.team2.model.TreatmentDetail;
 import com.csc.team2.service.TreatmentDtService;
 import com.csc.team2.util.CustomErrorType;
 
@@ -32,13 +32,13 @@ public class TreatmentDtController {
     // -------------------Retrieve All TreatmentDt---------------------------------------------
  
     @RequestMapping(value = "/treatmentdt/", method = RequestMethod.GET)
-    public ResponseEntity<List<TreatmentDt>> listAllTreatmentDt() {
-        List<TreatmentDt> treatmentsdt = treatmentdtService.findAllTreatmentDt();
+    public ResponseEntity<List<TreatmentDetail>> listAllTreatmentDt() {
+        List<TreatmentDetail> treatmentsdt = treatmentdtService.findAllTreatmentDt();
         if (treatmentsdt.isEmpty()) {
             return new ResponseEntity(HttpStatus.NO_CONTENT);
             // You many decide to return HttpStatus.NOT_FOUND
         }
-        return new ResponseEntity<List<TreatmentDt>>(treatmentsdt, HttpStatus.OK);
+        return new ResponseEntity<List<TreatmentDetail>>(treatmentsdt, HttpStatus.OK);
     }
  
     // -------------------Retrieve Single TreatmentDt------------------------------------------
@@ -46,19 +46,19 @@ public class TreatmentDtController {
     @RequestMapping(value = "/treatmentdt/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getTreatmentDt(@PathVariable("id") int id) {
         logger.info("Fetching TreatmentDt with id {}", id);
-        TreatmentDt treatmentdt = treatmentdtService.findById(id);
+        TreatmentDetail treatmentdt = treatmentdtService.findById(id);
         if (treatmentdt == null) {
             logger.error("User with id {} not found.", id);
             return new ResponseEntity(new Error("TreatmentDt with id " + id 
                     + " not found"), HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<TreatmentDt>(treatmentdt, HttpStatus.OK);
+        return new ResponseEntity<TreatmentDetail>(treatmentdt, HttpStatus.OK);
     }
  
     // -------------------Create a TreatmentDt-------------------------------------------
  
     @RequestMapping(value = "/treatmentdt/", method = RequestMethod.POST)
-    public ResponseEntity<?> createTrearmentDt(@RequestBody TreatmentDt treatmentdt, UriComponentsBuilder ucBuilder) {
+    public ResponseEntity<?> createTrearmentDt(@RequestBody TreatmentDetail treatmentdt, UriComponentsBuilder ucBuilder) {
         logger.info("Creating TreatmentDt : {}", treatmentdt);
  
         if (treatmentdtService.isTreatmentDtExist(treatmentdt)) {
@@ -76,10 +76,10 @@ public class TreatmentDtController {
     // ------------------- Update a TreatmentDt ------------------------------------------------
  
     @RequestMapping(value = "/treatmentdt/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<?> updateTreatmentDt(@PathVariable("id") int id, @RequestBody TreatmentDt treatmentdt) {
+    public ResponseEntity<?> updateTreatmentDt(@PathVariable("id") int id, @RequestBody TreatmentDetail treatmentdt) {
         logger.info("Updating TreatmentDt with id {}", id);
  
-        TreatmentDt currentTreatmentDt = treatmentdtService.findById(id);
+        TreatmentDetail currentTreatmentDt = treatmentdtService.findById(id);
  
         if (currentTreatmentDt == null) {
             logger.error("Unable to update. TreatmentDt with id {} not found.", id);
@@ -88,13 +88,13 @@ public class TreatmentDtController {
         }
  
         currentTreatmentDt.setId(treatmentdt.getId());
-        currentTreatmentDt.setIdTreatment(treatmentdt.getIdTreatment());
-        currentTreatmentDt.setIdMedicine(treatmentdt.getIdMedicine());
+        currentTreatmentDt.setTreatmentId(treatmentdt.getTreatmentId());
+        currentTreatmentDt.setMedicineId(treatmentdt.getMedicineId());
         currentTreatmentDt.setDiseases(treatmentdt.getDiseases());
        
  
         treatmentdtService.updateTreatmentDt(currentTreatmentDt);
-        return new ResponseEntity<TreatmentDt>(currentTreatmentDt, HttpStatus.OK);
+        return new ResponseEntity<TreatmentDetail>(currentTreatmentDt, HttpStatus.OK);
     }
  
     // ------------------- Delete a TreatmentDt-----------------------------------------
@@ -103,23 +103,23 @@ public class TreatmentDtController {
     public ResponseEntity<?> deleteTreatmentDt(@PathVariable("id") int id) {
         logger.info("Fetching & Deleting TreatmentDt with id {}", id);
  
-        TreatmentDt treatmentdt = treatmentdtService.findById(id);
+        TreatmentDetail treatmentdt = treatmentdtService.findById(id);
         if (treatmentdt == null) {
             logger.error("Unable to delete. TreatmentDt with id {} not found.", id);
             return new ResponseEntity(new Error("Unable to delete. TreatmentDt with id " + id + " not found."),
                     HttpStatus.NOT_FOUND);
         }
         treatmentdtService.deleteTreatmentDtById(id);
-        return new ResponseEntity<TreatmentDt>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<TreatmentDetail>(HttpStatus.NO_CONTENT);
     }
  
     // ------------------- Delete All TreatmentDt-----------------------------
  
     @RequestMapping(value = "/treatmentdt/", method = RequestMethod.DELETE)
-    public ResponseEntity<TreatmentDt> deleteAllTreatmentDt() {
+    public ResponseEntity<TreatmentDetail> deleteAllTreatmentDt() {
         logger.info("Deleting All TreatmentDt");
  
         treatmentdtService.deleteAllTreatmentDt();
-        return new ResponseEntity<TreatmentDt>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<TreatmentDetail>(HttpStatus.NO_CONTENT);
     }
 }

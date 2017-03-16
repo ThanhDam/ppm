@@ -27,15 +27,21 @@ public class LoginController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		System.out.println(auth.getAuthorities().toString());
 		if(auth.getAuthorities().toString().equals("[admin]")){
-			modelAndView.setViewName("admin/home");	
+			User user = userService.findUserByUsername(auth.getName());
+			modelAndView.addObject("userName", "Hi " + user.getName());
+			modelAndView.setViewName("/admin/home");	
 			return modelAndView;
 		}
 		else if(auth.getAuthorities().toString().equals("[doctor]")) {
-			modelAndView.setViewName("doctor/home");
+			User user = userService.findUserByUsername(auth.getName());
+			modelAndView.addObject("userName", "Welcome " + user.getName());
+			modelAndView.setViewName("/doctor/home");
 			return modelAndView;
 		}
 		else if(auth.getAuthorities().toString().equals("[nurse]")) {
-			modelAndView.setViewName("nurse/home");
+			User user = userService.findUserByUsername(auth.getName());
+			modelAndView.addObject("userName", "Welcome " + user.getName());
+			modelAndView.setViewName("/nurse/home");
 			return modelAndView;
 		}
 		modelAndView.setViewName("login");
@@ -154,14 +160,14 @@ public class LoginController {
 	}
 
 	
-	@RequestMapping(value="/admin/home", method = RequestMethod.GET)
+	/*@RequestMapping(value="/admin/home", method = RequestMethod.GET)
 	public ModelAndView adminHome(){
 		ModelAndView modelAndView = new ModelAndView();
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = userService.findUserByUsername(auth.getName());
 		modelAndView.addObject("userName", "Hi " + user.getName());
 		modelAndView.addObject("adminMessage","Content Available Only for Users with Admin Role");
-		modelAndView.setViewName("admin/home");
+		modelAndView.setViewName("/admin/home");
 		return modelAndView;
 	}
 	
@@ -170,9 +176,9 @@ public class LoginController {
 		ModelAndView modelAndView = new ModelAndView();
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = userService.findUserByUsername(auth.getName());
-		modelAndView.addObject("userName", "Welcome " + user.getName()  + " (" + user.getUsername() + ")");
+		modelAndView.addObject("userName", "Welcome " + user.getName());
 		modelAndView.addObject("doctorMessage","Content Available Only for Users with Doctor Role");
-		modelAndView.setViewName("doctor/home");
+		modelAndView.setViewName("/doctor/home");
 		return modelAndView;
 	}
 	
@@ -181,10 +187,10 @@ public class LoginController {
 		ModelAndView modelAndView = new ModelAndView();
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = userService.findUserByUsername(auth.getName());
-		modelAndView.addObject("userName", "Welcome " + user.getName() );
+		modelAndView.addObject("userName", "Welcome " + user.getName());
 		modelAndView.addObject("nurseMessage","Content Available Only for Users with Nurse Role");
-		modelAndView.setViewName("nurse/home");
+		modelAndView.setViewName("/nurse/home");
 		return modelAndView;
-	}
+	}*/
 
 }

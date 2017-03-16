@@ -83,21 +83,21 @@ COLLATE = utf8_unicode_ci;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `db_ppm`.`treatment` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `idPatient` INT(11) NOT NULL,
-  `idDoctor` INT(11) NOT NULL,
+  `patient_id` INT(11) NOT NULL,
+  `doctor_id` INT(11) NOT NULL,
   `date` DATE NOT NULL,
   `file` VARCHAR(100) CHARACTER SET 'utf8' NOT NULL,
   `prescription` VARCHAR(100) CHARACTER SET 'utf8' NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_treat_doc_idx` (`idDoctor` ASC),
-  INDEX `fk_treat_patient_idx` (`idPatient` ASC),
+  INDEX `fk_treat_doc_idx` (`doctor_id` ASC),
+  INDEX `fk_treat_patient_idx` (`patient_id` ASC),
   CONSTRAINT `fk_treat_doc`
-    FOREIGN KEY (`idDoctor`)
+    FOREIGN KEY (`doctor_id`)
     REFERENCES `db_ppm`.`user` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_treat_patient`
-    FOREIGN KEY (`idPatient`)
+    FOREIGN KEY (`patient_id`)
     REFERENCES `db_ppm`.`patient` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
@@ -112,13 +112,13 @@ COLLATE = utf8_unicode_ci;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `db_ppm`.`history` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `idTreatment` INT(11) NOT NULL,
-  `dateTime` DATETIME NOT NULL,
-  `contentChange` VARCHAR(45) CHARACTER SET 'utf8' NOT NULL,
+  `treatment_id` INT(11) NOT NULL,
+  `datetime` DATETIME NOT NULL,
+  `contentchange` VARCHAR(45) CHARACTER SET 'utf8' NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_his_treat_idx` (`idTreatment` ASC),
+  INDEX `fk_his_treat_idx` (`treatment_id` ASC),
   CONSTRAINT `fk_his_treat`
-    FOREIGN KEY (`idTreatment`)
+    FOREIGN KEY (`treatment_id`)
     REFERENCES `db_ppm`.`treatment` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
@@ -133,7 +133,7 @@ COLLATE = utf8_unicode_ci;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `db_ppm`.`type_of_medicine` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `typeName` VARCHAR(45) CHARACTER SET 'utf8' NOT NULL,
+  `typename` VARCHAR(45) CHARACTER SET 'utf8' NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
 AUTO_INCREMENT = 11
@@ -146,15 +146,15 @@ COLLATE = utf8_unicode_ci;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `db_ppm`.`medicine` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `idType` INT(11) NOT NULL,
+  `type_id` INT(11) NOT NULL,
   `name` VARCHAR(45) CHARACTER SET 'utf8' NOT NULL,
   `mfg` DATE NOT NULL,
   `producer` VARCHAR(45) CHARACTER SET 'utf8' NOT NULL,
   `dosage` VARCHAR(100) CHARACTER SET 'utf8' NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_type_idx` (`idType` ASC),
+  INDEX `fk_type_idx` (`type_id` ASC),
   CONSTRAINT `fk_type`
-    FOREIGN KEY (`idType`)
+    FOREIGN KEY (`type_id`)
     REFERENCES `db_ppm`.`type_of_medicine` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
@@ -166,14 +166,14 @@ COLLATE = utf8_unicode_ci;
 -- -----------------------------------------------------
 -- Table `db_ppm`.`allergic-detail`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `db_ppm`.`allergic_detail` (
+CREATE TABLE IF NOT EXISTS `db_ppm`.`allergic` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `idPatient` INT(11) NOT NULL,
-  `idMedicine` INT(11) NOT NULL,
+  `patient_id` INT(11) NOT NULL,
+  `medicine_id` INT(11) NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_aller_patient_idx` (`idPatient` ASC),
+  INDEX `fk_aller_patient_idx` (`patient_id` ASC),
   CONSTRAINT `fk_aller_patient`
-    FOREIGN KEY (`idPatient`)
+    FOREIGN KEY (`patient_id`)
     REFERENCES `db_ppm`.`patient` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
@@ -187,19 +187,19 @@ COLLATE = utf8_unicode_ci;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `db_ppm`.`treatment_detail` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `idTreatment` INT(11) NOT NULL,
-  `idMedicine` INT(11) NOT NULL,
+  `treatment_id` INT(11) NOT NULL,
+  `medicine_id` INT(11) NOT NULL,
   `diseases` VARCHAR(70) CHARACTER SET 'utf8' NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_detail_treat_idx` (`idTreatment` ASC),
-  INDEX `fk_detail_medicine_idx` (`idMedicine` ASC),
+  INDEX `fk_detail_treat_idx` (`treatment_id` ASC),
+  INDEX `fk_detail_medicine_idx` (`medicine_id` ASC),
   CONSTRAINT `fk_datail_treat`
-    FOREIGN KEY (`idTreatment`)
+    FOREIGN KEY (`treatment_id`)
     REFERENCES `db_ppm`.`treatment` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_detail_medicine`
-    FOREIGN KEY (`idMedicine`)
+    FOREIGN KEY (`medicine_id`)
     REFERENCES `db_ppm`.`medicine` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
@@ -249,16 +249,16 @@ INSERT INTO `patient` (`id`,`name`,`address`,`sex`,`dob`) VALUES (3,'Lai Thi Hoa
 LIMIT 0, 1000
 -- Date: 2017-03-07 16:32
 */
-INSERT INTO `treatment` (`id`,`idPatient`,`idDoctor`,`date`,`file`,`prescription`) VALUES (1,1,2,'2017-02-10','','nhiem trung mat');
-INSERT INTO `treatment` (`id`,`idPatient`,`idDoctor`,`date`,`file`,`prescription`) VALUES (2,3,3,'2017-02-10','','tim mach');
-INSERT INTO `treatment` (`id`,`idPatient`,`idDoctor`,`date`,`file`,`prescription`) VALUES (3,2,1,'2017-02-10','','tram cam');
+INSERT INTO `treatment` (`id`,`patient_id`,`doctor_id`,`date`,`file`,`prescription`) VALUES (1,1,2,'2017-02-10','','nhiem trung mat');
+INSERT INTO `treatment` (`id`,`patient_id`,`doctor_id`,`date`,`file`,`prescription`) VALUES (2,3,3,'2017-02-10','','tim mach');
+INSERT INTO `treatment` (`id`,`patient_id`,`doctor_id`,`date`,`file`,`prescription`) VALUES (3,2,1,'2017-02-10','','tram cam');
 
 /*
 -- Query: SELECT * FROM db_ppm.history
 LIMIT 0, 1000
 -- Date: 2017-03-07 16:32
 */
-INSERT INTO `history` (`id`,`idTreatment`,`dateTime`,`contentChange`) VALUES (1,1,'2017-02-10 00:00:00','doi thuoc');
+INSERT INTO `history` (`id`,`treatment_id`,`datetime`,`contentchange`) VALUES (1,1,'2017-02-10 00:00:00','doi thuoc');
 
 
 /*
@@ -266,41 +266,41 @@ INSERT INTO `history` (`id`,`idTreatment`,`dateTime`,`contentChange`) VALUES (1,
 LIMIT 0, 1000
 -- Date: 2017-03-07 16:33
 */
-INSERT INTO `type_of_medicine` (`id`,`typeName`) VALUES (1,'thuoc khang sinh');
-INSERT INTO `type_of_medicine` (`id`,`typeName`) VALUES (2,'thuoc gay te, gay me, phuc hoi');
-INSERT INTO `type_of_medicine` (`id`,`typeName`) VALUES (3,'thuoc ha sot, giam dau, chong co giat');
-INSERT INTO `type_of_medicine` (`id`,`typeName`) VALUES (4,'thuoc chong di ung');
-INSERT INTO `type_of_medicine` (`id`,`typeName`) VALUES (5,'thuoc tai mui hong');
-INSERT INTO `type_of_medicine` (`id`,`typeName`) VALUES (6,'thuoc dieu tri da day');
-INSERT INTO `type_of_medicine` (`id`,`typeName`) VALUES (7,'thuoc dieu tri xuong khop');
-INSERT INTO `type_of_medicine` (`id`,`typeName`) VALUES (8,'thuoc dieu tri tim mach');
-INSERT INTO `type_of_medicine` (`id`,`typeName`) VALUES (9,'vitamin');
-INSERT INTO `type_of_medicine` (`id`,`typeName`) VALUES (10,'thuoc than kinh');
+INSERT INTO `type_of_medicine` (`id`,`typename`) VALUES (1,'thuoc khang sinh');
+INSERT INTO `type_of_medicine` (`id`,`typename`) VALUES (2,'thuoc gay te, gay me, phuc hoi');
+INSERT INTO `type_of_medicine` (`id`,`typename`) VALUES (3,'thuoc ha sot, giam dau, chong co giat');
+INSERT INTO `type_of_medicine` (`id`,`typename`) VALUES (4,'thuoc chong di ung');
+INSERT INTO `type_of_medicine` (`id`,`typename`) VALUES (5,'thuoc tai mui hong');
+INSERT INTO `type_of_medicine` (`id`,`typename`) VALUES (6,'thuoc dieu tri da day');
+INSERT INTO `type_of_medicine` (`id`,`typename`) VALUES (7,'thuoc dieu tri xuong khop');
+INSERT INTO `type_of_medicine` (`id`,`typename`) VALUES (8,'thuoc dieu tri tim mach');
+INSERT INTO `type_of_medicine` (`id`,`typename`) VALUES (9,'vitamin');
+INSERT INTO `type_of_medicine` (`id`,`typename`) VALUES (10,'thuoc than kinh');
 
 /*
 -- Query: SELECT * FROM db_ppm.medicine
 LIMIT 0, 1000
 -- Date: 2017-03-07 16:33
 */
-INSERT INTO `medicine` (`id`,`idType`,`name`,`mfg`,`producer`,`dosage`) VALUES (1,4,'Abenin Tab','2016-12-31','	Kyung Dong Pharm Co., Ltd','Viên nén bao phim-10mg');
-INSERT INTO `medicine` (`id`,`idType`,`name`,`mfg`,`producer`,`dosage`) VALUES (2,3,'Tryox','2017-01-31','Suzhou Xinbao Pharmaceuticals Co., Ltd.','Bột đông khô để pha tiêm');
-INSERT INTO `medicine` (`id`,`idType`,`name`,`mfg`,`producer`,`dosage`) VALUES (3,8,'Accupril','2016-12-31','	Godecke GmbH','Viên nén bao phim');
-INSERT INTO `medicine` (`id`,`idType`,`name`,`mfg`,`producer`,`dosage`) VALUES (4,5,'Accutob','2016-10-12','Accure Labs Pvt., Ltd','Thuốc nhỏ mắt 0,3%');
-INSERT INTO `medicine` (`id`,`idType`,`name`,`mfg`,`producer`,`dosage`) VALUES (5,5,'Accutob-D','2016-10-12','Accure Labs Pvt., Ltd','Thuốc nhỏ mắt Tobramycin 15mg/5ml');
-INSERT INTO `medicine` (`id`,`idType`,`name`,`mfg`,`producer`,`dosage`) VALUES (6,10,'Aeyerop injection','2016-10-12','Huons Co., Ltd','Thuốc tiêm-1g/5ml');
-INSERT INTO `medicine` (`id`,`idType`,`name`,`mfg`,`producer`,`dosage`) VALUES (7,10,'Alepsal','2016-10-12','Laboratoires Genevrier','Viên nén');
-INSERT INTO `medicine` (`id`,`idType`,`name`,`mfg`,`producer`,`dosage`) VALUES (8,9,'4B with ginseng','2017-01-31','Robinson Pharma Inc USA ','Viên nang mềm');
-INSERT INTO `medicine` (`id`,`idType`,`name`,`mfg`,`producer`,`dosage`) VALUES (9,7,'Alenta 70mg','2016-10-23','	Getz Pharma Pakistan (Pvt) Ltd','	Viên nén');
+INSERT INTO `medicine` (`id`,`type_id`,`name`,`mfg`,`producer`,`dosage`) VALUES (1,4,'Abenin Tab','2016-12-31','	Kyung Dong Pharm Co., Ltd','Viên nén bao phim-10mg');
+INSERT INTO `medicine` (`id`,`type_id`,`name`,`mfg`,`producer`,`dosage`) VALUES (2,3,'Tryox','2017-01-31','Suzhou Xinbao Pharmaceuticals Co., Ltd.','Bột đông khô để pha tiêm');
+INSERT INTO `medicine` (`id`,`type_id`,`name`,`mfg`,`producer`,`dosage`) VALUES (3,8,'Accupril','2016-12-31','	Godecke GmbH','Viên nén bao phim');
+INSERT INTO `medicine` (`id`,`type_id`,`name`,`mfg`,`producer`,`dosage`) VALUES (4,5,'Accutob','2016-10-12','Accure Labs Pvt., Ltd','Thuốc nhỏ mắt 0,3%');
+INSERT INTO `medicine` (`id`,`type_id`,`name`,`mfg`,`producer`,`dosage`) VALUES (5,5,'Accutob-D','2016-10-12','Accure Labs Pvt., Ltd','Thuốc nhỏ mắt Tobramycin 15mg/5ml');
+INSERT INTO `medicine` (`id`,`type_id`,`name`,`mfg`,`producer`,`dosage`) VALUES (6,10,'Aeyerop injection','2016-10-12','Huons Co., Ltd','Thuốc tiêm-1g/5ml');
+INSERT INTO `medicine` (`id`,`type_id`,`name`,`mfg`,`producer`,`dosage`) VALUES (7,10,'Alepsal','2016-10-12','Laboratoires Genevrier','Viên nén');
+INSERT INTO `medicine` (`id`,`type_id`,`name`,`mfg`,`producer`,`dosage`) VALUES (8,9,'4B with ginseng','2017-01-31','Robinson Pharma Inc USA ','Viên nang mềm');
+INSERT INTO `medicine` (`id`,`type_id`,`name`,`mfg`,`producer`,`dosage`) VALUES (9,7,'Alenta 70mg','2016-10-23','	Getz Pharma Pakistan (Pvt) Ltd','	Viên nén');
 
 /*
 -- Query: SELECT * FROM db_ppm.`treatment-detail`
 LIMIT 0, 1000
 -- Date: 2017-03-07 16:33
 */
-INSERT INTO `treatment_detail` (`id`,`idTreatment`,`idMedicine`,`diseases`) VALUES (1,1,4,'nhiem trung mat');
-INSERT INTO `treatment_detail` (`id`,`idTreatment`,`idMedicine`,`diseases`) VALUES (2,1,5,'nhiem trung mat');
-INSERT INTO `treatment_detail` (`id`,`idTreatment`,`idMedicine`,`diseases`) VALUES (3,2,7,'tim mach');
-INSERT INTO `treatment_detail` (`id`,`idTreatment`,`idMedicine`,`diseases`) VALUES (4,2,8,'thieu vitamin');
+INSERT INTO `treatment_detail` (`id`,`treatment_id`,`medicine_id`,`diseases`) VALUES (1,1,4,'nhiem trung mat');
+INSERT INTO `treatment_detail` (`id`,`treatment_id`,`medicine_id`,`diseases`) VALUES (2,1,5,'nhiem trung mat');
+INSERT INTO `treatment_detail` (`id`,`treatment_id`,`medicine_id`,`diseases`) VALUES (3,2,7,'tim mach');
+INSERT INTO `treatment_detail` (`id`,`treatment_id`,`medicine_id`,`diseases`) VALUES (4,2,8,'thieu vitamin');
 
 
 /*
@@ -308,6 +308,6 @@ INSERT INTO `treatment_detail` (`id`,`idTreatment`,`idMedicine`,`diseases`) VALU
 LIMIT 0, 1000
 -- Date: 2017-03-07 16:28
 */
-INSERT INTO `allergic_detail` (`id`,`idPatient`,`idMedicine`) VALUES (1,3,3);
-INSERT INTO `allergic_detail` (`id`,`idPatient`,`idMedicine`) VALUES (2,3,1);
-INSERT INTO `allergic_detail` (`id`,`idPatient`,`idMedicine`) VALUES (3,1,9);
+INSERT INTO `allergic` (`id`,`patient_id`,`medicine_id`) VALUES (1,3,3);
+INSERT INTO `allergic` (`id`,`patient_id`,`medicine_id`) VALUES (2,3,1);
+INSERT INTO `allergic` (`id`,`patient_id`,`medicine_id`) VALUES (3,1,9);

@@ -7,6 +7,7 @@ app.factory('medicineService', function($http){
 	        return response.data;
 	      });
   };
+  
   var getOneMedicine = function(id){
 	  return $http.get("http://localhost:8080/medicine/" + id)
 	  .then(function(response){

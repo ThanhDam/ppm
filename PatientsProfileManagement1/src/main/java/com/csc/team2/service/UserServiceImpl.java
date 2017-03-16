@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.csc.team2.model.Role;
+import com.csc.team2.model.Roles;
 import com.csc.team2.model.User;
 import com.csc.team2.repository.RoleRepository;
 import com.csc.team2.repository.UserRepository;
@@ -25,15 +25,15 @@ public class UserServiceImpl implements UserService{
 	
     @Override
 	public User findUserByUsername(String username){
-		return userRepository.findByUsername(username);
+		return userRepository.findByusername(username);
 	}
 	
 	@Override
 	public void saveAdmin(User user) {
 		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 		user.setActive(1);
-	    Role userRole = roleRepository.findByRoles("admin");
-	    user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
+	    Roles userRole = roleRepository.findByroles("admin");
+	    user.setRolesList(new HashSet<Roles>(Arrays.asList(userRole)));
 	    userRepository.save(user);
 	}
 	
@@ -41,8 +41,8 @@ public class UserServiceImpl implements UserService{
 	public void saveDoctor(User user){
 		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 		user.setActive(1);
-		Role userRole = roleRepository.findByRoles("doctor");
-		user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
+		Roles userRole = roleRepository.findByroles("doctor");
+		user.setRolesList(new HashSet<Roles>(Arrays.asList(userRole)));
 		userRepository.save(user);
 	}
 	
@@ -50,8 +50,8 @@ public class UserServiceImpl implements UserService{
 	public void saveNurse(User user){
 		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 		user.setActive(1);
-		Role userRole = roleRepository.findByRoles("nurse");
-		user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
+		Roles userRole = roleRepository.findByroles("nurse");
+		user.setRolesList(new HashSet<Roles>(Arrays.asList(userRole)));
 		userRepository.save(user);
 	}
 	@Override

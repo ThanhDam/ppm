@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.csc.team2.model.Medicine;
-import com.csc.team2.model.TypeMedicine;
+import com.csc.team2.model.TypeOfMedicine;
 import com.csc.team2.service.TypeMedicineServiceImpl;
 
 @Controller
@@ -30,67 +30,67 @@ public class TypeMedicineController {
 	//--------------------Select All TypeMedicine-----------------------------------------
 	
 	@RequestMapping(value="/typemedicine", method = RequestMethod.GET)
-	public ResponseEntity<List<TypeMedicine>> listMedicine(){
-		List<TypeMedicine> typeMedicines = typeMedicineService.findAllTypeMedicines();
+	public ResponseEntity<List<TypeOfMedicine>> listMedicine(){
+		List<TypeOfMedicine> typeMedicines = typeMedicineService.findAllTypeMedicines();
 		if(typeMedicines.isEmpty()){
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
 		}
-		return new ResponseEntity<List<TypeMedicine>>(typeMedicines, HttpStatus.OK);
+		return new ResponseEntity<List<TypeOfMedicine>>(typeMedicines, HttpStatus.OK);
 	}
 	
 	//--------------------Select One TypeMedicine-----------------------------------------
 	@RequestMapping(value="/typemedicine/{id}", method = RequestMethod.GET)
 	public ResponseEntity<?> getMedicine(@PathVariable("id") int id){
 		logger.info("Fetching Medicine with id {}", id);
-		TypeMedicine typeMedicine = typeMedicineService.findById(id);
+		TypeOfMedicine typeMedicine = typeMedicineService.findById(id);
 		if(typeMedicine==null){
 			 logger.error("typeMedicine with id {} not found.", id);
 			 return new ResponseEntity(HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<TypeMedicine>(typeMedicine, HttpStatus.OK);
+		return new ResponseEntity<TypeOfMedicine>(typeMedicine, HttpStatus.OK);
 	}
 	//-------------------Create Type Medicine----------------------------------------------
 	
 		@RequestMapping(value="/typemedicine", method= RequestMethod.POST)
-		public ResponseEntity<?> createTypeMedicine(@RequestBody TypeMedicine typemedicine,UriComponentsBuilder ucBuilder){
+		public ResponseEntity<?> createTypeMedicine(@RequestBody TypeOfMedicine typemedicine,UriComponentsBuilder ucBuilder){
 			logger.info("create New Type Medicine : {}", typemedicine);
 			if(typeMedicineService.isTypeMedicineExist(typemedicine)){
-				logger.error("Unable to create. A Medicine with name {} already exist", typemedicine.getTypeName());
+				logger.error("Unable to create. A Medicine with name {} already exist", typemedicine.getTypename());
 				return new ResponseEntity(HttpStatus.CONFLICT);
 			}
 			typeMedicineService.saveTypeMedicine(typemedicine);
 			
 			HttpHeaders headers = new HttpHeaders();
-	        headers.setLocation(ucBuilder.path("/typemedicine/{id}").buildAndExpand(typemedicine.getTypeId()).toUri());
+	        headers.setLocation(ucBuilder.path("/typemedicine/{id}").buildAndExpand(typemedicine.getId()).toUri());
 	        return new ResponseEntity<String>(headers, HttpStatus.CREATED);
 		}
 		
 		//------------------Update Type Medicine-----------------------------------------------
 		
 		@RequestMapping(value="/typemedicine/{id}", method = RequestMethod.PUT)
-		public ResponseEntity<?> updateMedicine(@PathVariable("id") int id,@RequestBody TypeMedicine typemedicine){
+		public ResponseEntity<?> updateMedicine(@PathVariable("id") int id,@RequestBody TypeOfMedicine typemedicine){
 			logger.info("update type medicine with id {}", id);
 			
-			TypeMedicine currentTypeMedicine = typeMedicineService.findById(id);
+			TypeOfMedicine currentTypeMedicine = typeMedicineService.findById(id);
 			if(currentTypeMedicine==null){
 				logger.info("unable to update medicine with id {}, not found", id);
 			}
-			currentTypeMedicine.setTypeName(typemedicine.getTypeName());
+			currentTypeMedicine.setTypename(typemedicine.getTypename());
 			typeMedicineService.saveTypeMedicine(currentTypeMedicine);
 			
-			return new ResponseEntity<TypeMedicine>(currentTypeMedicine,HttpStatus.OK);
+			return new ResponseEntity<TypeOfMedicine>(currentTypeMedicine,HttpStatus.OK);
 		}
 		
 		//------------------Delete a Type Medicinhe-----------------------------------------
 		@RequestMapping(value="/typemedicine/{id}", method = RequestMethod.DELETE)
 		public ResponseEntity<?> deleteTypeMedicine(@PathVariable("id") int id){
 			logger.info("Fetch & delete type medicine with id {}", id);
-			TypeMedicine typemedicine = typeMedicineService.findById(id);
+			TypeOfMedicine typemedicine = typeMedicineService.findById(id);
 			if(typemedicine==null){
 				logger.info("unable to delete type medicine with id {}, not found",id);
 			}
 			typeMedicineService.deleteTypeMedicineById(id);
-			return new ResponseEntity<TypeMedicine>(HttpStatus.NO_CONTENT);
+			return new ResponseEntity<TypeOfMedicine>(HttpStatus.NO_CONTENT);
 		}
 		
 		//------------------Delete All Type Medicine---------------------------------------
@@ -99,7 +99,7 @@ public class TypeMedicineController {
 			logger.info("Deleting All type Medicine");
 			 
 			typeMedicineService.deleteAllTypeMedicines();
-	        return new ResponseEntity<TypeMedicine>(HttpStatus.NO_CONTENT);
+	        return new ResponseEntity<TypeOfMedicine>(HttpStatus.NO_CONTENT);
 
 		}
 }

@@ -2,25 +2,25 @@ package com.csc.team2.service;
 
 import java.util.List;
 
-import com.csc.team2.model.TreatmentDt;
+import com.csc.team2.model.TreatmentDetail;
 
 public interface TreatmentDtService  {
 	
-	TreatmentDt findById(int id);
+	TreatmentDetail findById(int id);
 	 
-    TreatmentDt findByName(String name);
+    TreatmentDetail findByName(String name);
  
-    void saveTreatmentDt(TreatmentDt treatmentdt);
+    void saveTreatmentDt(TreatmentDetail treatmentdt);
  
-    void updateTreatmentDt(TreatmentDt treatmentdt);
+    void updateTreatmentDt(TreatmentDetail treatmentdt);
  
     void deleteTreatmentDtById(int id);
  
     void deleteAllTreatmentDt();
  
-    List<TreatmentDt> findAllTreatmentDt();
+    List<TreatmentDetail> findAllTreatmentDt();
  
-    boolean isTreatmentDtExist(TreatmentDt treatmentdt);
+    boolean isTreatmentDtExist(TreatmentDetail treatmentdt);
 
     
 }

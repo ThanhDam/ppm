@@ -1,15 +1,15 @@
 var app = angular.module('myApp');
 
-app.factory('patientService', function($http){
-  var getPatient = function() {
-	    return $http.get("http://localhost:8080/patient")
+app.factory('treatmentService', function($http){
+  var getTreatment = function() {
+	    return $http.get("http://localhost:8080/treatment")
 	      .then(function(response) {
 	        return response.data;
 	      });
   };
   
-  var getOnePatient = function(id){
-	  return $http.get("http://localhost:8080/patient/" + id)
+  var getOneTreatment = function(id){
+	  return $http.get("http://localhost:8080/treatment/" + id)
 	  .then(function(response){
 			return response.data;
 		});
@@ -22,54 +22,43 @@ app.factory('patientService', function($http){
 		});
   }
   
-  var getDetail = function(id) {
-	  return $http.get("http://localhost:8080/patient/" + id)
-	  			.then(function(response){
-					return response.data;
-				});
+
+ 
+  var createTreatment = function(treatment){
+	  return $http.post("http://localhost:8080/treatment",treatment)
+	  .then(function(response){
+			return response.data;
+		});
   }
-  var getPatientTrament = function(id) {
-	  return $http.get("http://localhost:8080/patient/" + id)
+  var updateTreatment = function(id,treatment){
+	  return $http.put("http://localhost:8080/treament/"+id,treatment)
 	  .then(function(response){
 			return response.data;
 		});
   }
   
-  var createPatient = function(patient){
-	  return $http.post("http://localhost:8080/patient",patient)
-	  .then(function(response){
-			return response.data;
-		});
-  }
-  var updatePatient = function(id,patient){
-	  return $http.put("http://localhost:8080/patient/"+id,patient)
+  var deleteTreatment = function(id){
+	  return $http.delete("http://localhost:8080/treatment/"+id)
 	  .then(function(response){
 			return response.data;
 		});
   }
   
-  var deletePatient = function(id){
-	  return $http.delete("http://localhost:8080/patient/"+id)
-	  .then(function(response){
-			return response.data;
-		});
-  }
-  
-  var deleteAllpatient = function(){
-	  return $http.delete("http://localhost:8080/patient")
+  var deleteAllTreatment = function(){
+	  return $http.delete("http://localhost:8080/treatment")
 	  .then(function(response){
 			return response.data;
 		});
   }
   
   return {
-	  deletePatient: deletePatient,
-	  getPatient: getPatient,
+	  deleteTreatment: deleteTreatment,
+	  getTreatment: getTreatment,
   	  getDetail: getDetail,
-  	  createPatient: createPatient,
-  	  updatePatient: updatePatient,
-  	  deleteAllpatient: deleteAllpatient,
-  	  getOnePatient:getOnePatient,
+  	  createTreatment: createTreatment,
+  	  updateTreatment: updateTreatment,
+  	  deleteAllTreatment: deleteAllTreatment,
+  	  getOneTreatment:getOneTreatment,
   }
 });
 

@@ -1,11 +1,11 @@
 package com.csc.team2.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import com.csc.team2.model.TypeMedicine;
+import com.csc.team2.model.TypeOfMedicine;
 
 @Repository
-public interface ITypeMedicneRepository extends JpaRepository<TypeMedicine, Integer> {
-		TypeMedicine findBytypeName(String name);
+public interface ITypeMedicneRepository extends CrudRepository<TypeOfMedicine, Integer> {
+		TypeOfMedicine findBytypename(String name);
 }

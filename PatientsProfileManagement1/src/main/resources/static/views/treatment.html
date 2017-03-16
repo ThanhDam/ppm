@@ -148,18 +148,15 @@
 								</label>
 								<div class="col-md-3 col-sm-3 col-xs-12">
 									<input type="text" id="id" required="required"
-										class="form-control col-md-7 col-xs-12" 
-										ng-model="patient.patienId">
+										class="form-control col-md-7 col-xs-12" ng-model="id">
 								</div>
 								<div class="col-md-3 col-sm-3 col-xs-12">
 									<input type="text" id="name" required="required"
-										class="form-control col-md-7 col-xs-12" 
-										>
+										class="form-control col-md-7 col-xs-12" value={{patient.name}}>
 								</div>
 								<div class="col-md-3 col-sm-3 col-xs-12 col-md-offset-3">
 									<button class="btn btn-searchID" type="button"
-									ng-click="getOnePatient(patient.patienId)">Search
-										Patient's ID</button>
+										ng-click="getOnePatient(id)">Search Patient's ID</button>
 								</div>
 
 							</div>
@@ -171,22 +168,59 @@
 								</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
 									<input id="doctor-name" class="form-control col-md-7 col-xs-12"
-										type="text" name="doctor-name" value={{doctor.name}}>
+										type="text" name="doctor-name" value={{doctor.name}}
+										ng-model="doctor.name">
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="control-label col-md-3 col-sm-3 col-xs-12">Diagnotics</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
 									<input id="diagnotics" class="form-control col-md-7 col-xs-12"
-										type="text" name="diagnotics">
+										type="text" name="diagnotics"
+										ng-model="treatment.prescription">
 								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">Search
+									for medicine</label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<!-- <span> 
+									<input tabindex="11" id="autocomplete" class="form-control tt-input" 
+									type="text" placeholder="Tryox, Accutob, Alepsal..." 
+									name="autocomplete" autocomplete="off" spellcheck="false" dir="auto" 
+									>
+										<div class="tt-menu" >
+										<div class="tt-dataset tt-dataset-starters"></div></div>
+									</span> -->
+									<md-content layout-padding layout="column">
+									<form ng-submit="preventDefault()">
+
+										<md-autocomplete md-selected-item="selectedItem" md-items="medicine in medicine"
+										 md-search-text="searchText" md-item-text="medicine.name">
+										<md-item-template> <span class="item-title">
+											<span> <input id="autocomplete"
+												class="form-control tt-input" type="text"
+												placeholder="Tryox, Accutob, Alepsal..." name="autocomplete"
+												autocomplete="off" spellcheck="false" value="{{medicine.name}}">
+										</span> 
+
+										</span> </md-item-template> </md-autocomplete>
+									</form>
+									</md-content>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">Selected
+									Medicines</label>
+								<div class="col-md-6 col-sm-6 col-xs-12" id="starters"></div>
 							</div>
 							<div class="ln_solid"></div>
 							<div class="form-group">
 								<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-									<button class="btn btn-prescript" type="button">Prescript</button>
-
+									<button class="btn btn-prescript" type="submit"
+										ng-click="createTreatment()">Submit</button>
 								</div>
+
 							</div>
 
 						</form>
@@ -206,7 +240,8 @@
 						<button type="submit">
 							<i class="fa fa-search" aria-hidden="true"></i>
 						</button>
-						<input type="text" placeholder="Search here..." required>
+						<input type="text" placeholder="Search here..." ng-model="search"
+							class="form-control" required>
 					</form>
 					<div class="x_content">
 
@@ -225,14 +260,14 @@
 									</tr>
 								</thead>
 
-								<tbody ng-repeat="treatment in treatments">
+								<tbody ng-repeat="treatment in treatments| filter:search">
 									<tr class="even pointer">
 										<td>{{treatment.id}}</td>
-										<td >{{treatment.idPatient}}</td>
-										<td>{{treatment.idDoctor}}</td>
+										<td>{{treatment.patientId.name}}</td>
+										<td>{{treatment.doctorId.name}}</td>
 										<td>{{treatment.date}}</td>
 										<td>{{treatment.prescription}}</td>
-										<td><a href="#/treatmentdetail/{{treatment.id}}">Detail</a></td>
+										<td><a href="#/treatment/{{treatment.id}}">Detail</a></td>
 									</tr>
 
 

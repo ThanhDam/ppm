@@ -45,7 +45,7 @@ public class AllergicServiceImpl implements IAllergicService {
 
 	@Override
 	public List<Allergic> findAllAllergics() {
-		return allergicRepos.findAll();
+		return (List<Allergic>) allergicRepos.findAll();
 	}
 
 	@Override

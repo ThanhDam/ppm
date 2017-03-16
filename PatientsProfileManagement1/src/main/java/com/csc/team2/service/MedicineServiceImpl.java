@@ -50,7 +50,7 @@ public class MedicineServiceImpl implements IMedicineService {
 
 	@Override
 	public List<Medicine> findAllMedicines() {
-		return medicineRepos.findAll();
+		return (List<Medicine>) medicineRepos.findAll();
 	}
 
 	@Override
