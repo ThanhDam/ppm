@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<project name="My Application" default="compile" basedir=".">
+
+  <!-- Configure the directory into which the web application is built -->
+  <property name="build"    value="${basedir}/build"/>
+
+  <!-- Configure the context path for this application -->
+  <property name="path"     value="/myapp"/>
+
+  <!-- Configure properties to access the Manager application -->
+  <property name="url"      value="http://localhost:8080/manager/text"/>
+  <property name="username" value="nam"/>
+  <property name="password" value="pass"/>
+
+  <!-- Configure the path to the Tomcat installation -->
+  <property name="catalina.home" value="C:\Users\training\Downloads\apache-tomcat-8.5.11-windows-x64\apache-tomcat-8.5.11"/>
+
+  <!-- Configure the custom Ant tasks for the Manager application -->
+  <import file="${catalina.home}/bin/catalina-tasks.xml"/>
+
+  <!-- Executable Targets -->
+  <target name="compile" description="Compile web application">
+    <!-- ... construct web application in ${build} subdirectory, and
+            generated a ${path}.war ... -->
+  </target>
+
+  <target name="deploy" description="Install web application"
+          depends="compile">
+    <deploy url="${url}" username="${username}" password="${password}"
+            path="/myapp" war="file:C:\Users\training\Downloads\sample.war"/>
+  </target>
+</project>

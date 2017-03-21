@@ -60,4 +60,6 @@ public class TreatmentServiceIplm implements ITreatmentService{
 	public boolean isTreatmentExist(Treatment treatment) {
 		return findById(treatment.getId()) != null;
 	}
+
+	
 }

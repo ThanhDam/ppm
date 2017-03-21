@@ -3,12 +3,9 @@ package com.csc.team2.repository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import com.csc.team2.model.Treatment;;
+import com.csc.team2.model.Allergic;
 
 @Repository
-public interface ITreatmentRepository extends CrudRepository<Treatment, Integer>{
-
-	//User findByName(String name);
-	
+public interface IAllergicRepository extends CrudRepository<Allergic, Integer> {
 	
 }
