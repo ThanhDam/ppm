@@ -1,0 +1,196 @@
+<!-- Content Treatment Detail -->
+<section class="content-header">
+   <h1>
+      Treatment Management
+      <small>Control panel</small>
+   </h1>
+   <ol class="breadcrumb">
+      <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+      <li>Treatment</li>
+      <li class="active">Treatment Detail</li>
+   </ol>
+</section>
+
+<section class="content">
+	<div class="row">
+      <!-- Patient's Information -->
+      <div class="col-md-6">
+         <div class="box box-success">
+            <div class="box-header with-border">
+               <i class="fa fa-warning"></i>
+               <h3 class="box-title">Patient's Information</h3>
+            </div>
+            <!-- /.box-header -->
+            <form class="form-horizontal">
+               <div class="box-body">
+                  <div class="form-group">
+                     <label class="col-sm-3 control-label">Patient's name</label>
+                     <div class="col-sm-9">
+                        <input class="form-control" ng-model="treatment.patientId.name" disabled="disabled" type="text" >
+                     </div>
+                  </div>
+				  <div class="form-group">
+                     <label class="col-sm-3 control-label">Address</label>
+                     <div class="col-sm-9">
+                        <input class="form-control" ng-model="treatment.patientId.address" disabled="disabled" type="text">
+                     </div>
+                  </div>
+				  <div class="form-group">
+                     <label class="col-sm-3 control-label">Date of Birth</label>
+                     <div class="col-sm-9">
+                        <input class="form-control" ng-model="treatment.patientId.dob" disabled="disabled" type="date">
+                     </div>
+                  </div>
+				  <div class="form-group">
+                     <label class="col-sm-3 control-label">Sex</label>
+                     <div class="col-sm-9">
+                        <input class="form-control" ng-model="treatment.patientId.sex" disabled="disabled" type="text" >
+                     </div>
+                  </div>
+               </div>
+               <!-- /.box-footer -->
+            </form>
+            <!-- /.box-body -->
+         </div>
+         <!-- /.box -->
+      </div>
+      <!-- /.col -->
+      
+      
+      <!-- Doctor's Information -->
+      <div class="col-md-6">
+         <div class="box box-success">
+            <div class="box-header with-border">
+               <i class="fa fa-bullhorn"></i>
+               <h3 class="box-title">Doctor's Information</h3>
+            </div>
+            <!-- /.box-header -->
+            <form class="form-horizontal">
+               <div class="box-body">
+                  <div class="form-group">
+                     <label class="col-sm-3 control-label">Doctor's Name</label>
+                     <div class="col-sm-9">
+                        <input class="form-control" ng-model="treatment.doctorId.name" disabled="disabled" type="text" >
+                     </div>
+                  </div>
+				  <div class="form-group">
+                     <label class="col-sm-3 control-label">Address</label>
+                     <div class="col-sm-9">
+                        <input class="form-control" ng-model="treatment.doctorId.specialist" disabled="disabled" type="text" >
+                     </div>
+                  </div>
+				  <div class="form-group">
+                     <label class="col-sm-3 control-label">Specialist</label>
+                     <div class="col-sm-9">
+                        <input class="form-control" ng-model="treatment.doctorId.name" disabled="disabled" type="text" >
+                     </div>
+                  </div>
+				  <div class="form-group">
+                     <label class="col-sm-3 control-label">Sex</label>
+                     <div class="col-sm-9">
+                        <input class="form-control" ng-model="treatment.doctorId.sex" disabled="disabled" type="text" >
+                     </div>
+                  </div>
+               </div>
+               <!-- /.box-footer -->
+            </form>
+            <!-- /.form-body -->
+         </div>
+      </div>
+      <!-- /.col -->
+   </div>
+   
+   
+   
+   
+   
+   <div class="row">
+      <!-- Allergic -->
+      <div class="col-md-6">
+         <div class="box box-success">
+            <div class="box-header with-border">
+               <i class="fa fa-bullhorn"></i>
+               <h3 class="box-title">Allergic</h3>
+            </div>
+            <!-- /.box-header -->
+            <form class="form-horizontal">
+               <div class="box-body">
+                  <div class="form-group">
+                     <md-content class="md-padding autocomplete col-md-10"
+					layout="column"> <md-contact-chips
+					ng-model="allergics" md-contacts="querySearch($query)"
+					md-contact-name="name" md-require-match="true"
+					md-highlight-flags="i" filter-selected="filterSelected"
+					placeholder="Enter name medicne"> </md-contact-chips> </md-content>
+                  </div>
+               </div>
+               <!-- /.box-body -->
+               <div class="box-footer">
+                  <button type="reset" class="btn btn-default">Reset</button>
+                  <button type="submit" ng-click="createAllergics()" class="btn btn-success pull-right">Add Allergic</button>
+               </div>
+               <!-- /.box-footer -->
+            </form>
+            <!-- /.form-body -->
+         </div>
+         <!-- /.box -->
+         <div class="box box-primary">
+            <div class="box-header">
+               <h3 class="box-title">List Allergic</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+               <table class="  table table-bordered  table-striped tableBodyScroll">
+                  <thead>
+                     <tr>
+                        <th class="col-xs-8 column-title">Medicine's Name</th>
+                        <th class="col-xs-4 column-title no-link last">Action</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <tr ng-repeat="typemedicine in typemedicines">
+                        <td class="col-xs-8">
+                           {{allergic.medicineId.name}}
+                        </td>
+                        <td class="col-xs-4">
+                           <button ng-click="deleteAllergic(allergic.id)"
+                              class="glyphicon glyphicon-trash btn btn-danger"></button>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+            <!-- /.box-body -->
+         </div>
+      </div>
+      <!-- /.col -->
+      
+      
+      <!-- File Attached -->
+      <div class="col-md-6">
+         <div class="box box-success">
+            <div class="box-header with-border">
+               <i class="fa fa-bullhorn"></i>
+               <h3 class="box-title">File Attached</h3>
+            </div>
+            <!-- /.box-header -->
+            <form class="form-horizontal">
+               <div class="box-body">
+                  <div class="form-group">
+                     <label class="col-sm-4 control-label">Doctor's Name</label>
+                     <div class="col-sm-8">
+                        <input class="form-control" ng-model="treatment.doctorId.name" disabled="disabled" type="text" >
+                     </div>
+                  </div>
+				 
+               </div>
+               <!-- /.box-footer -->
+            </form>
+            <!-- /.form-body -->
+         </div>
+      </div>
+      <!-- /.col -->
+   </div>
+</section>
+
+	

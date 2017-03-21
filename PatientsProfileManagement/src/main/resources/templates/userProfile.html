@@ -1,0 +1,46 @@
+<html>
+<head></head>
+<body>
+	<table>
+		<tr>
+			<td><label><b>User Id:</b></label></td>
+			<td><span th:text="${userid}"></span></td>
+		</tr>
+		<tr>
+			<td><label><b>User Name:</b></label></td>
+			<td><span th:text="${userName}"></span></td>
+		</tr>
+		<tr>
+			<td><label><b>User role:</b></label></td>
+			<td><span th:text="${userRole}"></span></td>
+		</tr>
+		<tr>
+			<td><label><b>Address:</b></label></td>
+			<td><span th:text="${userAddress}"></span></td>
+		</tr>
+		<tr>
+			<td><label><b>Specialist:</b></label></td>
+			<td><span th:text="${userSpecialist}"></span></td>
+		</tr>
+		<tr>
+			<td><label><b>Gender:</b></label></td>
+			<td><span th:text="${userSex}"></span></td>
+		</tr>
+		<tr>
+			<td>
+				<form th:action="@{/}" method="get">
+					<div class="btn-center">
+						<button class="btn btn-lock"
+							style="background-color: transparent; color: #00b2f9; font-weight: bold;"
+							type="Submit">HOME</button>
+					</div>
+				</form>
+			</td>
+			<td><button>Update User</button></td>
+		</tr>
+
+
+
+	</table>
+</body>
+</html>
