@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<project name="My Application" default="compile" basedir="C:\Users\training\Downloads">
+
+	<property name="build" value="${basedir}/build"/>
+	
+	<property name="path" value="/myapp"/>
+
+	<property name="url" value="http://localhost:8080/manager/text"/>
+	<property name="username" value="ngxdiep"/>
+	<property name="password" value="diepngx"/>
+
+	<property name="catalina.home" value="C:\Users\training\Downloads\apache-tomcat-8.5.11-windows-x64\apache-tomcat-8.5.11"/>
+
+	<import file="${catalina.home}/bin/catalina-tasks.xml"/>
+		
+	<target name="compile" description="Compile web application">
+    	
+  	</target>
+	
+
+	<target name="deploy" description="Install web application"
+          depends="compile">
+    		<deploy url="${url}" username="${username}" password="${password}"
+            path="/myapp" war="file:C:/Users/training/Downloads/sample.war"/>
+ 	</target>
+
+	<target name="reload" description="Reload web application"
+          depends="compile">
+    		<reload  url="${url}" username="${username}" password="${password}"
+            path="${path}"/>
+  	</target>
+
+  	<target name="undeploy" description="Remove web application">
+    		<undeploy url="${url}" username="${username}" password="${password}"
+            path="${path}"/>
+  	</target>
+</project>

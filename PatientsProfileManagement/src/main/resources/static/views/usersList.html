@@ -1,0 +1,340 @@
+<!-- Content Userlist -->
+<section class="content-header">
+   <h1>
+      User Management
+      <small>Control panel</small>
+   </h1>
+   <ol class="breadcrumb">
+      <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+      <li class="active">User Account</li>
+   </ol>
+</section>
+
+
+<section class="content">
+	<div class="row">
+		<!-- ====== Admin List ======= -->
+		<div class="col-md-12">
+			<div class="box box-primary">
+		      <div class="box-header">
+		         <h3 class="box-title">List Admin</h3>
+		      </div>
+		      
+		      <!-- Search -->
+		      <div class="col-md-12 col-sm-12 col-xs-12 ser-medicine" >
+		         <div class="col-md-8 col-sm-8 col-xs-12 none-padding">
+		            <div class="input-group">
+		               <div class="input-group-btn">
+		                  <button type="submit" class="btn btn-danger">
+		                  <i class="fa fa-search" aria-hidden="true"></i>
+		                  </button>
+		               </div>
+		               <input ng-model="searchAdmin" class="form-control" type="text" placeholder="Search here...">
+		            </div>
+		         </div>
+		      </div>
+		      
+		      <!-- /.box-header -->
+		      <div class="box-body">
+		         <table class="table table-bordered table-striped">
+		            <thead>
+		               <tr>
+		                  <th ng-click="sort('name')">Name
+		                     <span class="glyphicon pull-right"  ng-class="{'glyphicon-menu-up':reverse,'glyphicon-menu-down':!reverse}"></span>
+		                  </th>
+		                  <th ng-click="sort('active')">Active
+		                     <span class="glyphicon pull-right" ng-class="{'glyphicon-menu-up':reverse,'glyphicon-menu-down':!reverse}"></span>
+		                  </th>
+		                  <th  ng-click="sort('role')">Role
+		                     <span class="glyphicon pull-right" ng-class="{'glyphicon-menu-up':reverse,'glyphicon-menu-down':!reverse}"></span>
+		                  </th>
+		                  <th ng-click="sort('address')">Address
+		                     <span class="glyphicon pull-right" ng-class="{'glyphicon-menu-up':reverse,'glyphicon-menu-down':!reverse}"></span>
+		                  </th>
+		                  <th ng-click="sort('specialist')">Specialist
+		                     <span class="glyphicon pull-right" ng-class="{'glyphicon-menu-up':reverse,'glyphicon-menu-down':!reverse}"></span>
+		                  </th>
+						  <th ng-click="sort('sex')">Sex
+		                     <span class="glyphicon pull-right" ng-class="{'glyphicon-menu-up':reverse,'glyphicon-menu-down':!reverse}"></span>
+		                  </th>
+		                  <th>Action</th>
+		               </tr>
+		            </thead>
+		            <tbody>
+		               <tr
+							dir-paginate="admin in usersAdmin|orderBy:sortKey:reverse|filter:searchAdmin|itemsPerPage:3">
+							<td>{{admin.name |uppercase}}</td>
+							<td>{{admin.active}}</td>
+							<td>{{admin.rolesList["0"].roles}}</td>
+							<td>{{admin.address}}</td>
+							<td>{{admin.specialist}}</td>
+							<td>{{admin.sex }}</td>
+		
+							<td>
+								<button type="button" ng-click="getOneUser(admin.id)"
+									class="btn btn-primary" data-toggle="modal"
+									data-target="#UserModal">
+									<span><i class="fa fa-wrench" aria-hidden="true"></i></i></span>
+								</button>
+								<button ng-click="deleteUser(admin.id)" data-toggle="tooltip"
+									class="glyphicon glyphicon-trash btn btn-danger"></button>
+							</td>
+						</tr>
+		            </tbody>
+		         </table>
+		         
+		         <div class="align">
+		            <dir-pagination-controls
+		               max-size="5"
+		               direction-links="true"
+		               boundary-links="true" >
+		            </dir-pagination-controls>
+		         </div>
+		         
+		      </div>
+		      <!-- /.box-body -->
+		   </div>
+		</div>
+	</div>
+	
+	
+	<!-- ====== Doctor List ====== -->
+	<div class="row">
+		<div class="col-md-12">
+			<div class="box box-primary">
+			      <div class="box-header">
+			         <h3 class="box-title">List Doctor Account</h3>
+			      </div>
+			      
+			      <!-- Search -->
+			      <div class="col-md-12 col-sm-12 col-xs-12 ser-medicine" >
+			         <div class="col-md-8 col-sm-8 col-xs-12 none-padding">
+			            <div class="input-group">
+			               <div class="input-group-btn">
+			                  <button type="submit" class="btn btn-danger">
+			                  <i class="fa fa-search" aria-hidden="true"></i>
+			                  </button>
+			               </div>
+			               <input ng-model="searchDoctor" class="form-control" type="text" placeholder="Search here...">
+			            </div>
+			         </div>
+			      </div>
+			      
+			      <!-- /.box-header -->
+			      <div class="box-body">
+			         <table class="table table-bordered table-striped">
+			            <thead>
+			               <tr>
+			                  <th ng-click="sort('name')">Name
+			                     <span class="glyphicon pull-right"  ng-class="{'glyphicon-menu-up':reverse,'glyphicon-menu-down':!reverse}"></span>
+			                  </th>
+			                  <th ng-click="sort('active')">Active
+			                     <span class="glyphicon pull-right" ng-class="{'glyphicon-menu-up':reverse,'glyphicon-menu-down':!reverse}"></span>
+			                  </th>
+			                  <th  ng-click="sort('role')">Role
+			                     <span class="glyphicon pull-right" ng-class="{'glyphicon-menu-up':reverse,'glyphicon-menu-down':!reverse}"></span>
+			                  </th>
+			                  <th ng-click="sort('address')">Address
+			                     <span class="glyphicon pull-right" ng-class="{'glyphicon-menu-up':reverse,'glyphicon-menu-down':!reverse}"></span>
+			                  </th>
+			                  <th ng-click="sort('specialist')">Specialist
+			                     <span class="glyphicon pull-right" ng-class="{'glyphicon-menu-up':reverse,'glyphicon-menu-down':!reverse}"></span>
+			                  </th>
+							  <th ng-click="sort('sex')">Sex
+			                     <span class="glyphicon pull-right" ng-class="{'glyphicon-menu-up':reverse,'glyphicon-menu-down':!reverse}"></span>
+			                  </th>
+			                  <th>Action</th>
+			               </tr>
+			            </thead>
+			            <tbody>
+			               <tr
+								dir-paginate="doctor in usersDoctor|orderBy:sortKey:reverse|filter:searchDoctor|itemsPerPage:3">
+								<td>{{doctor.name | uppercase}}</td>
+								<td>{{doctor.active}}</td>
+								<td>{{doctor.rolesList["0"].roles}}</td>
+								<td>{{doctor.address}}</td>
+								<td>{{doctor.specialist}}</td>
+								<td>{{doctor.sex }}</td>
+			
+								<td>
+									<button type="button" ng-click="getOneUser(doctor.id)"
+										class="btn btn-primary" data-toggle="modal"
+										data-target="#UserModal">
+										<span><i class="fa fa-wrench" aria-hidden="true"></i></i></span>
+									</button>
+									<button ng-click="deleteUser(doctor.id)" data-toggle="tooltip"
+										class="glyphicon glyphicon-trash btn btn-danger"></button>
+								</td>
+							</tr>
+			            </tbody>
+			         </table>
+			         
+			         <div class="align">
+			            <dir-pagination-controls
+			               max-size="5"
+			               direction-links="true"
+			               boundary-links="true" >
+			            </dir-pagination-controls>
+			         </div>
+			         
+			      </div>
+			      <!-- /.box-body -->
+			   </div>
+		</div>
+	</div>
+	
+	
+	<!-- ====== Doctor List ====== -->
+	<div class="row">
+		<div class="col-md-12">
+			<div class="box box-primary">
+			      <div class="box-header">
+			         <h3 class="box-title">List Nurse Account</h3>
+			      </div>
+			      
+			      <!-- Search -->
+			      <div class="col-md-12 col-sm-12 col-xs-12 ser-medicine" >
+			         <div class="col-md-8 col-sm-8 col-xs-12 none-padding">
+			            <div class="input-group">
+			               <div class="input-group-btn">
+			                  <button type="submit" class="btn btn-danger">
+			                  <i class="fa fa-search" aria-hidden="true"></i>
+			                  </button>
+			               </div>
+			               <input ng-model="searchNurse" class="form-control" type="text" placeholder="Search here...">
+			            </div>
+			         </div>
+			      </div>
+			      
+			      <!-- /.box-header -->
+			      <div class="box-body">
+			         <table class="table table-bordered table-striped">
+			            <thead>
+			               <tr>
+			                  <th ng-click="sort('name')">Name
+			                     <span class="glyphicon pull-right"  ng-class="{'glyphicon-menu-up':reverse,'glyphicon-menu-down':!reverse}"></span>
+			                  </th>
+			                  <th ng-click="sort('active')">Active
+			                     <span class="glyphicon pull-right" ng-class="{'glyphicon-menu-up':reverse,'glyphicon-menu-down':!reverse}"></span>
+			                  </th>
+			                  <th  ng-click="sort('role')">Role
+			                     <span class="glyphicon pull-right" ng-class="{'glyphicon-menu-up':reverse,'glyphicon-menu-down':!reverse}"></span>
+			                  </th>
+			                  <th ng-click="sort('address')">Address
+			                     <span class="glyphicon pull-right" ng-class="{'glyphicon-menu-up':reverse,'glyphicon-menu-down':!reverse}"></span>
+			                  </th>
+			                  <th ng-click="sort('specialist')">Specialist
+			                     <span class="glyphicon pull-right" ng-class="{'glyphicon-menu-up':reverse,'glyphicon-menu-down':!reverse}"></span>
+			                  </th>
+							  <th ng-click="sort('sex')">Sex
+			                     <span class="glyphicon pull-right" ng-class="{'glyphicon-menu-up':reverse,'glyphicon-menu-down':!reverse}"></span>
+			                  </th>
+			                  <th>Action</th>
+			               </tr>
+			            </thead>
+			            <tbody>
+			               <tr dir-paginate="nurse in usersNurse|orderBy:sortKey:reverse|filter:searchNurse|itemsPerPage:3">
+								<td><a ng-href="#/user/{{user.username}}"></a>{{nurse.name |
+									uppercase}}</td>
+								<td>{{nurse.active}}</td>
+								<td>{{nurse.rolesList["0"].roles}}</td>
+								<td>{{nurse.address}}</td>
+								<td>{{nurse.specialist}}</td>
+								<td>{{nurse.sex }}</td>
+								<td>
+									<button type="button" ng-click="getOneUser(nurse.id)"
+										class="btn btn-primary" data-toggle="modal"
+										data-target="#UserModal">
+										<span><i class="fa fa-wrench" aria-hidden="true"></i></i></span>
+									</button>
+									<button ng-click="deleteUser(nurse.id)" data-toggle="tooltip"
+										class="glyphicon glyphicon-trash btn btn-danger"></button>
+								</td>
+							</tr>
+			            </tbody>
+			         </table>
+			         
+			         <div class="align">
+			            <dir-pagination-controls
+			               max-size="5"
+			               direction-links="true"
+			               boundary-links="true" >
+			            </dir-pagination-controls>
+			         </div>
+			         
+			      </div>
+			      <!-- /.box-body -->
+			   </div>
+		</div>
+	</div>
+</section>
+
+
+
+
+
+<!-- Update User -->
+<div class="modal fade" id="UserModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+	   <div class="modal-content">
+	      <div class="modal-header">
+	         <button style="color:#fff;" type="button" class="close" data-dismiss="modal" aria-label="Close">
+	         <span aria-hidden="true">&times;</span>
+	         </button>
+	         <h3 class="modal-title" id="myModalLabel">Update User</h3>
+	      </div>
+	      <div class="modal-body">
+	         <form class="form-horizontal form-label-left">
+				 <div class="form-group" >
+					<label class="control-label col-md-3 col-sm-3 col-xs-12">Name<span class="required">*</span>
+					</label>
+					<div class="col-md-9 col-sm-9 col-xs-12">
+					   <input ng-model="curentUser.name" type="text"
+						  required class="form-control col-md-7 col-xs-12">
+					</div>
+				 </div>
+				 <div class="form-group" >
+					<label class="control-label col-md-3 col-sm-3 col-xs-12">Specialist<span class="required">*</span>
+					</label>
+					<div class="col-md-9 col-sm-9 col-xs-12">
+					   <input ng-model="curentUser.specialist" type="text"
+						  required class="form-control col-md-7 col-xs-12">
+					</div>
+				 </div>
+				 <div class="form-group" >
+					<label class="control-label col-md-3 col-sm-3 col-xs-12">Address<span class="required">*</span>
+					</label>
+					<div class="col-md-9 col-sm-9 col-xs-12">
+					   <input  ng-model="curentUser.address" type="text"
+						  required class="form-control col-md-7 col-xs-12">
+					</div>
+				 </div>
+				 <div class="form-group" >
+					<label class="control-label col-md-3 col-sm-3 col-xs-12">Gender<span class="required">*</span>
+					</label>
+					<div class="col-md-9 col-sm-9 col-xs-12">
+						<div id="gender" class="btn-group" data-toggle="buttons">
+							<label> <input type="radio" ng-model="curentUser.sex"
+								value="Male"> Male
+							</label> 
+							<label> <input type="radio" ng-model="curentUser.sex"
+								value="Female"> Female
+							</label>
+						</div>
+					</div>
+				 </div>
+				 <div class="modal-footer">
+					<button class="btn btn-primary btn-in-modal" type="reset">
+					<span><i class="fa fa-refresh" aria-hidden="true"></i></span>
+					Clear
+					</button>
+					<button type="button" ng-click="updateUser(curentUser.id,curentUser )" data-dismiss="modal" class="btn btn-success btn-in-modal">
+					<span><i class="glyphicon glyphicon-floppy-save" aria-hidden="true"></i></span>
+					Save changes
+					</button>
+				 </div>
+	         </form>
+	      </div>
+	   </div>
+	</div>
+</div>
