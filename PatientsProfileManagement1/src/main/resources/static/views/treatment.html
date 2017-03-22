@@ -1,0 +1,210 @@
+<!-- Content Medicine -->
+<section class="content-header">
+	<h1>
+		Treatment Management <small>Control panel</small>
+	</h1>
+	<ol class="breadcrumb">
+		<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+		<li class="active">Treatment</li>
+	</ol>
+</section>
+
+
+<!-- Main content -->
+<section class="content">
+	<div class="row">
+
+
+		<!-- Add Treatment -->
+		<div class="col-md-12">
+			<div class="box box-success">
+				<div class="box-header with-border">
+					<i class="fa fa-warning"></i>
+					<h3 class="box-title">Add New Treatment</h3>
+				</div>
+				<form class="form-horizontal">
+               <div class="box-body">
+					<div flex layout="row" ng-cloak class="form-group">
+					<label class="control-label col-md-3 col-sm-3 col-xs-12"
+						for="patient-name">Patient's name <span class="required">*</span>
+					</label>
+					<div class="col-md-6 col-sm-6 col-xs-12">
+						<md-autocomplete required md-input-name="autocomplete"
+							md-selected-item="selectedPatient" md-search-text="searchText"
+							md-items="item in querySearchAC(searchText)"
+							md-item-text="item.name" md-min-length="0"
+							placeholder="Enter patient name"> <md-item-template>
+						<span class="item-title"> <span> {{item.name}} </span>
+						</span> <span class="item-metadata"> <span> address: <strong>{{item.address}}</strong>
+						</span> <span> dob: <strong>{{item.dob}}</strong>
+						</span>
+						</span> </md-item-template> <md-not-found> No match found. </md-not-found>
+						<div ng-messages="treatmentform.autocomplete.$error">
+							<div ng-message="required">This field is required</div>
+						</div>
+						</md-autocomplete>
+					</div>
+				</div>
+				
+                  <div class="form-group">
+                     <label class="col-sm-3 control-label">Doctor's Name<span class="required">*</span></label>
+                     <div class="col-sm-6">
+                        <input class="form-control"
+							ng-model="doctor.name" disabled="disabled" type="text" required>
+                     </div>
+                  </div>
+				  <div class="form-group">
+					<label class="control-label col-md-3 col-sm-3 col-xs-12">Diagnotics<span
+						class="required">*</span></label>
+					<div class="col-md-6 col-sm-6 col-xs-12">
+						<input id="diagnotics" class="form-control col-md-7 col-xs-12"
+							required type="text" name="diagnotics"
+							ng-model="treatment.prescription">
+					</div>
+				</div>
+				<div class="ln_solid"></div>
+               </div>
+               <!-- /.box-body -->
+               <div class="box-footer">
+                  <button type="reset" class="btn btn-default">Reset</button>
+                  <button type="submit"
+							ng-click="createTreatment()" class="btn btn-success">Create</button>
+               </div>
+               <!-- /.box-footer -->
+            </form>
+            
+          </div>  
+        </div>
+       </div>
+        <div class="row">
+        	<!-- List Treatment -->
+        	<div class="col-md-12">
+        		<div class="box box-primary">
+					<div class="box-header with-border">
+						<i class="fa fa-bullhorn"></i>
+						<h3 class="box-title">List Treatment</h3>
+					</div>
+
+					<!-- Search -->
+					<div class="col-md-12 col-sm-12 col-xs-12 ser-medicine">
+						<div class="col-md-8 col-sm-8 col-xs-12 none-padding">
+							<div class="input-group">
+								<div class="input-group-btn">
+									<button type="submit" class="btn btn-danger">
+										<i class="fa fa-search" aria-hidden="true"></i>
+									</button>
+								</div>
+								<input ng-model="search" class="form-control" type="text"
+									placeholder="Search here..." required>
+							</div>
+						</div>
+					</div>
+
+					<!-- /.box-header -->
+					<div class="box-body">
+						<table class="table table-bordered table-striped">
+							<thead>
+								<tr>
+									<th>ID</th>
+									<th>Patient's Name</th>
+									<th>Doctor's Name</th>
+									<th>Date</th>
+									<th>Prescription</th>
+									<th>Action</th>
+									<th>View</th>
+								</tr>
+							</thead>
+							<tbody
+								dir-paginate="treatment in treatments| filter:search| itemsPerPage:5">
+								<tr >
+									<td>{{treatment.id}}</td>
+									<td>{{treatment.patientId.name}}</td>
+									<td>{{treatment.doctorId.name}}</td>
+									<td>{{treatment.date}}</td>
+									<td>{{treatment.prescription}}</td>
+									<td><button type="button"
+											ng-click="getOneTreatment(treatment.id)"
+											class="btn btn-primary" data-toggle="modal"
+											data-target="#modalTreatment">
+											<span><i class="fa fa-wrench" aria-hidden="true"></i></span>
+										</button></td>
+									<td><a href="#/treatment/{{treatment.id}}">Detail</a></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<!-- /.box-body -->
+
+					<div class="align">
+						<dir-pagination-controls max-size="5" direction-links="true"
+							boundary-links="true"> 
+						</dir-pagination-controls>
+					</div>
+				</div>
+        	</div>				
+		</div>
+</section>
+
+<!-- UPDATE TREATMENT CREATE TREATMENT DETAIL -->
+<div class="modal fade" id="modalTreatment" tabindex="-1" role="dialog"
+	aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button style="color: #fff;" type="button" class="close"
+					data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h3 class="modal-title" id="myModalLabel">Update Treatment</h3>
+			</div>
+			<div class="modal-body">
+				<form data-parsley-validate class="form-horizontal form-label-left">
+					<div class="form-group">
+						<label class="control-label col-md-3 col-sm-3 col-xs-12">Patient's
+							Name </label>
+						<div class="col-md-9 col-sm-9 col-xs-12">
+							<input type="text" id="namePatient" name="namePatient"
+								required="required" class="form-control col-md-7 col-xs-12"
+								ng-model="currentTreatment.patientId.name" disabled="disabled">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-md-3 col-sm-3 col-xs-12"
+							for="last-name">Doctor's Name </label>
+						<div class="col-md-9 col-sm-9 col-xs-12">
+							<input type="text" id="nameDoctor" name="nameDoctor"
+								required="required" class="form-control col-md-7 col-xs-12"
+								ng-model="doctor.name" disabled="disabled">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-md-3 col-sm-3 col-xs-12">Diagnotics</label>
+						<div class="col-md-9 col-sm-9 col-xs-12">
+							<input type="text" id="prescription" name="prescription"
+								required="required" class="form-control col-md-7 col-xs-12"
+								ng-model="currentTreatment.prescription">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-md-3 col-sm-3 col-xs-12">Date</label>
+						<div class="col-md-9 col-sm-9 col-xs-12">
+							<input type="date" id="dateTreatment" name="dateTreatment"
+								required="required" class="form-control col-md-7 col-xs-12"
+								ng-model="currentTreatment.date" disabled="disabled">
+						</div>
+					</div>
+			</div>
+			<div class="modal-footer">
+				<button ng-click="resetDiseases()" class="btn btn-primary btn-in-modal" type="reset">
+            <span><i class="fa fa-refresh" aria-hidden="true" ></i></span> Clear
+				</button>
+				<button type="submit" data-dismiss="modal"
+					ng-click="updateTreatment(currentTreatment.id,currentTreatment)"
+					class="btn btn-success btn-in-modal">
+					<span><i class="glyphicon glyphicon-floppy-save"
+						aria-hidden="true"></i></span> Submit
+				</button>
+			</div>
+		</div>
+	</div>
+</div>

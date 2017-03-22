@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Patient Profile Management</title>
+	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
+	<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/css/font-awesome.min.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+  	
+</head>
+
+<body>
+	<!-- Top content -->
+        <div class="top-content">
+        	
+            <div class="inner-bg">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-8 col-sm-offset-2 text">
+                            <h1>Welcome to<strong> CSC Clinic!!!</strong></h1>
+                            <div class="description">
+                            	<p>
+	                            	Patient Profile Management
+                            	</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-sm-offset-3 form-box">
+                        	<div class="form-top">
+                        		<div class="form-top-left">
+                        			<h3>Login to our site</h3>
+                            		<p>Enter your username and password to log on:</p>
+                        		</div>
+                        		
+                            </div>
+                            <div class="form-bottom">
+			                    <form class="login-form" role="form" th:action="@{/login}" method="POST">
+			                    	<div class="form-group">
+			                    		<label class="sr-only" for="form-username">Username</label>
+										<div class="input-group">
+											<input type="text" name="username" placeholder="Username..." class="form-username form-control" id="username">
+											<span class="input-group-addon">
+													<i class="glyphicon glyphicon-user"></i>
+											</span>
+										</div>
+			                        </div>
+			                        <div class="form-group">
+			                        	<label class="sr-only" for="form-password">Password</label>
+										<div class="input-group">
+											<input type="password" name="password" placeholder="Password..." class="password form-control" id="password">
+											<span class="input-group-addon">
+													<i class="glyphicon glyphicon-lock"></i>
+											</span>
+										</div>
+			                        </div>
+			                        <button type="submit" class="btn" name="Submit" value="Login">Sign in!</button>
+			                        <span th:utext="${successMessage}"></span>
+			                    </form>
+								<br>
+								<!-- <form th:action="@{/registration}" method="get" class="form-btn-reg">
+									<button class="btn btn-lock" style="background-color: transparent;
+    									color: #00b2f9;" type="submit">Go To Registration Page</button>
+    									
+								</form> -->
+								<div align="center" th:if="${param.error}">
+									<p style="font-size: 20; color: #ff1e19; padding-bottom: 20px;">Username or Password invalid, please verify</p>
+								</div>
+		                    </div> 
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            
+        </div>
+
+
+
+	<script type="text/javascript" th:src="@{/js/jquery.js}"></script>
+  	<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+  	<script type="text/javascript" th:src="@{/js/jquery.backstretch.min.js}"></script>
+  	<script type="text/javascript" th:src="@{/js/scripts.js}"></script>
+</body>
+</html>
