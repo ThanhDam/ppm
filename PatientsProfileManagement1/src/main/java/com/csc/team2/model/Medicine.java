@@ -3,6 +3,7 @@ package com.csc.team2.model;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -25,7 +26,8 @@ import javax.xml.bind.annotation.XmlTransient;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 /**
@@ -42,7 +44,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
     , @NamedQuery(name = "Medicine.findByMfg", query = "SELECT m FROM Medicine m WHERE m.mfg = :mfg")
     , @NamedQuery(name = "Medicine.findByProducer", query = "SELECT m FROM Medicine m WHERE m.producer = :producer")
     , @NamedQuery(name = "Medicine.findByDosage", query = "SELECT m FROM Medicine m WHERE m.dosage = :dosage")})
-@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@medicineId")
+@JsonIdentityInfo(generator=ObjectIdGenerators.UUIDGenerator.class, property="@medicineId",scope = Medicine.class)
 public class Medicine implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -71,11 +73,18 @@ public class Medicine implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "dosage")
     private String dosage;
+    
     @JoinColumn(name = "type_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    @JsonManagedReference
+    //@JsonManagedReference
     private TypeOfMedicine typeId;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "medicineId")
+    @JsonIgnore
+    private List<Allergic> allergicList;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "medicineId")
+    @JsonIgnoreProperties("treatmentDetailList")
     @JsonBackReference
     private List<TreatmentDetail> treatmentDetailList;
 

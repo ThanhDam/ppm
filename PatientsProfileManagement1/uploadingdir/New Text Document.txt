@@ -1,3 +1,0 @@
-email: tnguyen281@csc.com
-subject: HTML/CSS Feb <date>
-attached filed: HTML_CSS_<yourname>_<date>

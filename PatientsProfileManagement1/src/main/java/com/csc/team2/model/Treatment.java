@@ -25,6 +25,8 @@ import javax.xml.bind.annotation.XmlTransient;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 /**
@@ -41,6 +43,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
     , @NamedQuery(name = "Treatment.findByFile", query = "SELECT t FROM Treatment t WHERE t.file = :file")
     , @NamedQuery(name = "Treatment.findByPrescription", query = "SELECT t FROM Treatment t WHERE t.prescription = :prescription")})
 @JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@treatmentId")
+
 public class Treatment implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -49,19 +52,26 @@ public class Treatment implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
-    @NotNull
+    public List<File> getFileList() {
+		return fileList;
+	}
+
+	public void setFileList(List<File> fileList) {
+		this.fileList = fileList;
+	}
+
+	@Basic(optional = false)
+    
     @Column(name = "date")
     @Temporal(TemporalType.DATE)
     private Date date;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
+    
+
     @Column(name = "file")
     private String file;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
+   
     @Column(name = "prescription")
     private String prescription;
     @JoinColumn(name = "doctor_id", referencedColumnName = "id")
@@ -69,11 +79,17 @@ public class Treatment implements Serializable {
     private User doctorId;
     @JoinColumn(name = "patient_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
+    //@JsonManagedReference
     private Patient patientId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "treatmentId")
+    //@JsonIgnoreProperties("historyList")
     private List<History> historyList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "treatmentId")
+    //@JsonIgnoreProperties("treatmentDetailList")
     private List<TreatmentDetail> treatmentDetailList;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "treatmentId")
+    private List<File> fileList;
 
     public Treatment() {
     }

@@ -48,7 +48,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.antMatchers("/").permitAll()
 			.antMatchers("/login").permitAll()		
 			.antMatchers("/uploadfile").permitAll()
-			//.antMatchers("/user/**").permitAll()
 			.antMatchers("/admin/**").hasAuthority("admin")
 			.antMatchers("/nurse/**").hasAuthority("nurse")
 			.antMatchers("/doctor/**").hasAuthority("doctor")
@@ -84,6 +83,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	public void configure(WebSecurity web) throws Exception {
 	    web
 	       .ignoring()
-	       .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**","/patient/**", "/images/**","/medicine/**","/user/**","/typemedicine/**");	}
+	       .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**","/patient/**", "/images/**","/medicine/**","/userbyrole/**","/typemedicine/**");	}
 
 }

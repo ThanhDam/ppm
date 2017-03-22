@@ -1,120 +1,189 @@
-var app = angular.module('myApp');
 
+
+
+var app = angular.module('myApp');
 app.controller('treatmentController', function(
-        $scope, $interval, $location,$http, $routeParams, patientService, $log, $timeout) {
+        $scope, $interval, $location,$http,patientService,userService,treatmentService,treatmentDetailService,allergicService) {
 	
-	$scope.treatment = {
-			patientId :"" ,
-			doctorId :"",
-			prescription : "",
-			file:"",
-		};
+	$scope.treatment ={
+			date : null,
+			file : null,
+			prescription : null,
+			doctorId : {
+					
+			},
+			patientId : {
+					
+			}
+	}
 	
+////////////////autocomplete for patient
+	
+	$scope.searchText = null;
+	$scope.selectedPatient = null;
+	$scope.querySearchAC   = querySearchAC;
+
+    function querySearchAC (query) {
+    	var result;
+      if(query) {
+        result = loadAndParseAC().then(function(data) {
+             return data.filter(createFilterForAC(query))
+           })
+      } else {
+        result = []
+      }
+      return result
+      }
+    
+    function parseAC (data) {
+        return data.data.map(function (repo) {
+        	repo.value = repo.name.toLowerCase();
+            return repo;
+          })      
+      }
+    
+    function loadAndParseAC() {
+        return $http.get('http://localhost:8080/patient').then(parseAC)
+      }
+    
+    function createFilterForAC(query) {
+      var lowercaseQuery = angular.lowercase(query);
+
+      return function filterFn(item) {
+        return (item.value.indexOf(lowercaseQuery)  != -1);
+      };
+
+    }
+	
+ ///////////////contacts chip for medicine and allergi
+    
+    
+ //////////////////////////////////////////////////////////////////////
+	
+////==========Get All Treatment=======================================
 	$http.get("http://localhost:8080/treatment").then(function(response) {
 		$scope.treatments = response.data;
-    });
+	});
 	
-	// ///------------get All Treatment
-// $scope.getTreatment = function(data){
-// treatmentService.getTreatment().then(getSuccess,getError);
-// }
-// var getSuccess = function(data) {
-// $scope.treatments = data;
-// };
-// var getError = function(error) {
-// $scope.error = "Could not find any data"
-// };
+	$scope.getAllTreatment= function(){
+		treatmentService.getAllTreatment().then(getAllSuccess,getAllError)
+	}
+	var getAllSuccess = function(data) {
+		$scope.treatments = data;
+	};
+	var getAllError = function(error) {
+	};
 	
- ///------------get Id Patient
-	
+////==========Get One Patient=======================================
 	$scope.getOnePatient = function(id){
 		patientService.getOnePatient(id).then(getOneSuccess,getOneError)
 	};
+	
 	var getOneSuccess = function(data) {
 		$scope.patient = data;
-
 	};
 	var getOneError = function(error) {
 	};
 	
-///------------get name doctor
-	$http.get("http://localhost:8080/treatment/name").then(function(response) {
+////==========Get current doctor=======================================
+	$http.get("http://localhost:8080/userProfile").then(function(response) {
 		$scope.doctor = response.data;
-    });
+	});
 	
-	 ///-----------create treatment ------------
-//	$scope.treat.patientId=patient.id;
-//	$scpoe.treat.doctorId=user.id;
-//	$scope.treat.date= new Date();
-//	$scope.treat.file="";
 	
-	$http.get("http://localhost:8080/treatment", $scope.treatment).then(function(response) {
-		$scope.treatment= response.data;
-    });
+	$scope.getLoginUser = function(id){
+		userService.getLoginUser().then(getLoginUserSuccess,getLoginUserError)
+	};
 	
-	///--------------get all medicine-----------
-	$http.get("http://localhost:8080/medicine").then(function(response) {
-		$scope.medicine= response.data;
-    });
-
-	var self = this;
-
-    self.simulateQuery = false;
-    self.isDisabled    = false;
-
-    self.repos         = loadAll();
-    self.querySearch   = querySearch;
-    self.selectedItemChange = selectedItemChange;
-    self.searchTextChange   = searchTextChange;
-
-    // ******************************
-    // Internal methods
-    // ******************************
-
-    /**
-     * Search for repos... use $timeout to simulate
-     * remote dataservice call.
-     */
-    function querySearch (query) {
-      var results = query ? self.repos.filter( createFilterFor(query) ) : self.repos,
-          deferred;
-      if (self.simulateQuery) {
-        deferred = $q.defer();
-        $timeout(function () { deferred.resolve( results ); }, Math.random() * 1000, false);
-        return deferred.promise;
-      } else {
-        return results;
-      }
-    }
-
-    function searchTextChange(text) {
-      $log.info('Text changed to ' + text);
-    }
-
-    function selectedItemChange(item) {
-      $log.info('Item changed to ' + JSON.stringify(item));
-    }
-
-    /**
-     * Build `components` list of key/value pairs
-     */
-    function loadAll() {
-     
-     return $http.get("http://localhost:8080/medicine")
-      .then(function(response) {
-	        return response.data;
-	      });
-    }
-
-    /**
-     * Create filter function for a query string
-     */
-    function createFilterFor(query) {
-      var lowercaseQuery = angular.lowercase(query);
-
-      return function filterFn(item) {
-        return (item.value.indexOf(lowercaseQuery) === 0);
-      };
-
-    }
+	var getLoginUserSuccess = function(data) {
+		$scope.user = data;
+	};
+	var getLoginUserError = function(error) {
+	};
+	
+////==========Create treatment=========================================
+	$scope.createTreatment = function(){
+		$scope.treatment.patientId = $scope.selectedPatient.id;
+		$scope.treatment.doctorId = $scope.doctor.id;
+		$scope.treatment.date = new Date();
+		treatmentService.createTreatment($scope.treatment).then(createTreatmentSuccess,createTreatmentError);
+	};
+	var createTreatmentSuccess = function(data) {
+		bootbox.alert({
+			message: "Add New Treatment Success!",
+			title: "MESSAGE",
+		    size: 'small'
+		});
+		$scope.getAllTreatment();
+	};
+	var createTreatmentError = function(error) {
+		bootbox.alert({
+			message: "Add Treatment Error!",
+			title: "MESSAGE",
+		    size: 'small'
+		});
+	};
+	
+////==========Create treatment detail==================================
+	$scope.createTreatmentDetail = function(){
+		if($scope.medicines!=null){
+			angular.forEach($scope.medicines, function(value, key){
+				$scope.treatmentDetail.treatmentId = $scope.treatment.id;
+				$scope.treatmentDetail.medicineId =value;
+				$scope.treatmentDetail.diseases =$scope.treatment.prescription;
+				treatmentDetailService.createTreatmentDetail($scope.treatmentDetail)
+				
+			});
+		}
+		else{
+		}
+	}
+////==========Get One Treatment ==================================
+	$scope.getOneTreatment = function(id){
+		treatmentService.getOneTreatment(id).then(getOneSuccess,getOneError)
+	};
+	var getOneSuccess = function(data) {
+		$scope.currentTreatment = data;
+		$scope.currentTreatment.date = new Date();
+	};
+	var getOneError = function(error) {
+	};
+////==========Update Treatment ==================================
+	$scope.updateTreatment = function(id,treatment){
+		/*if($scope.currentTreatment.doctorId.id==$scope.doctor.id){*/
+			treatmentService.updateTreatment(id,treatment).then(updateSuccess,updateError);
+/*		}
+		else{
+			alert('You have not permission');
+		}*/
+	};
+	var updateSuccess = function(data) {
+		bootbox.alert({
+			message: "Update Treatment Success!",
+			title: "MESSAGE",
+		    size: 'small'
+		});
+		//$(".modal").modal("hide");
+		$scope.getAllTreatment();
+		
+	};
+	var updateError = function(error) {
+		bootbox.alert({
+			message: "Update Treatment Error!",
+			title: "MESSAGE",
+		    size: 'small'
+		});
+	};
+		
+		
+	
+	/*$scope.updateTreatment = function(id,treatment){
+		treatmentService.updateTreatment(id,treatment).then(updateSuccess,updateError)
+	};
+	var updateSuccess = function(data) {
+		alert('update treatment Success:' + data.name);
+		$scope.getAllTreatment();
+		
+	};*/
+	
 });

@@ -8,6 +8,8 @@ public interface IAllergicService {
 	Allergic findById(int id);
  
     void saveAllergic(Allergic allergic);
+    
+    void saveAllergicList(List<Allergic> allergicList);
  
     void updateAllergic(Allergic allergic);
  

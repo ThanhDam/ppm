@@ -2,6 +2,7 @@ package com.csc.team2.model;
 
 
 import java.io.Serializable;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,9 +14,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
@@ -30,7 +31,8 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
     @NamedQuery(name = "Allergic.findAll", query = "SELECT a FROM Allergic a")
     , @NamedQuery(name = "Allergic.findById", query = "SELECT a FROM Allergic a WHERE a.id = :id")
     , @NamedQuery(name = "Allergic.findByMedicineId", query = "SELECT a FROM Allergic a WHERE a.medicineId = :medicineId")})
-@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@allergicId")
+@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@allergicId", scope= Allergic.class)
+
 public class Allergic implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -39,12 +41,14 @@ public class Allergic implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "medicine_id")
-    private int medicineId;
-    @JoinColumn(name = "patient_id", referencedColumnName = "id")
+
+    @JoinColumn(name = "medicine_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
+    private Medicine medicineId;
+
+	@JoinColumn(name = "patient_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+	@JsonBackReference
     private Patient patientId;
 
     public Allergic() {
@@ -54,7 +58,7 @@ public class Allergic implements Serializable {
         this.id = id;
     }
 
-    public Allergic(Integer id, int medicineId) {
+    public Allergic(Integer id, Medicine medicineId) {
         this.id = id;
         this.medicineId = medicineId;
     }
@@ -66,15 +70,6 @@ public class Allergic implements Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
-
-    public int getMedicineId() {
-        return medicineId;
-    }
-
-    public void setMedicineId(int medicineId) {
-        this.medicineId = medicineId;
-    }
-
     public Patient getPatientId() {
         return patientId;
     }
@@ -82,6 +77,15 @@ public class Allergic implements Serializable {
     public void setPatientId(Patient patientId) {
         this.patientId = patientId;
     }
+    
+    public Medicine getMedicineId() {
+		return medicineId;
+	}
+
+	public void setMedicineId(Medicine medicineId) {
+		this.medicineId = medicineId;
+	}
+
 
     @Override
     public int hashCode() {

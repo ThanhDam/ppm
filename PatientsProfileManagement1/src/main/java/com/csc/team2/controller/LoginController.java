@@ -1,24 +1,30 @@
 package com.csc.team2.controller;
 
+import java.security.Principal;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.csc.team2.model.User;
-import com.csc.team2.service.UserService;
+import com.csc.team2.service.IUserService;
 
-@Controller
+@RestController
 public class LoginController {
 	
 	@Autowired
-	private UserService userService;
+	private IUserService userService;
 
 	@RequestMapping(value={"/","/login"}, method = RequestMethod.GET)
 	public ModelAndView login(){
@@ -30,6 +36,7 @@ public class LoginController {
 			User user = userService.findUserByUsername(auth.getName());
 			modelAndView.addObject("userName", "Hi " + user.getName());
 			modelAndView.setViewName("/admin/home");	
+			user.getRolesList();
 			return modelAndView;
 		}
 		else if(auth.getAuthorities().toString().equals("[doctor]")) {
@@ -158,7 +165,13 @@ public class LoginController {
 		}
 		return modelAndView;
 	}
-
+//	
+//	@RequestMapping(value = "/username", method = RequestMethod.GET)
+//    @ResponseBody
+//    public String currentUserName(Object principal) {
+//		principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//		return principal.toString();
+//    }
 	
 	/*@RequestMapping(value="/admin/home", method = RequestMethod.GET)
 	public ModelAndView adminHome(){
@@ -169,28 +182,8 @@ public class LoginController {
 		modelAndView.addObject("adminMessage","Content Available Only for Users with Admin Role");
 		modelAndView.setViewName("/admin/home");
 		return modelAndView;
-	}
-	
-	@RequestMapping(value="/doctor/home", method = RequestMethod.GET)
-	public ModelAndView doctorHome(){
-		ModelAndView modelAndView = new ModelAndView();
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		User user = userService.findUserByUsername(auth.getName());
-		modelAndView.addObject("userName", "Welcome " + user.getName());
-		modelAndView.addObject("doctorMessage","Content Available Only for Users with Doctor Role");
-		modelAndView.setViewName("/doctor/home");
-		return modelAndView;
-	}
-	
-	@RequestMapping(value="/nurse/home", method = RequestMethod.GET)
-	public ModelAndView nurseHome(){
-		ModelAndView modelAndView = new ModelAndView();
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		User user = userService.findUserByUsername(auth.getName());
-		modelAndView.addObject("userName", "Welcome " + user.getName());
-		modelAndView.addObject("nurseMessage","Content Available Only for Users with Nurse Role");
-		modelAndView.setViewName("/nurse/home");
-		return modelAndView;
 	}*/
+	
+	
 
 }

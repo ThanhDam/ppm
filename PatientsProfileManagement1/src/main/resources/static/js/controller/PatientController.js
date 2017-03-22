@@ -44,23 +44,23 @@ app.controller('patientController', function(
 	/////-----------create Patient ------------
 	$scope.createPatient = function(){
 		patientService.createPatient($scope.patient).then(createSuccess,createError);
-		reset;
+		
 	}
 	
-	reset = function(){
-		$scope.patient = {
-				name : "",
-				address : "",
-				sex : "male",
-				dob : "",
-			};
-	};
-	
 	var createSuccess = function(data) {
-		alert('add new patient Success:' + data.name);
+		bootbox.alert({
+			message: "Add Patient Success!",
+			title: "MESSAGE",
+		    size: 'small'
+		});
 		$scope.getPatient();
 	};
 	var createError = function(error) {
+		bootbox.alert({
+			message: "Add Patient Error!",
+			title: "MESSAGE",
+		    size: 'small'
+		});
 	};
 	
 	/////-----------update patient-------------
@@ -68,22 +68,40 @@ app.controller('patientController', function(
 		patientService.updatePatient(id,patient).then(updateSuccess,updateError);
 	};
 	var updateSuccess = function(data) {
-		alert('update patient Success:' + data.name);
+		bootbox.alert({
+			message: "Update Patient Success!",
+			title: "MESSAGE",
+		    size: 'small'
+		});
 		$scope.getPatient();
 	};
 	var updateError = function(error) {
+		bootbox.alert({
+			message: "Update Patient Error!",
+			title: "MESSAGE",
+		    size: 'small'
+		});
 	};
 	
-	/////-----------dalete patient-------------
+	/////-----------delete patient-------------
 	$scope.deletePatient= function(id){
 		patientService.deletePatient(id).then(deleteSuccess,deleteError);
 		
 	};
 	var deleteSuccess = function(data) {
-		alert('delete patient Success:' + data.name);
+		bootbox.alert({
+			message: "Delete Patient Success!",
+			title: "MESSAGE",
+		    size: 'small'
+		});
 		$scope.getPatient();
 	};
 	var deleteError = function(error) {
+		bootbox.alert({
+			message: "Delete Patient Error!",
+			title: "MESSAGE",
+		    size: 'small'
+		});
 	};
 	
 	/////----------get one patient-------------

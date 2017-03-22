@@ -8,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,9 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
  
 import com.csc.team2.model.Treatment;
-import com.csc.team2.model.User;
-import com.csc.team2.service.TreatmentService;
-import com.csc.team2.service.UserService;
+import com.csc.team2.service.ITreatmentService;
 import com.csc.team2.util.CustomErrorType;
 
  
@@ -30,7 +26,7 @@ public class TreatmentController {
     public static final Logger logger = LoggerFactory.getLogger(TreatmentController.class);
  
     @Autowired
-    TreatmentService treatmentService; //Service which will do all data retrieval/manipulation work
+    ITreatmentService treatmentService; //Service which will do all data retrieval/manipulation work
  
     // -------------------Retrieve All Treatment---------------------------------------------
  
@@ -50,24 +46,12 @@ public class TreatmentController {
     public ResponseEntity<?> getTreatment(@PathVariable("id") int id) {
         logger.info("Fetching Treatment with id {}", id);
         Treatment treatment = treatmentService.findById(id);
-        System.out.println("------------------treat");
         if (treatment == null) {
             logger.error("User with id {} not found.", id);
             return new ResponseEntity(new Error("Treatment with id " + id 
                     + " not found"), HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<Treatment>(treatment, HttpStatus.OK);
-    }
-    @Autowired
-	private UserService userService;
- // -------------------Retrieve Single Name------------------------------------------
-    
-    @RequestMapping(value = "/treatment/name", method = RequestMethod.GET)
-    public ResponseEntity<?> getNameDoctor() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-    	User user = userService.findUserByUsername(auth.getName());
-    	System.out.println("---------------"+auth.getName());
-        return new ResponseEntity<User>(user, HttpStatus.OK);
     }
  
     // -------------------Create a Treatment-------------------------------------------
@@ -76,11 +60,11 @@ public class TreatmentController {
     public ResponseEntity<?> createTreatment(@RequestBody Treatment treatment, UriComponentsBuilder ucBuilder) {
         logger.info("Creating Treatment : {}", treatment);
  
-        if (treatmentService.isTreatmentExist(treatment)) {
-            logger.error("Unable to create. A Treatment with ID {} already exist", treatment.getId());
-            return new ResponseEntity(new Error("Unable to create. A Treatment with ID " + 
-            treatment.getId() + " already exist."),HttpStatus.CONFLICT);
-        }
+//        if (treatmentService.isTreatmentExist(treatment)) {
+//            logger.error("Unable to create. A Treatment with ID {} already exist", treatment.getId());
+//            return new ResponseEntity(new Error("Unable to create. A Treatment with ID " + 
+//            treatment.getId() + " already exist."),HttpStatus.CONFLICT);
+//        }
         treatmentService.saveTreatment(treatment);
  
         HttpHeaders headers = new HttpHeaders();
@@ -96,17 +80,16 @@ public class TreatmentController {
  
         Treatment currentTreatment = treatmentService.findById(id);
  
-        if (currentTreatment == null) {
+        /*if (currentTreatment == null) {
             logger.error("Unable to update. Treatment with id {} not found.", id);
             return new ResponseEntity(new Error("Unable to upate. Treatment with id " + id + " not found."),
                     HttpStatus.NOT_FOUND);
-        }
+        }*/
  
         currentTreatment.setId(treatment.getId());
         currentTreatment.setPatientId(treatment.getPatientId());
         currentTreatment.setDoctorId(treatment.getDoctorId());
         currentTreatment.setDate(treatment.getDate());
-        
         currentTreatment.setFile(treatment.getFile());
         currentTreatment.setPrescription(treatment.getPrescription());
  
@@ -139,6 +122,4 @@ public class TreatmentController {
         treatmentService.deleteAllTreatment();
         return new ResponseEntity<Treatment>(HttpStatus.NO_CONTENT);
     }
-    
-    
 }

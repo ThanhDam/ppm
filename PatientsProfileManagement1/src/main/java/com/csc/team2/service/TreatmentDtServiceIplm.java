@@ -2,24 +2,23 @@ package com.csc.team2.service;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.Persistence;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.csc.team2.model.Medicine;
 import com.csc.team2.model.TreatmentDetail;
-import com.csc.team2.repository.TreatmentDtRepository;
+import com.csc.team2.repository.ITreatmentDtRepository;
 
 
 @Service("treatmentDtService")
 @Transactional
 
-public class TreatmentDtServiceIplm implements TreatmentDtService {
+public class TreatmentDtServiceIplm implements ITreatmentDtService {
 	
 	@Autowired
-    private TreatmentDtRepository treatmentdtRepository;
+    private ITreatmentDtRepository treatmentdtRepository;
 
 	@Override
 	public TreatmentDetail findById(int id) {
@@ -66,9 +65,10 @@ public class TreatmentDtServiceIplm implements TreatmentDtService {
 		return findById(treatmentdt.getId()) != null;
 	}
 
-	
-
-	
+	@Override
+	public List<Object[]> findNotAllergic(int id) {
+		return treatmentdtRepository.findNotAllergic(id);
+	}
 	
 	
 	

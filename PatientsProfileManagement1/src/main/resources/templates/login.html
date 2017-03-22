@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Patient Profile Management</title>
 	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}" />
 	<link rel="stylesheet" type="text/css" th:href="@{/css/font-awesome.min.css}" />
 	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
   	
@@ -40,7 +40,7 @@
                         		
                             </div>
                             <div class="form-bottom">
-			                    <form role="form" th:action="@{/login}" method="POST">
+			                    <form class="login-form" role="form" th:action="@{/login}" method="POST">
 			                    	<div class="form-group">
 			                    		<label class="sr-only" for="form-username">Username</label>
 										<div class="input-group">
@@ -63,13 +63,13 @@
 			                        <span th:utext="${successMessage}"></span>
 			                    </form>
 								<br>
-								<form th:action="@{/registration}" method="get" class="form-btn-reg">
+								<!-- <form th:action="@{/registration}" method="get" class="form-btn-reg">
 									<button class="btn btn-lock" style="background-color: transparent;
     									color: #00b2f9;" type="submit">Go To Registration Page</button>
     									
-								</form>
+								</form> -->
 								<div align="center" th:if="${param.error}">
-									<p style="font-size: 20; color: #FF1C19; padding-bottom: 20px;">Username or Password invalid, please verify</p>
+									<p style="font-size: 20; color: #ff1e19; padding-bottom: 20px;">Username or Password invalid, please verify</p>
 								</div>
 		                    </div> 
                         </div>
@@ -82,8 +82,8 @@
 
 
 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script type="text/javascript" th:src="@{/js/jquery.js}"></script>
+  	<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
   	<script type="text/javascript" th:src="@{/js/jquery.backstretch.min.js}"></script>
   	<script type="text/javascript" th:src="@{/js/scripts.js}"></script>
 </body>

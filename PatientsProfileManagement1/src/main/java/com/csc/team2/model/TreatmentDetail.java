@@ -1,7 +1,10 @@
 package com.csc.team2.model;
 
 import java.io.Serializable;
+import java.util.List;
+
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -18,6 +22,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 /**
@@ -32,6 +37,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
     , @NamedQuery(name = "TreatmentDetail.findById", query = "SELECT t FROM TreatmentDetail t WHERE t.id = :id")
     , @NamedQuery(name = "TreatmentDetail.findByDiseases", query = "SELECT t FROM TreatmentDetail t WHERE t.diseases = :diseases")})
 @JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@treatmentdetailId")
+
 public class TreatmentDetail implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -45,9 +51,10 @@ public class TreatmentDetail implements Serializable {
     @Size(min = 1, max = 70)
     @Column(name = "diseases")
     private String diseases;
+    
     @JoinColumn(name = "treatment_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    @JsonBackReference
+    //@JsonBackReference
     private Treatment treatmentId;
     @JoinColumn(name = "medicine_id", referencedColumnName = "id")
     @ManyToOne(optional = false)

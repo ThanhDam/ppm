@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Patients Profile Management</title>
 	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}" />
 	<link rel="stylesheet" type="text/css" th:href="@{/css/font-awesome.min.css}" />
 	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
 </head>
@@ -32,18 +32,18 @@
                         <div class="col-sm-7 col-sm-offset-3 form-box">
                         	<div class="form-top">
                         		<div class="form-top-left">
-                        			<h2 style="color: #fff; font-weight: bold;">Register User</h2>
+                        			<h2 style="color: #fff; ">Register User</h2>
                         		</div>
                         		
                             </div>
                             <div class="form-bottom">
-			                    <form role="form" autocomplete="off" action="#" th:action="@{/registration}" th:object="${user}" 
+			                    <form class="regis" role="form" autocomplete="off" action="#" th:action="@{/registration}" th:object="${user}" 
 			                    method="post" class="form-horizontal">
 								
 			                    	<div class="form-group">
 			                    		<label class="col-sm-2 control-label">Full Name</label>
 										<div class="col-sm-10">
-										  <input type="text" th:field="*{name}" placeholder="Full name" class="form-control" />
+										  <input type="text" th:field="*{name}" placeholder="Full name" class="form-control"/>
 										</div>
 			                        </div>
 									<div class="row">
@@ -57,7 +57,7 @@
 			                       <div class="form-group">
 										<label class="col-sm-2 control-label">Username</label>
 										<div class="col-sm-10">
-										  <input type="text" th:field="*{username}" placeholder="Username" class="form-control"/>
+										  <input type="text" th:field="*{username}" placeholder="Username" class="form-control" />
 										</div>
 								  </div>
 								  <div class="row">
@@ -85,7 +85,7 @@
 								  <div class="form-group">
 										<label class="col-sm-2 control-label">Specialist</label>
 										<div class="col-sm-10">
-										  <input type="text" th:field="*{specialist}" placeholder="specialist" class="form-control"/> 
+										  <input type="text" th:field="*{specialist}" placeholder="specialist" class="form-control" /> 
 										</div>
 								  </div>
 								  <div class="row">
@@ -133,12 +133,16 @@
 										</div>
 								  </div>
 								  
-								  
 			                        <button type="submit" class="btn">Register Admin!</button>
 			                        <span th:utext="${successMessage}"></span>
 			                    </form>
 								<br>
-								
+								<form th:action="@{/}" method="get">
+									<div class="btn-center">
+										<button class="btn btn-lock" style="background-color: transparent;
+    									color: #00b2f9; font-weight:bold;" type="Submit">Login</button>
+									</div>
+								</form>	
 		                    </div>
                         </div>
                     </div>
@@ -149,9 +153,10 @@
         </div>
 	
 	
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script type="text/javascript" th:src="@{/js/jquery.js}"></script>
+  	<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
   	<script type="text/javascript" th:src="@{/js/jquery.backstretch.min.js}"></script>
+  	<script type="text/javascript" th:src="@{/js/scripts.js}"></script>
   	<script type="text/javascript">
   		jQuery(document).ready(function() {
   			$.backstretch("/images/regis.png");

@@ -1,5 +1,7 @@
 package com.csc.team2.controller;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -14,24 +16,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
- 
+
+import com.csc.team2.model.Medicine;
 import com.csc.team2.model.TreatmentDetail;
-import com.csc.team2.service.TreatmentDtService;
+import com.csc.team2.service.ITreatmentDtService;
 import com.csc.team2.util.CustomErrorType;
 
  
 @RestController
-
 public class TreatmentDtController {
  
     public static final Logger logger = LoggerFactory.getLogger(TreatmentDtController.class);
  
     @Autowired
-    TreatmentDtService treatmentdtService; //Service which will do all data retrieval/manipulation work
+    ITreatmentDtService treatmentdtService; //Service which will do all data retrieval/manipulation work
  
     // -------------------Retrieve All TreatmentDt---------------------------------------------
  
-    @RequestMapping(value = "/treatmentdt/", method = RequestMethod.GET)
+    @RequestMapping(value = "/treatmentdt", method = RequestMethod.GET)
     public ResponseEntity<List<TreatmentDetail>> listAllTreatmentDt() {
         List<TreatmentDetail> treatmentsdt = treatmentdtService.findAllTreatmentDt();
         if (treatmentsdt.isEmpty()) {
@@ -54,18 +56,40 @@ public class TreatmentDtController {
         }
         return new ResponseEntity<TreatmentDetail>(treatmentdt, HttpStatus.OK);
     }
+    
+ ////====================
+    @RequestMapping(value = "/unAllergic/{id}", method = RequestMethod.GET)
+    public ResponseEntity<?> getNotAllerggic(@PathVariable("id") int id) {
+        logger.info("Fetching TreatmentDt with id {}", id);
+        List<Object[]> Objects = treatmentdtService.findNotAllergic(id);
+        List<Medicine> medicines = new ArrayList<Medicine>();
+        if (medicines == null) {
+            logger.error(" not found.");
+        }
+        for (Object[] obj : Objects)
+        {
+        	Medicine medicine = new Medicine();
+        	medicine.setId((Integer)obj[0]);
+        	medicine.setName((String)obj[1]);
+        	medicine.setMfg((Date)obj[2]);
+        	medicine.setProducer((String)obj[3]);
+        	medicine.setDosage((String)obj[4]);
+        	medicines.add(medicine);
+        }
+        return new ResponseEntity<List<Medicine>>(medicines, HttpStatus.OK);
+    }
+    
+ //// -------------------Create a TreatmentDt-------------------------------------------
  
-    // -------------------Create a TreatmentDt-------------------------------------------
- 
-    @RequestMapping(value = "/treatmentdt/", method = RequestMethod.POST)
+    @RequestMapping(value = "/treatmentdt", method = RequestMethod.POST)
     public ResponseEntity<?> createTrearmentDt(@RequestBody TreatmentDetail treatmentdt, UriComponentsBuilder ucBuilder) {
         logger.info("Creating TreatmentDt : {}", treatmentdt);
  
-        if (treatmentdtService.isTreatmentDtExist(treatmentdt)) {
-            logger.error("Unable to create. A TreatmentDt with ID {} already exist", treatmentdt.getId());
-            return new ResponseEntity(new Error("Unable to create. A TreatmentDt with ID " + 
-            treatmentdt.getId() + " already exist."),HttpStatus.CONFLICT);
-        }
+//        if (treatmentdtService.isTreatmentDtExist(treatmentdt)) {
+//            logger.error("Unable to create. A TreatmentDt with ID {} already exist", treatmentdt.getId());
+//            return new ResponseEntity(new Error("Unable to create. A TreatmentDt with ID " + 
+//            treatmentdt.getId() + " already exist."),HttpStatus.CONFLICT);
+//        }
         treatmentdtService.saveTreatmentDt(treatmentdt);
  
         HttpHeaders headers = new HttpHeaders();
@@ -115,7 +139,7 @@ public class TreatmentDtController {
  
     // ------------------- Delete All TreatmentDt-----------------------------
  
-    @RequestMapping(value = "/treatmentdt/", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/treatmentdt", method = RequestMethod.DELETE)
     public ResponseEntity<TreatmentDetail> deleteAllTreatmentDt() {
         logger.info("Deleting All TreatmentDt");
  

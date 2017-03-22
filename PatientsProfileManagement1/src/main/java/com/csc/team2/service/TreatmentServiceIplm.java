@@ -8,14 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.csc.team2.model.Treatment;
-import com.csc.team2.repository.TreatmentRepository;;
+import com.csc.team2.repository.ITreatmentRepository;;
 
 @Service("treatmentService")
 @Transactional
-public class TreatmentServiceIplm implements TreatmentService{
+public class TreatmentServiceIplm implements ITreatmentService{
 
 	@Autowired
-    private TreatmentRepository treatmentRepository;
+    private ITreatmentRepository treatmentRepository;
 
 	@Override
 	public Treatment findById(int id) {
@@ -60,6 +60,4 @@ public class TreatmentServiceIplm implements TreatmentService{
 	public boolean isTreatmentExist(Treatment treatment) {
 		return findById(treatment.getId()) != null;
 	}
-
-	
 }

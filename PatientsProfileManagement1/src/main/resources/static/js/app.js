@@ -1,39 +1,35 @@
-var app = angular.module('myApp', ['ngRoute','ngResource','angularUtils.directives.dirPagination']);
-app.config(function($routeProvider){
-    $routeProvider
-	    /*.when('/another',{
-	        templateUrl: '/patientprofile/views/another.html',
-	        controller: 'AnotherController'
-	    })*/
-	    .when('/',{
-	        templateUrl: '/views/homepage.html',
-	        controller: 'HomeController'
-	    })
-	    .when('/patient',{
-	        templateUrl: '/views/patient.html',
-	        controller: 'patientController'
-	    })
-	    .when("/medicine", {
-            templateUrl: "/views/medicine.html",
-            controller: "medicineController"
-          })
-    	.when('/user',{
-    		templateUrl: '/views/user.html',
-    		controller: "userController"
-    	})
-    .when('/treatment',{
-		templateUrl: '/views/treatment.html',
-		controller: "treatmentController"
+var app = angular.module('myApp', [ 'ngRoute', 'ngResource',
+		'angularUtils.directives.dirPagination','ngMaterial' ]);
+app.config(function($routeProvider) {
+	$routeProvider.when('/patient', {
+		templateUrl : '/views/patient.html',
+		controller : 'PatientController'
+	}).when('/', {
+		templateUrl : '/views/homepage.html',
+		controller : 'HomeController'
+	}).when('/patient', {
+		templateUrl : '/views/patient.html',
+		controller : 'patientController'
+	}).when("/medicine", {
+		templateUrl : "/views/medicine.html",
+		controller : "medicineController"
+	}).when('/usersList', {
+		templateUrl : '/views/usersList.html',
+		controller : "userController"
+	}).when('/userProfile', {
+		templateUrl : '/views/userProfile.html',
+		controller : "userController"
+	}).when('/treatment', {
+		templateUrl : '/views/treatment.html',
+		controller : "treatmentController"
 	})
-	 
-	
-	
-    .when('/treatment/:id',{
-		templateUrl: '/views/treatmentdetail.html',
-		controller: "treatmentDetailController"
+
+	.when('/treatment/:treatmentId', {
+		templateUrl : '/views/treatmentdetail.html',
+		controller : "treatmentDetailController"
 	});
-    	
-        /*.otherwise(
-            { redirectTo: '/'}
-        );*/
+
+	/*
+	 * .otherwise( { redirectTo: '/'} );
+	 */
 });

@@ -1,261 +1,253 @@
-<div class="container">
-<!--table -->
-<div class="col-md-12 col-sm-12 col-xs-12">
-	<div class="x_panel">
-		<div class="x_title">
-			<h2>List Patient</h2>
-		</div>
-		<div class="x_content">
-			<div class="row">
-				
-				<div class="col-md-8">
-					<form class="form-wrapper cf">
-					    <button type="submit">
-					    	<i class="fa fa-search" aria-hidden="true"></i>
-					    </button>
-					  	<input type="text" ng-model="search" placeholder="Search here..." class="form-control" required> 
-					</form>
-				</div>
-				<div class="col-md-4">
-					<button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#modalCreatePatient">
-					  <span>Create Patient</span>
-					</button>
-				</div>
-			</div>
-			
-			<div class="table-responsive">
-				<table class="table table-striped jambo_table bulk_action">
-					<thead>
-						<tr class="headings">
-						
-							<th class="column-title" ng-click="sort('name')">Name
-							 <span class="glyphicon sort-icon" ng-show="sortKey=='name'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-							</th>
-							<th class="column-title" ng-click="sort('address')">Address
-							<span class="glyphicon sort-icon" ng-show="sortKey=='address'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-							</th>
-							<th class="column-title" ng-click="sort('sex')">Gender
-							<span class="glyphicon sort-icon" ng-show="sortKey=='sex'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-							</th>
-							<th class="column-title" ng-click="sort('dob')">DOB
-							<span class="glyphicon sort-icon" ng-show="sortKey=='dob'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-							</th>
-							<th class="column-title no-link last"><span class="nobr">Action</span>
-							</th>
+<!-- Content Patient -->
+<section class="content-header">
+   <h1>
+      Patient Management
+      <small>Control panel</small>
+   </h1>
+   <ol class="breadcrumb">
+      <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+      <li class="active">Patient</li>
+   </ol>
+</section>
 
-						</tr>
-					</thead>
+<span th:text="${#authorization.expression('isAuthenticated()')} ? 
+               'the user is logged in' : 
+               'the user is NOT logged in'">
+</span>
+<div sec:authentication="name">fasdf</div> <!-- works fine -->
+<div sec:authentication="principal.authorities">fdsa</div> <!-- works fine -->
 
-					<tbody>
-						<tr dir-paginate="patient in patients|orderBy:sortKey:reverse|filter:search|itemsPerPage:3">
-						<td>
-							<a href="#/patient/{{patient.patientId}}"> {{patient.name | uppercase}} </a>
-						</td>
-							<td>{{patient.address}}</td>
-							<td>{{patient.sex }}</td>
-							<td>{{patient.dob}}</td>
-							<td>
-								<button type="button" ng-click="getOne(patient.patientId)" class="btn btn-primary" data-toggle="modal" data-target="#modalUpdatePatient">
-							  <span><i class="fa fa-wrench" aria-hidden="true"></i></span>
-							</button>
-								
-								<button ng-click="deletePatient(patient.patientId)"
-									data-toggle="tooltip" title="Delete Patient!"
-									class="glyphicon glyphicon-trash btn btn-danger"></button>
-
-							</td>
-						</tr>
-
-					</tbody>
-				</table>
-				
-				<dir-pagination-controls
-			       max-size="5"
-			       direction-links="true"
-			       boundary-links="true" >
-			    </dir-pagination-controls>
-    
-			</div>
-
-
-		</div>
-	</div>
+<div sec:authorize="isAuthenticated()">
+  This content is only shown to authenticated users.
 </div>
-<!--end table-->
+<div sec:authorize="hasAuthority('[admin]')">
+  This content is only shown to administrators.
+</div>
+<div sec:authorize="hasAuthority('[doctor]')">
+  This content is only shown to users.
+</div>
+<!-- Main content -->
+<section class="content">
+   <div class="x_panel">
+      <div class="x_title">
+         <h1>Patient</h1>
+      </div>
+      
+      <!-- Search -->
+      <div class="col-md-12 col-sm-12 col-xs-12 none-padding" >
+         <div class="col-md-8 col-sm-8 col-xs-12 none-padding">
+            <div class="input-group">
+               <div class="input-group-btn">
+                  <button type="submit" class="btn btn-danger">
+                  <i class="fa fa-search" aria-hidden="true"></i>
+                  </button>
+               </div>
+               <input ng-model="search" class="form-control" type="text" placeholder="Search here...">
+            </div>
+         </div>
+         <div class="col-md-3 col-sm-3 col-xs-12 pull-right">
+            <button type="button" class="btn btn-block btn-success"
+               data-toggle="modal" data-target="#modalCreatePatient">
+            <span>Create Patient</span>
+            </button>
+         </div>
+      </div>
+      
+      <div class="x_content">
+         <!-- LIST PATIENT -->
+         <div class="box box-primary">
+            <div class="box-header">
+               <h3 class="box-title">List Patient</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+               <table class="table table-bordered table-striped">
+                  <thead>
+                     <tr>
+                        <th  ng-click="sort('name')">Name
+                           <span class="glyphicon pull-right" aria-hidden="true" ng-class="{'glyphicon-menu-up':reverse,'glyphicon-menu-down':!reverse}"></span>
+                        </th>
+                        <th  ng-click="sort('address')">Address
+                           <span class="glyphicon pull-right"  aria-hidden="true" ng-class="{'glyphicon-menu-up':reverse,'glyphicon-menu-down':!reverse}"></span>
+                        </th>
+                        <th ng-click="sort('sex')">Gender
+                           <span class="glyphicon pull-right" aria-hidden="true" ng-class="{'glyphicon-menu-up':reverse,'glyphicon-menu-down':!reverse}"></span>
+                        </th>
+                        <th ng-click="sort('dob')">DOB
+                           <span class="glyphicon pull-right" aria-hidden="true" ng-class="{'glyphicon-menu-up':reverse,'glyphicon-menu-down':!reverse}"></span>
+                        </th>
+                        <th class="column-title no-link last">Action</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <tr dir-paginate="patient in patients|orderBy:sortKey:reverse|filter:search|itemsPerPage:3">
+                        <td>
+                           <a href="#/patient/{{patient.id}}"> {{patient.name | uppercase}} </a>
+                        </td>
+                        <td>{{patient.address}}</td>
+                        <td>{{patient.sex }}</td>
+                        <td>{{patient.dob}}</td>
+                        <td>
+                           <button type="button" ng-click="getOne(patient.id)" class="btn btn-primary" data-toggle="modal" data-target="#modalUpdatePatient">
+                           <span><i class="fa fa-wrench" aria-hidden="true"></i></span>
+                           </button>
+                           <button ng-click="deletePatient(patient.id)"
+                              data-toggle="tooltip" title="Delete Patient!"
+                              class="glyphicon glyphicon-trash btn btn-danger"></button>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+            <!-- /.box-body -->
+         </div>
+         <!-- Pagination -->
+         <div class="align">
+            <dir-pagination-controls
+               max-size="5"
+               direction-links="true"
+               boundary-links="true" >
+            </dir-pagination-controls>
+         </div>
+      </div>
+   </div>
+   <!--end table-->
+</section>
 
 
-	<!-- Modal -->
-	<div class="modal fade" id="modalUpdatePatient" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-	  <div class="modal-dialog" role="document">
-		<div class="modal-content">
-		  <div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			<h4 class="modal-title" id="myModalLabel">Update Patient</h4>
-		  </div>
-		  
-		  <div class="modal-body">
-		   <div class="form-group">
-				<label class="control-label col-md-3 col-sm-3 col-xs-12"
-					for="first-name">Name <span class="required">*</span>
-				</label>
-				<div class="col-md-6 col-sm-6 col-xs-12">
-					<input ng-model="curentPatient.name" type="text" id="first-name"
-						required="required" class="form-control col-md-7 col-xs-12">
-				</div>
-			</div>
-			<br>
-			<div class="form-group">
-				<label class="control-label col-md-3 col-sm-3 col-xs-12"
-					for="last-name">Address<span class="required">*</span>
-				</label>
-				<div class="col-md-6 col-sm-6 col-xs-12">
-					<input ng-model="curentPatient.address" type="text" id="address"
-						name="address" required="required"
-						class="form-control col-md-7 col-xs-12">
-				</div>
-			</div>
-			<br>
-			<div class="form-group">
-				<label class="control-label col-md-3 col-sm-3 col-xs-12">Gender</label>
-				<div class="col-md-6 col-sm-6 col-xs-12">
-					<div id="gender" class="btn-group" data-toggle="buttons">
-						<label> <input type="radio" ng-model="curentPatient.sex"
-							value="male"> Male
-						</label> <label> <input type="radio" ng-model="curentPatient.sex"
-							value="female"> Female
-						</label>
-					</div>
-					<div class="col-md-6 col-sm-6 col-xs-12">
-						<input ng-model="curentPatient.name" type="text" id="first-name"
-							required="required" class="form-control col-md-7 col-xs-12">
-					</div>
-				</div>
-				<br>
-				<div class="form-group">
-					<label class="control-label col-md-3 col-sm-3 col-xs-12"
-						for="last-name">Address<span class="required">*</span>
-					</label>
-					<div class="col-md-6 col-sm-6 col-xs-12">
-						<input ng-model="curentPatient.address" type="text" id="address"
-							name="address" required="required"
-							class="form-control col-md-7 col-xs-12">
-					</div>
-				</div>
-				<br>
-				<div class="form-group">
-					<label class="control-label col-md-3 col-sm-3 col-xs-12">Gender</label>
-					<div class="col-md-6 col-sm-6 col-xs-12">
-						<div id="gender" class="btn-group" data-toggle="buttons">
-							<label> <input type="radio" ng-model="curentPatient.sex"
-								value="male"> Male
-							</label> <label> <input type="radio" ng-model="curentPatient.sex"
-								value="female"> Female
-							</label>
-						</div>
-					</div>
-				</div>
-				<br>
-				<div class="form-group">
-					<label class="control-label col-md-3 col-sm-3 col-xs-12">Date
-						Of Birth <span class="required">*</span>
-					</label>
-					<div class="col-md-6 col-sm-6 col-xs-12">
-						<input ng-model="curentPatient.dob" type="date">
-					</div>
-				</div>
-			</div>
-			<br>
-			<div class="form-group">
-				<label class="control-label col-md-3 col-sm-3 col-xs-12">Date
-					Of Birth <span class="required">*</span>
-				</label>
-				<div class="col-md-6 col-sm-6 col-xs-12">
-					<input  ng-model="curentPatient.dob"  type="date" >
-					<div class="form-group">
-				</div>
-				</div>
-			</div>
-		  </div>
-		  
-		  <div class="modal-footer">
-			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			<button type="button" ng-click="updatePatient(curentPatient.patientId,curentPatient )" class="btn btn-primary">Save changes</button>
-		  </div>
-		</div>
-	  </div>
-	</div>
-	
-	
-	<!-- Modal Create -->
-	
-	<div class="modal fade" id="modalCreatePatient" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-	  <div class="modal-dialog" role="document">
-		<div class="modal-content">
-		  <div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			<h2 class="modal-title" id="myModalLabel">Create New Patient</h2>
-		  </div>
-		  
-		  <div class="modal-body">
-		   	<form id="demo-form2" ng-submit="submitForm()" data-parsley-validate class="form-horizontal form-label-left">
-					<div class="form-group">
-						<label class="control-label col-md-3 col-sm-3 col-xs-12">Name <span class="required">*</span>
-						</label>
-						<div class="col-md-9 col-sm-9 col-xs-12">
-							<input ng-model="patient.name" type="text" id="first-name"
-								required="required" class="form-control col-md-7 col-xs-12">
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="control-label col-md-3 col-sm-3 col-xs-12"
-							for="last-name">Address<span class="required">*</span>
-						</label>
-						<div class="col-md-9 col-sm-9 col-xs-12">
-							<input ng-model="patient.address" type="text" id="address"
-								name="address" required="required"
-								class="form-control col-md-7 col-xs-12">
-						</div>
-					</div>
 
-					<div class="form-group">
-						<label class="control-label col-md-3 col-sm-3 col-xs-12">Gender</label>
-						<div class="col-md-9 col-sm-9 col-xs-12">
-							<div id="gender" class="btn-group" data-toggle="buttons">
-								<label> <input type="radio" ng-model="patient.sex"
-									value="male"> Male
-								</label> <label> <input type="radio" ng-model="patient.sex"
-									value="female"> Female
-								</label>
-							</div>
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="control-label col-md-3 col-sm-3 col-xs-12">Date Of Birth <span class="required">*</span>
-						</label>
-						<div class="col-md-9 col-sm-9 col-xs-12">
-							<input ng-model="patient.dob" type="date" class="datepicker"
-								data-date-format="mm/dd/yyyy">
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-							<button type="submit" ng-click="createPatient()"
-								class="btn btn-success btn-lg">
-								<span><i class="glyphicon glyphicon-floppy-save" aria-hidden="true"></i></span>
-								Submit
-							</button>
-							<button ng-click="getPatient()" class="btn btn-primary btn-lg"
-								type="reset">
-								<span><i class="fa fa-refresh" aria-hidden="true"></i></span>
-								Clear
-							</button>
-							
-						</div>
-					</div>
+<!-- UPDATE PATIENT -->
+<div class="modal fade" id="modalUpdatePatient" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+   <div class="modal-dialog" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button style="color:#fff;" type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+            <h3 class="modal-title" id="myModalLabel">Update Patient</h3>
+         </div>
+         <div class="modal-body">
+            <form data-parsley-validate class="form-horizontal form-label-left">
+               <div class="form-group">
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12">Name <span class="required">*</span>
+                  </label>
+                  <div class="col-md-9 col-sm-9 col-xs-12">
+                     <input ng-model="curentPatient.name" type="text" id="first-name"
+                        required="required" class="form-control col-md-7 col-xs-12">
+                  </div>
+               </div>
+               <div class="form-group">
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                     for="last-name">Address<span class="required">*</span>
+                  </label>
+                  <div class="col-md-9 col-sm-9 col-xs-12">
+                     <input ng-model="curentPatient.address" type="text" id="address"
+                        name="address" required="required"
+                        class="form-control col-md-7 col-xs-12">
+                  </div>
+               </div>
+               <div class="form-group">
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12">Gender</label>
+                  <div class="col-md-9 col-sm-9 col-xs-12">
+                     <div id="gender" class="btn-group" data-toggle="buttons">
+                        <label> <input type="radio" ng-model="curentPatient.sex"
+                           value="male"> Male
+                        </label> <label> <input type="radio" ng-model="curentPatient.sex"
+                           value="female"> Female
+                        </label>
+                     </div>
+                  </div>
+               </div>
+               <div class="form-group">
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12">Date Of Birth <span class="required">*</span>
+                  </label>
+                  <div class="col-md-9 col-sm-9 col-xs-12">
+                     <input  ng-model="curentPatient.dob"  type="date" >
+                  </div>
+               </div>
+            </form>
+         </div>
+         <div class="modal-footer">
+            <button ng-click="getPatient()" class="btn btn-primary btn-in-modal" type="reset">
+            <span><i class="fa fa-refresh" aria-hidden="true"></i></span>
+            Clear
+            </button>
+            <button type="submit" ng-click="updatePatient(curentPatient.id,curentPatient)" data-dismiss="modal" class="btn btn-success btn-in-modal">
+            <span><i class="glyphicon glyphicon-floppy-save" aria-hidden="true"></i></span>
+            Submit
+            </button>
+         </div>
+      </div>
+   </div>
+</div>
 
-				</form>
-		  </div>
-		</div>
-	  </div>
-	</div>
+
+
+<!-- Modal Create -->
+<!-- CREATE PATIENT -->
+<div class="modal fade" id="modalCreatePatient" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+   <div class="modal-dialog" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button style="color:#fff;" type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+            <h3 class="modal-title" id="myModalLabel">Create New Patient</h3>
+         </div>
+         <div class="modal-body">
+            <form id="form-create"  name="createPatienta"
+               data-parsley-validate class="form-horizontal form-label-left">
+               <div class="form-group" >
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12">Name <span class="required">*</span>
+                  </label>
+                  <div class="col-md-9 col-sm-9 col-xs-12">
+                     <input ng-model="patient.name" type="text" name="name"
+                        required class="form-control col-md-7 col-xs-12">
+                  </div>
+                  <p ng-show="form-create.name.$invalid && !form-create.name.$pristine" class="help-block">You name is required.</p>
+               </div>
+               <div class="form-group">
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                     for="last-name">Address<span class="required">*</span>
+                  </label>
+                  <div class="col-md-9 col-sm-9 col-xs-12">
+                     <input ng-model="patient.address" type="text" id="address"
+                        name="address" required="required"
+                        class="form-control col-md-7 col-xs-12">
+                  </div>
+               </div>
+               <div class="form-group">
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12">Gender<span class="required">*</span></label>
+                  <div class="col-md-9 col-sm-9 col-xs-12">
+                     <div id="gender" class="btn-group" data-toggle="buttons">
+                        <label> <input type="radio" ng-model="patient.sex"
+                           value="male"> Male
+                        </label> <label> <input type="radio" ng-model="patient.sex"
+                           value="female"> Female
+                        </label>
+                     </div>
+                  </div>
+               </div>
+               <div class="form-group">
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12">Date Of Birth <span class="required">*</span>
+                  </label>
+                  <div class="col-md-9 col-sm-9 col-xs-12">
+                     <input ng-model="patient.dob" type="date" class="datepicker"
+                        data-date-format="mm/dd/yyyy">
+                  </div>
+               </div>
+            </form>
+         </div>
+         <div class="modal-footer">
+            <button class="btn btn-primary btn-in-modal" type="reset">
+            <span><i class="fa fa-refresh" aria-hidden="true"></i></span>
+            Clear
+            </button>
+            <button type="submit" ng-click="createPatient()" data-dismiss="modal" ng-disabled="createPatienta.$pristine || (createPatienta.$dirty && createPatienta.$invalid)" class="btn btn-success btn-in-modal">
+            <span><i class="glyphicon glyphicon-floppy-save" aria-hidden="true"></i></span>
+            Submit
+            </button>
+         </div>
+      </div>
+   </div>
 </div>
